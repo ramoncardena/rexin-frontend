@@ -26,6 +26,9 @@ const StyledIcon = styled(Icon)`
 const StyledListIItem = styled.li`
     margin: 0;
     padding: 0;
+    &:last-child {
+        margin-right: 1rem;
+    }
 `
 const StyledLink = styled(Link)`
     margin: 0 0 0 1rem;

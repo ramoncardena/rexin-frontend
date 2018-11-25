@@ -9,7 +9,7 @@ const StyledDropdownLink = styled.button`
     color: ${ props => props.textcolor };
     font-weight: ${props => props.active ? 'bold' : 'normal'};
     font-size: 1rem;
-    padding: 0;
+    padding: 5px 0;
     text-decoration: none;
     display: block;
     border: none;
@@ -28,7 +28,7 @@ const StyledDropdownLink = styled.button`
 `
 const StyledDropdownButton = styled.button`
     cursor: pointer;
-    margin: 0 0 0 1rem;
+    margin: 0;
     padding: 0;
     color: ${ props => props.textcolor };
     border: none;
