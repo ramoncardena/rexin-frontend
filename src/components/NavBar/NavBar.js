@@ -6,6 +6,8 @@ import i18next from 'i18next'
 
 import NavMenu from '../NavMenu'
 import NavIconMenu from '../NavIconMenu'
+import SignOutButton from '../SignOutButton'
+import SignInButton from '../SignInButton'
 import ModalMenu from '../ModalMenu'
 import LangSelector from '../LangSelector'
 
@@ -102,6 +104,12 @@ class NavBar extends Component {
                             secondaryColor={this.props.secondaryColor}
                         />
                        
+                        <SignInButton 
+                            link={this.props.loginRoute} 
+                            textcolor={this.props.primaryColor} 
+                            hovercolor={this.props.secondaryColor}
+                        />
+
                         <TabletLandscapeDown>
                             <ModalMenu 
                                 items={menuElements} 

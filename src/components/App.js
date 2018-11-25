@@ -9,6 +9,9 @@ import * as config from '../config';
 
 import NavBar from './NavBar'
 import HomePage from '../pages/HomePage'
+import SignInPage from '../pages/SignInPage'
+import SignUpPage from '../pages/SignUpPage'
+import PasswordForgetPage from '../pages/PasswordForgetPage'
 import FooterBar from './FooterBar'
 
 import logo from '../images/logo.png'
@@ -74,6 +77,7 @@ class App extends Component {
                             contactLink="/"
                             homeIcon={ true }
                             homeLink={ routes.HOME }
+                            loginRoute={ routes.SIGN_IN }
                             primaryColor={ config.primaryColor} 
                             secondaryColor={ config.secondaryColor } />
                     </TopNavigation>
@@ -82,6 +86,18 @@ class App extends Component {
                             <Route
                                 exact path={routes.HOME}
                                 component={() => <HomePage />}
+                            />
+                            <Route
+                                exact path={routes.SIGN_IN}
+                                component={() => <SignInPage />}
+                            />
+                            <Route
+                                exact path={routes.SIGN_UP}
+                                component={() => <SignUpPage />}
+                            />
+                            <Route
+                                exact path={routes.PASSWORD_RESET}
+                                component={() => <PasswordForgetPage />}
                             />
                             {/* <Route  component={Error404} /> */}
                         </Switch>
