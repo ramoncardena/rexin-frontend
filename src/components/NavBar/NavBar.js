@@ -2,10 +2,12 @@ import React, {Component} from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import MediaQuery from 'react-responsive'
+import i18next from 'i18next'
 
 import NavMenu from '../NavMenu'
 import NavIconMenu from '../NavIconMenu'
 import ModalMenu from '../ModalMenu'
+import LangSelector from '../LangSelector'
 
 
 const StyledNavBar = styled.div`
@@ -58,6 +60,7 @@ class NavBar extends Component {
     
     render() {
         const menuElements = this.props.elements
+        const currLang = i18next.languages[0]
 
         return (
             <StyledNavBar>
@@ -92,6 +95,12 @@ class NavBar extends Component {
                                 secondaryColor={this.props.secondaryColor}
                             />
                         </TabletPortaitUp>
+
+                        <LangSelector 
+                            lang={currLang} 
+                            primaryColor={this.props.primaryColor}
+                            secondaryColor={this.props.secondaryColor}
+                        />
                        
                         <TabletLandscapeDown>
                             <ModalMenu 

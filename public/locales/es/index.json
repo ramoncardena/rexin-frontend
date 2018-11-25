@@ -1,0 +1,15 @@
+{
+    "Page_Title": "Plantilla de Sitio con React",
+    "Site_Description": "¡Esta es mi fantástica página web!",
+    "Navbar_Title": "Mi Compañía",
+    "Main_Menu_Item_1": "Uno",
+    "Main_Menu_Item_2": "Dos",
+    "Main_Menu_Item_3": "Tres",
+    "Main_Menu_Item_4": "Cuatro",
+    "Footer_Menu_Legal": "Aviso Legal",
+    "Footer_Menu_Cookies": "Cookies",
+    "Footer_Menu_About": "Nosotros",
+    "Footer_Menu_Contact": "Contacto",
+    "Copyright_Notice": "©2018 Mi Compañía. Todos los derechos reservados.",
+    "Home_Title": "¡Hola Mundo!"
+}

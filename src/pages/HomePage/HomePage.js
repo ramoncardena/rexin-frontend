@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Helmet } from "react-helmet";
+import { translate } from 'react-i18next';
 import styled from 'styled-components'
 
 const PageContainer = styled.div`
@@ -24,12 +25,12 @@ class HomePage extends Component {
         return (
             <div>
                 <Helmet>
-                    <title>Basic Web Scaffolding</title>
+                    <title>{ t('Page_Title') }</title>
                     <meta name="description" content="Basic web scaffolding" />
                 </Helmet>
 
                 <PageContainer>
-                    <Title>Hello Universe!</Title>
+                    <Title>{ t('Home_Title') }</Title>
                 </PageContainer>
             </div>
         );
@@ -37,4 +38,4 @@ class HomePage extends Component {
 }
 
 
-export default HomePage
+export default translate('index')(HomePage)

@@ -1,0 +1,15 @@
+{
+    "Page_Title": "React Site Template",
+    "Site_Description": "This is my amazing website!",
+    "Navbar_Title": "My Company Name",
+    "Main_Menu_Item_1": "One",
+    "Main_Menu_Item_2": "Two",
+    "Main_Menu_Item_3": "Three",
+    "Main_Menu_Item_4": "Four",
+    "Footer_Menu_Legal": "Legal",
+    "Footer_Menu_Cookies": "Cookies",
+    "Footer_Menu_About": "About",
+    "Footer_Menu_Contact": "Contact",
+    "Copyright_Notice": "©2018 Your Company. All rights reserved.",
+    "Home_Title": "Hello World!"
+}

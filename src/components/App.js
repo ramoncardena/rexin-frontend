@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import styled from 'styled-components'
+import { translate } from 'react-i18next'
 import './App.css';
 
 import * as routes from '../constants/routes';
 import * as config from '../config';
+
 import NavBar from './NavBar'
 import HomePage from '../pages/HomePage'
 import FooterBar from './FooterBar'
+
+import logo from '../images/logo.png'
 
 const SiteContainer = styled.div`
     display: flex;
@@ -35,16 +39,36 @@ const BottomNavigation = styled.footer`
 class App extends Component {
    
     render() {
-        
+        const { t } = this.props;
+
+        const navbarTitle = t('Navbar_Title')
+        const siteDescription = t('Site_Description')
+
+        const mainMenu = [
+            { title: t('Main_Menu_Item_1'), link: "/" },
+            { title:  t('Main_Menu_Item_2'), link: "/" },
+            { title:  t('Main_Menu_Item_3'), link: "/" },
+            { title:  t('Main_Menu_Item_4'), link: "/" }
+        ]
+        const footerMenu = [
+            { title: t('Footer_Menu_Legal'), link: '/' },
+            { title: t('Footer_Menu_Cookies'), link: '/' },
+            { title: t('Footer_Menu_About'), link: '/' },
+            { title: t('Footer_Menu_Contact'), link: '/' }
+        ]
+
+        const copyright = t('Copyright_Notice')
+
+
         return (
         <Router>
                 <SiteContainer>
                     <TopNavigation>
                         <NavBar 
-                            siteLogo={ config.siteLogo}
-                            siteTitle={ config.siteTitle } 
-                            siteDescription={ config.siteLogo}
-                            elements={ config.mainMenu } 
+                            siteLogo={ logo }
+                            siteTitle={ navbarTitle } 
+                            siteDescription={ siteDescription}
+                            elements={ mainMenu } 
                             aboutIcon={ true }
                             aboutLink="/"
                             contactIcon={ true }
@@ -68,9 +92,9 @@ class App extends Component {
                         <FooterBar
                             primaryColor={ config.primaryColor} 
                             secondaryColor={ config.secondaryColor } 
-                            copyright={ config.copyright }
+                            copyright={ copyright }
                             border={ false }
-                            menu={ config.footerMenu } 
+                            menu={ footerMenu } 
                             facebook={ config.facebook.active }
                             linkFacebook={ config.facebook.link } 
                             twitter={ config.twitter.active } 
@@ -91,4 +115,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default translate('index')(App);
