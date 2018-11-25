@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const StyledLink = styled(Link)`
-    margin: 0 0 0 0.5rem;
+    margin: 0;
     padding: 0;
     text-decoration: none;
     font-size: 0.9rem;
@@ -14,8 +14,12 @@ const StyledLink = styled(Link)`
     }
 `
 const StyledMenuItem = styled.li`
-    margin: 0;
+    margin: 0 0 0 0.5rem;
     padding: 0;
+    &:first-child {
+        margin: 0;
+    }
+    
 `
 const StyledMenu = styled.ul`
     display: flex;
@@ -24,7 +28,7 @@ const StyledMenu = styled.ul`
     align-self: center;
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 0.25rem;
 `
 
 /* Component: FOOTERMENU */

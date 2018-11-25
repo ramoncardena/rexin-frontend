@@ -33,7 +33,6 @@ const TopNavigation = styled.nav`
 const BottomNavigation = styled.footer`
     margin: 0;
     padding: 0;
-    max-height: 70px;
 `
 
 class App extends Component {

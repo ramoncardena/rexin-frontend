@@ -14,38 +14,19 @@ const StyledFooter = styled.div`
 `
 const StyledFooterContent = styled.div`
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    @media screen and (max-width: 649px) {
-        justify-content: center;
-    }
-    max-height: 70px;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    flex-wrap: wrap-reverse;
+    max-width: 13000px;
     margin: 0;
     padding: 1rem ;
     
 `
-const StyledFooterLeft = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    margin: 0;
-    padding: 0.5rem 0;
-`
-const StyledFooterRight = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    margin: 0;
-    padding: 0.5rem 0;
-`
+
 const StyledCopyright = styled.p`
     font-size: 0.9rem;
     margin: 0;
-    padding: 0;
+    padding: 0.25rem;
     color: ${ props => props.textcolor };
 `
 
@@ -56,33 +37,30 @@ function FooterBar (props) {
         <StyledFooter border={props.border} borderColor={props.primaryColor}>
             <StyledFooterContent>
 
-                <StyledFooterLeft>
-                    <StyledCopyright textcolor={props.primaryColor}>
-                        { props.copyright }
-                    </StyledCopyright>
-                </StyledFooterLeft>
+                <FooterMenu 
+                    items={props.menu} 
+                    primaryColor={props.primaryColor}
+                    secondaryColor={props.secondaryColor}
+                />
 
-                <StyledFooterRight>
-                    <FooterMenu 
-                        items={props.menu} 
-                        primaryColor={props.primaryColor}
-                        secondaryColor={props.secondaryColor}
-                    />
-                    <NavSocialMenu 
-                        facebook={props.facebook} 
-                        linkFacebook={props.linkFacebook}
-                        twitter={props.twitter} 
-                        linkTwitter={props.linkTwitter}
-                        linkedin={props.linkedin} 
-                        linkLinkedin={props.linkLinkedin}
-                        github={props.github} 
-                        linkGithub={props.linkGithub}
-                        instagram={props.instagram} 
-                        linkInstagram={props.linkInstagram}
-                        primaryColor={props.primaryColor}
-                        secondaryColor={props.secondaryColor}
-                        />
-                </StyledFooterRight>
+                <NavSocialMenu 
+                    facebook={props.facebook} 
+                    linkFacebook={props.linkFacebook}
+                    twitter={props.twitter} 
+                    linkTwitter={props.linkTwitter}
+                    linkedin={props.linkedin} 
+                    linkLinkedin={props.linkLinkedin}
+                    github={props.github} 
+                    linkGithub={props.linkGithub}
+                    instagram={props.instagram} 
+                    linkInstagram={props.linkInstagram}
+                    primaryColor={props.primaryColor}
+                    secondaryColor={props.secondaryColor}
+                />
+                
+                <StyledCopyright textcolor={props.primaryColor}>
+                    { props.copyright }
+                </StyledCopyright>
                 
             </StyledFooterContent>
         </StyledFooter> 

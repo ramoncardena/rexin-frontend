@@ -15,7 +15,7 @@ const StyledIcons = styled.ul`
     flex-direction: row;
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 0.25rem;
 `
 const StyledIcon = styled(Icon)`
     margin: 0;
@@ -26,11 +26,14 @@ const StyledIcon = styled(Icon)`
     }
 `
 const StyledListIItem = styled.li`
-    margin: 0;
+    margin: 0 0 0 1rem;
     padding: 0;
+    &:first-child {
+        margin: 0;
+    }
 `
 const StyledLink = styled.a`
-    margin: 0 0 0 1rem;
+    margin: 0;
     padding: 0;
     color: ${ props => props.color };
     &:hover {
