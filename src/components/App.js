@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import './App.css';
 
 import * as routes from '../constants/routes';
-import * as config from '../constants/config';
+import * as config from '../config';
 import NavBar from './NavBar'
 import HomePage from '../pages/HomePage'
 import FooterBar from './FooterBar'

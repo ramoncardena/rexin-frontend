@@ -1,4 +1,4 @@
-import logo from '../images/logo.png'
+import logo from './images/logo.png'
 
 export const version = "0.0.1"
 
