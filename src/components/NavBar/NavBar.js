@@ -3,13 +3,10 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import MediaQuery from 'react-responsive'
 
-import * as routes from '../../constants/routes'
 import NavMenu from '../NavMenu'
 import NavIconMenu from '../NavIconMenu'
 import ModalMenu from '../ModalMenu'
 
-/* Resources */
-import logo from './logo.png'
 
 const StyledNavBar = styled.div`
     width: 100%;
@@ -67,7 +64,7 @@ class NavBar extends Component {
                 <StyledNavContent>
 
                     <StyledNavLeft>
-                        <NavLogo src={logo} description='Basic Web' />
+                        <NavLogo src={this.props.siteLogo} description={this.props.siteDescription} />
                         <NavTitle 
                             title={this.props.siteTitle}
                             primaryColor={this.props.primaryColor} 
@@ -85,12 +82,12 @@ class NavBar extends Component {
 
                         <TabletPortaitUp>
                             <NavIconMenu 
-                                iconAbout={true} 
-                                linkAbout='#' 
-                                iconContact={true} 
-                                linkContact='#' 
-                                iconHome={true} 
-                                linkHome={routes.HOME} 
+                                iconAbout={this.props.aboutIcon} 
+                                linkAbout={this.props.aboutLink} 
+                                iconContact={this.props.contactIcon} 
+                                linkContact={this.props.contactLink} 
+                                iconHome={this.props.homeIcon} 
+                                linkHome={this.props.homeLink} 
                                 primaryColor={this.props.primaryColor}
                                 secondaryColor={this.props.secondaryColor}
                             />

@@ -35,25 +35,24 @@ const BottomNavigation = styled.footer`
 class App extends Component {
    
     render() {
-        const copyright = "©2018 " + config.companyName + ". All rights reserved." + " (ver. " + config.version + " )"
         
         return (
         <Router>
                 <SiteContainer>
                     <TopNavigation>
                         <NavBar 
-                            siteTitle={ config.companyName } 
-                            elements={
-                                [
-                                    { title: 'Menu1', link: "/" },
-                                    { title: 'Menu2', link: "/" },
-                                    { title: 'Menu3', link: "/" },
-                                    { title: 'Menu4', link: "/" },
-                                    { title: 'Menu5', link: "/" }
-                                ]
-                            } 
-                            primaryColor="#808080" 
-                            secondaryColor="#647796" />
+                            siteLogo={ config.siteLogo}
+                            siteTitle={ config.siteTitle } 
+                            siteDescription={ config.siteLogo}
+                            elements={ config.mainMenu } 
+                            aboutIcon={ true }
+                            aboutLink="/"
+                            contactIcon={ true }
+                            contactLink="/"
+                            homeIcon={ true }
+                            homeLink={ routes.HOME }
+                            primaryColor={ config.primaryColor} 
+                            secondaryColor={ config.secondaryColor } />
                     </TopNavigation>
                     <div className="container">
                         <Switch>
@@ -67,29 +66,21 @@ class App extends Component {
 
                     <BottomNavigation>
                         <FooterBar
-                            primaryColor="#808080" 
-                            secondaryColor="#647796" 
-                            copyright={ copyright }
+                            primaryColor={ config.primaryColor} 
+                            secondaryColor={ config.secondaryColor } 
+                            copyright={ config.copyright }
                             border={ false }
-                            menu={
-                                [
-                                    { title: 'Legal', link: '/' },
-                                    { title: 'Cookies', link: '/' },
-                                    { title: 'About', link: '/' },
-                                    { title: 'Contact', link: '/' }
-                                ]
-                            } 
-                            facebook={ true }
-                            linkFacebook='https://www.facebook.com/ramon.cardena' 
-                            twitter={ true } 
-                            linkTwitter='https://twitter.com/ramon_cardena' 
-                            linkedin={ true } 
-                            linkLinkedin='https://www.linkedin.com/in/ramoncardena/' 
-                            github={ true } 
-                            linkGithub='https://github.com/ramoncardena' 
-                            instagram={ true } 
-                            linkInstagram='https://www.instagram.com/ramoncardena' 
-
+                            menu={ config.footerMenu } 
+                            facebook={ config.facebook.active }
+                            linkFacebook={ config.facebook.link } 
+                            twitter={ config.twitter.active } 
+                            linkTwitter={ config.twitter.link } 
+                            linkedin={ config.linkedin.active } 
+                            linkLinkedin={ config.linkedin.link }
+                            github={ config.github.active } 
+                            linkGithub={ config.github.link }
+                            instagram={ config.instagram.active } 
+                            linkInstagram={ config.instagram.link }
                         />
                     </BottomNavigation>
 
