@@ -32,7 +32,7 @@ class App extends Component {
             <SiteContainer>
                 <TopNavigation>
                     <NavBar 
-                        siteTitle={''} 
+                        siteTitle={'Your Company'} 
                         elements={
                             [
                                 { title: 'Menu1', link: "/" },

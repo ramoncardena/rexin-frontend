@@ -43,56 +43,57 @@ const StyledLink = styled(Link)`
         transform: scaleX(1);
     }
 `
-const StyledMenuItem = styled.li`
-    margin: 0;
-    padding: 0;
+
+const StyledModal = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;  
+    text-align: center;
+    overflow: hidden;
+    
+    /* width: ${props => props.folded ? '0' : '300px'};
+    height: 100vh; */
+    width: 100%;
+    height: ${props => props.folded ? '0' : '300px'};
+
+    background-color: #ffffff;
+    color: white;
+    opacity: 0.9;
+    z-index: 10000;
+    transition: all 0.5s ease-in-out;
+    box-shadow: ${props => props.folded ? '0' : '1px 0px 5px 1px rgba(0,0,0,0.1)'};
 `
+
+const StyledCloseIcon = styled(Icon)`
+    align-self: flex-end;
+    cursor: pointer;
+    margin: 0;
+    padding: 1.45rem 0.905rem 0 0;
+    color: ${ props => props.color };
+    &:hover {
+        color: ${ props => props.hovercolor };
+    }
+`
+
 const StyledMenu = styled.ul`
-    display: ${props => props.folded ? 'none' : 'flex'};
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-self: center;
     list-style: none;
     margin: 0;
     padding: 0;
-    transition: all 1s ease-in-out;
 `
 
-const StyledModal = styled.div`
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid lightgray;
-    display: flex;
-    flex-direction: column;
-    align-items: center;  
-    text-align: center;
-    width: 100%;
-    background-color: #ffffff;
-    color: white;
-    opacity: 0.9;
-    z-index: 10000;
-    /* visibility: ${props => props.folded ? 'hidden' : 'visible'}; */
-    transform-origin: top center;
-    transform: ${props => props.folded ? 'ScaleY(0)' : 'ScaleY(1)'};
-    transition: all 0.3s ease-in-out;
-
-`
-const StyledCloseIcon = styled(Icon)`
-    align-self: flex-end;
-    cursor: pointer;
+const StyledMenuItem = styled.li`
     margin: 0;
-    padding: 1rem 1.2rem 0 0;
-    color: ${ props => props.color };
-    transition: all 0.5s ease-in-out;
-    display: ${props => props.folded ? 'none' : 'inherit'};
-    &:hover {
-        color: ${ props => props.hovercolor };
-    }
-
+    padding: 0;
 `
-/* Component: MODALMENU */
+
+
 class ModalMenu extends React.Component {
     constructor(props) {
         super(props);
