@@ -3,17 +3,19 @@ import { Helmet } from "react-helmet";
 import styled from 'styled-components'
 
 const PageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  width: 100%;
-  text-align: center;
-  padding: 0;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    width: 100%;
+    text-align: center;
+    padding: 80px 0 0 0;
 `
-
+const Title = styled.h1`
+    color: #808080;
+`
 
 class HomePage extends Component {
     render() {
@@ -26,7 +28,7 @@ class HomePage extends Component {
                 </Helmet>
 
                 <PageContainer>
-                    <h1>Hello Universe!</h1>
+                    <Title>Hello Universe!</Title>
                 </PageContainer>
             </div>
         );
