@@ -10,8 +10,9 @@ const PageContainer = styled.div`
     justify-content: center;
     flex: 1;
     width: 100%;
+    height: 640px;
     text-align: center;
-    padding: 80px 0 0 0;
+    margin: 80px 0 0 0;
 `
 const Title = styled.h1`
     color: #808080;

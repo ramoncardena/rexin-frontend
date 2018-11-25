@@ -22,7 +22,7 @@ const TopNavigation = styled.nav`
     width: 100%;
     margin: 0;
     padding: 0;
-    max-height: 70px;
+    max-height: 80px;
     overflow: visible;
     z-index: 1000;
 `
