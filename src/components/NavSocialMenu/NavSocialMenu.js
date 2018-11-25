@@ -13,6 +13,9 @@ import {github} from 'react-icons-kit/icomoon/github'
 const StyledIcons = styled.ul`
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
     list-style: none;
     margin: 0;
     padding: 0.25rem;

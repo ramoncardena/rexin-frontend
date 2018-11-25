@@ -28,6 +28,7 @@ const StyledCopyright = styled.p`
     margin: 0;
     padding: 0.25rem;
     color: ${ props => props.textcolor };
+    text-align: center;
 `
 
 
