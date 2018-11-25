@@ -3,6 +3,8 @@ export const version = "0.0.1"
 export const primaryColor = "#808080"
 export const secondaryColor = "#647796"
 
+/* API */
+export const BASE_URL = "http://localhost:5000/v1"
 
 /*
  *  Social Networks

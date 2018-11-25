@@ -8,6 +8,7 @@ import { withRouter } from 'react-router-dom';
 import { SignUpLink } from '../SignUpPage';
 import { PasswordForgetLink } from '../PasswordForgetPage';
 
+import {auth} from '../../api'
 import * as routes from '../../constants/routes';
 import * as config from '../../config.js';
 
@@ -133,30 +134,37 @@ class SignInForm extends Component {
             password
         } = this.state;
 
-        // const {
-        //     history,
-        //     authToken,
-        //     onLoginSuccess
-        // } = this.props;
+        const {
+            history,
+            onLoginSuccess
+        } = this.props;
 
-        // this.setState({ error: null });
+        this.setState({ error: null });
 
-        // const credentials = {
-        //     "username": email,
-        //     "password": password,
-        // }
+        const credentials = {
+            "email": email,
+            "password": password,
+        }
 
-        // auth.loginUser(credentials)
-        // .then( res => {
-        //     console.dir(res.data._kmd)
-        //     sessionStorage.setItem('kToken', res.data._kmd.authtoken);
-        //     onLoginSuccess(res.data._kmd.authtoken)
-        //     history.push(routes.HOME);
-        // })
-        // .catch( error => {
-        //     console.log(error)
-        //     this.setState(byPropKey('error', error));
-        // })
+        auth.login(credentials)
+        .then( res => {
+            res.json().then( data => {
+                if (data.success) {
+                    onLoginSuccess(data)
+                    localStorage.setItem('token', data.token)
+                    localStorage.setItem('userid', data.user.id)
+                    history.push(routes.HOME);
+                }
+                else {
+                    console.log(data.error)
+                    this.setState({'error': data.error});
+                }
+            });
+        })
+        .catch( error => {
+            console.log(error)
+            this.setState(byPropKey('error', error));
+        })
 
         event.preventDefault();
     }
@@ -190,15 +198,24 @@ class SignInForm extends Component {
                     Sign In
                 </FormButton>
                 <ErrorText>
-                    { error && <p>{error.message}</p> }
+                    { error && <p>{error}</p> }
                 </ErrorText>
             </form>
         );
     }
 }
 
+const mapStateToProps = (state) => ({
+    authToken: state.authState.authToken
+});
+  
+const mapDispatchToProps = (dispatch) => ({
+    onLoginSuccess: (data) => dispatch({ type: 'LOGIN_SUCCESS', data})
+});
 
-export default withRouter(SignInPage);
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps)
+)(withRouter(SignInPage));
 
 export {
     SignInForm,
