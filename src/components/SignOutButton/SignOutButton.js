@@ -10,7 +10,7 @@ import * as routes from '../../constants/routes';
 
 const StyledButton = styled.button`
     padding: 0;
-    margin: 5px 0 0 1rem;
+    margin: 0 0 0 1rem;
     background: transparent;
     color: ${ props => props.textcolor};
     border: none;
@@ -70,7 +70,7 @@ class SignOutButton extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    authToken: state.kinveyAuthState.authToken
+    authToken: state.authState.authToken
 });
   
 const mapDispatchToProps = (dispatch) => ({

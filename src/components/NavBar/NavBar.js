@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import MediaQuery from 'react-responsive'
@@ -61,6 +62,7 @@ const TabletLandscapeDown = props => <MediaQuery {...props} maxWidth={900} />;
 class NavBar extends Component { 
     
     render() {
+        const { authToken } = this.props
         const menuElements = this.props.elements
         const currLang = i18next.languages[0]
 
@@ -104,11 +106,18 @@ class NavBar extends Component {
                             secondaryColor={this.props.secondaryColor}
                         />
                        
-                        <SignInButton 
-                            link={this.props.loginRoute} 
-                            textcolor={this.props.primaryColor} 
-                            hovercolor={this.props.secondaryColor}
-                        />
+                        { authToken
+                            ?   <SignOutButton 
+                                    textcolor={this.props.primaryColor} 
+                                    hovercolor={this.props.secondaryColor}
+                                />
+                            :   <SignInButton 
+                                    link={this.props.loginRoute} 
+                                    textcolor={this.props.primaryColor} 
+                                    hovercolor={this.props.secondaryColor}
+                                />
+                        }
+                        
 
                         <TabletLandscapeDown>
                             <ModalMenu 
@@ -144,7 +153,16 @@ const NavTitle = ({title, primaryColor, secondaryColor}) => (
 );
 
 
-export default NavBar
+
+const mapStateToProps = (state) => ({
+    authToken: state.authState.authToken,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    onLogoutSuccess: (token) => dispatch({ type: 'LOGOUT_SUCCESS', token}),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar)
 
 
 

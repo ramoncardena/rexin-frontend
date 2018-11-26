@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 import { translate } from 'react-i18next'
@@ -39,7 +41,18 @@ const BottomNavigation = styled.footer`
 `
 
 class App extends Component {
-   
+    componentDidMount() {
+        const { onSessionRecover } = this.props;
+
+        if (localStorage.getItem('token') && localStorage.getItem('userid')) {
+            const sessionData = {
+                authToken: localStorage.getItem('token'),
+                userId: localStorage.getItem('userid')
+            }
+            onSessionRecover(sessionData)
+        }
+    }
+
     render() {
         const { t } = this.props;
 
@@ -130,4 +143,16 @@ class App extends Component {
     }
 }
 
-export default translate('index')(App);
+const mapStateToProps = (state) => ({
+    authToken: state.authState.authToken,
+    userId: state.authState.userId
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    onSessionRecover: (data) => dispatch({ type: 'SESSION_RECOVER', data})
+});
+
+export default compose(
+    translate('index'),
+    connect(mapStateToProps, mapDispatchToProps)
+)(App);
