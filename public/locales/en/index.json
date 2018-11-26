@@ -1,4 +1,8 @@
 {
+    "Global_Email_Address": "Email address",
+    "Global_Password" : "Password",
+    "Global_Sign_In": "Sign In",
+    "Global_Sign_Up": "Sign Up",
     "Page_Title": "React Site Template",
     "Site_Description": "This is my amazing website!",
     "Navbar_Title": "My Company Name",
@@ -11,5 +15,13 @@
     "Footer_Menu_About": "About",
     "Footer_Menu_Contact": "Contact",
     "Copyright_Notice": "©2018 Your Company. All rights reserved.",
+    "Login_Intro": "Please, enter your email address and password to sign in into your account.",
+    "Login_Forgot_Password": "Forgot Password?",
+    "Login_New_Account_Link": "Don't have an account?",
+    "Sign_Up_Intro": "Please, fill the form below to create a new account.",
+    "Sign_Up_Full_Name": "Full Name",
+    "Sign_Up_Password_Confirm": "Confirm Password",
+    "Password_Reset_Title": "Rassword reset",
+    "Password_Reset_Intro": "Fill the field below with your email address and I will send you an email with the instructions to reset your password.",
     "Home_Title": "Hello World!"
 }

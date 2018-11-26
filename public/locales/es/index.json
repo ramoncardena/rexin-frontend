@@ -1,4 +1,8 @@
 {
+    "Global_Email_Address": "Dirección de email",
+    "Global_Password" : "Contraseña",
+    "Global_Sign_In": "Iniciar sesión",
+    "Global_Sign_Up": "Registrarse",
     "Page_Title": "Plantilla de Sitio con React",
     "Site_Description": "¡Esta es mi fantástica página web!",
     "Navbar_Title": "Mi Compañía",
@@ -11,5 +15,13 @@
     "Footer_Menu_About": "Nosotros",
     "Footer_Menu_Contact": "Contacto",
     "Copyright_Notice": "©2018 Mi Compañía. Todos los derechos reservados.",
+    "Login_Intro": "Por favor, introduzca su usuario y contraseña para iniciar sesión.",
+    "Login_Forgot_Password": "¿Olvidó su contraseña?",
+    "Login_New_Account_Link": "¿No tiene una cuenta?",
+    "Sign_Up_Intro": "Por favor, rellene los siguientes campos para crear su nueva cuenta",
+    "Sign_Up_Full_Name": "Nombre completo",
+    "Sign_Up_Password_Confirm": "Confirme contraseña",
+    "Password_Reset_Title": "Restablecer contraseña",
+    "Password_Reset_Intro": "Por favor, rellene el siguiente campo con su dirección de correo y le enviaremos un correo electrónico con las instrucciones para resablecer su contraseña.",
     "Home_Title": "¡Hola Mundo!"
 }

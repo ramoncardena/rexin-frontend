@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
 import { Helmet } from "react-helmet";
+import { translate } from 'react-i18next';
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
@@ -100,18 +102,18 @@ const StyledForgetLink = styled.p`
     }
 `
 
-const PasswordForgetPage = () =>
+const PasswordForgetPage = ({t}) =>
     <div>
         <Helmet>
-            <title>Password Reset</title>
+            <title>{ t('Password_Reset_Title') }</title>
             <meta name="description" content="Ramon Cardena - Professional web development." />
         </Helmet>
         <PageContainer>
             <Text>
-                Fill the field below with your email address and I will send you an email with the instructions to reset your password.
+                { t('Password_Reset_Intro') }
             </Text>
             <FormContainer>
-                <PasswordForgetForm />
+                <PasswordForgetForm t={t} />
             </FormContainer>
         </PageContainer>
     </div>
@@ -126,59 +128,61 @@ const INITIAL_STATE = {
 }
 
 class PasswordForgetForm extends Component {
-  constructor(props) {
-    super(props)
+    constructor(props) {
+        super(props)
 
-    this.state = { ...INITIAL_STATE }
-  }
+        this.state = { ...INITIAL_STATE }
+    }
 
-  onSubmit = (event) => {
-    const { email } = this.state
+    onSubmit = (event) => {
+        const { email } = this.state
 
-    // auth.doPasswordReset(email)
-    //   .then(() => {
-    //     this.setState({ ...INITIAL_STATE })
-    //   })
-    //   .catch(error => {
-    //     this.setState(byPropKey('error', error))
-    //   })
+        // auth.doPasswordReset(email)
+        //   .then(() => {
+        //     this.setState({ ...INITIAL_STATE })
+        //   })
+        //   .catch(error => {
+        //     this.setState(byPropKey('error', error))
+        //   })
 
-    event.preventDefault()
-  }
+        event.preventDefault()
+    }
 
-  render() {
-    const {
-      email,
-      error,
-    } = this.state
+    render() {
+        const {t} = this.props
 
-    const isInvalid = email === ''
+        const {
+            email,
+            error,
+        } = this.state
 
-    return (
-      <form onSubmit={this.onSubmit}>
-        <InputField
-          value={this.state.email}
-          onChange={event => this.setState(byPropKey('email', event.target.value))}
-          type="text"
-          placeholder="Email Address"
-        />
-        <FormButton disabled={isInvalid} type="submit">
-          Reset Password
-        </FormButton>
-        <ErrorText>
-         { error && <p>{error.message}</p> }
-        </ErrorText>
-      </form>
-    )
-  }
+        const isInvalid = email === ''
+
+        return (
+        <form onSubmit={this.onSubmit}>
+            <InputField
+            value={this.state.email}
+            onChange={event => this.setState(byPropKey('email', event.target.value))}
+            type="text"
+            placeholder={ t('Global_Email_Address') }
+            />
+            <FormButton disabled={isInvalid} type="submit">
+                { t('Password_Reset_Title') }
+            </FormButton>
+            <ErrorText>
+            { error && <p>{error.message}</p> }
+            </ErrorText>
+        </form>
+        )
+    }
 }
 
-const PasswordForgetLink = ({textcolor, hovercolor, linkcolor}) =>
+const PasswordForgetLink = ({t, textcolor, hovercolor, linkcolor}) =>
   <StyledForgetLink  textcolor={textcolor} linkcolor={linkcolor} hovercolor={hovercolor}>
-    <Link to={routes.PASSWORD_RESET}>Forgot Password?</Link>
+    <Link to={routes.PASSWORD_RESET}>{ t('Login_Forgot_Password') }</Link>
   </StyledForgetLink>
 
-export default PasswordForgetPage
+export default translate('index')(PasswordForgetPage)
 
 export {
   PasswordForgetForm,

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import styled from 'styled-components'
 import { Helmet } from "react-helmet";
+import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 
 import { SignUpLink } from '../SignUpPage';
@@ -93,23 +94,32 @@ const ErrorText = styled.div`
     padding: 1rem;
 `
 
-const SignInPage = ({ history, onLoginSuccess, authToken }) =>
-    <div>
-        <Helmet>
-            <title>Sign In</title>
-            <meta name="description" content="Sign in page." />
-        </Helmet>
-        <PageContainer>
-            <Text>
-                Please, enter your email address and password to sign in into your account.
-            </Text>
-            <FormContainer>
-                <SignInForm history={history} onLoginSuccess={onLoginSuccess} authToken={authToken} />
-                <PasswordForgetLink textcolor="#808080" linkcolor="#808080" hovercolor="#FBC62B" />
-                <SignUpLink textcolor="#808080" linkcolor="#808080" hovercolor="#FBC62B"/>
-            </FormContainer>
-        </PageContainer>
-    </div>
+class SignInPage extends Component {
+    
+    render() {
+        const { t, history, onLoginSuccess, authToken } = this.props
+       
+        return (
+            <div>
+                <Helmet>
+                    <title>{ t('Global_Sign_In') }</title>
+                    <meta name="description" content="Sign in page." />
+                </Helmet>
+                <PageContainer>
+                    <Text>
+                        { t('Login_Intro') }
+                    </Text>
+                    <FormContainer>
+                        <SignInForm t={t} history={history} onLoginSuccess={onLoginSuccess} authToken={authToken} />
+                        <PasswordForgetLink t={t} textcolor="#808080" linkcolor="#808080" hovercolor="#FBC62B" />
+                        <SignUpLink t={t} textcolor="#808080" linkcolor="#808080" hovercolor="#FBC62B"/>
+                    </FormContainer>
+                </PageContainer>
+            </div>
+        )
+    }
+}
+    
 
 const byPropKey = (propertyName, value) => () => ({
     [propertyName]: value,
@@ -169,6 +179,8 @@ class SignInForm extends Component {
     }
 
     render() {
+        const { t } = this.props;
+
         const {
             email,
             password,
@@ -185,16 +197,16 @@ class SignInForm extends Component {
                     value={email}
                     onChange={event => this.setState(byPropKey('email', event.target.value))}
                     type="text"
-                    placeholder="Email Address"
+                    placeholder={ t('Global_Email_Address') }
                 />
                 <InputField
                     value={password}
                     onChange={event => this.setState(byPropKey('password', event.target.value))}
                     type="password"
-                    placeholder="Password"
+                    placeholder={ t('Global_Password') }
                 />
                 <FormButton disabled={isInvalid} type="submit">
-                    Sign In
+                    { t('Global_Sign_In') }
                 </FormButton>
                 <ErrorText>
                     { error && <p>{error}</p> }
@@ -213,9 +225,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default compose(
+    translate('index'),
     connect(mapStateToProps, mapDispatchToProps)
 )(withRouter(SignInPage));
 
 export {
-    SignInForm,
+    SignInForm
 };

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { compose } from 'recompose';
 import { Helmet } from "react-helmet";
+import { translate } from 'react-i18next';
 import { Link, withRouter } from 'react-router-dom';
 import styled from 'styled-components'
 
@@ -98,22 +100,29 @@ const StyledSignUpLink = styled.p`
     }
 `
 
-const SignUpPage = ({ history }) =>
-    <div>
-        <Helmet>
-            <title>Ramon Cardena - Web Development</title>
-            <meta name="description" content="Ramon Cardena - Professional web development." />
-        </Helmet>
-        <PageContainer>
-            <Text>
-                Please, fill the form below to create a new account. 
-            </Text>
-            <FormContainer>
-                <SignUpForm history={history} />
-            </FormContainer>
-        </PageContainer>
-    </div>
-
+class SignUpPage extends Component {
+    
+    render() {
+        const { t, history } = this.props
+    
+        return (
+            <div>
+                <Helmet>
+                    <title> { t('Global_Sign_Up') } </title>
+                    <meta name="description" content="Ramon Cardena - Professional web development." />
+                </Helmet>
+                <PageContainer>
+                    <Text>
+                        { t('Sign_Up_Intro') }
+                    </Text>
+                    <FormContainer>
+                        <SignUpForm t={t} history={history} />
+                    </FormContainer>
+                </PageContainer>
+            </div>
+        )
+    }
+}
 
 const INITIAL_STATE = {
     username: '',
@@ -164,6 +173,8 @@ class SignUpForm extends Component {
     }
 
     render() {
+        const {t} = this.props
+
         const {
             username,
             email,
@@ -184,28 +195,28 @@ class SignUpForm extends Component {
                     value={username}
                     onChange={event => this.setState(byPropKey('username', event.target.value))}
                     type="text"
-                    placeholder="Full Name"
+                    placeholder={ t('Sign_Up_Full_Name') }
                 />
                 <InputField
                     value={email}
                     onChange={event => this.setState(byPropKey('email', event.target.value))}
                     type="text"
-                    placeholder="Email Address"
+                    placeholder={ t('Global_Email_Address') }
                 />
                 <InputField
                     value={passwordOne}
                     onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
                     type="password"
-                    placeholder="Password"
+                    placeholder={ t('Global_Password') }
                 />
                 <InputField
                     value={passwordTwo}
                     onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
                     type="password"
-                    placeholder="Confirm Password"
+                    placeholder={ t('Sign_Up_Password_Confirm') }
                 />
                 <FormButton disabled={isInvalid} type="submit">
-                    Sign Up
+                    { t('Global_Sign_Up') }
                 </FormButton>
                 <ErrorText>
                     { error && <p>{error.message}</p> }
@@ -215,16 +226,18 @@ class SignUpForm extends Component {
     }
 }
 
-const SignUpLink = ({textcolor, hovercolor, linkcolor}) =>
+const SignUpLink = ({t, textcolor, hovercolor, linkcolor}) =>
     <StyledSignUpLink textcolor={textcolor} linkcolor={linkcolor} hovercolor={hovercolor}>
-        Don't have an account?
+        { t('Login_New_Account_Link') }
         {' '}
-        <Link to={routes.SIGN_UP}>Sign Up</Link>
+        <Link to={routes.SIGN_UP}>{ t('Global_Sign_Up') }</Link>
     </StyledSignUpLink>
 
 
 
-export default withRouter(SignUpPage);
+export default compose(
+    translate('index')
+)(withRouter(SignUpPage));
 
 export {
     SignUpForm,
