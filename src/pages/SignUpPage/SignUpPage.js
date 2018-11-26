@@ -25,31 +25,39 @@ const FormContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    max-width: 350px;
+    flex-wrap: nowrap;
+    max-width: 750px;
     padding: 2rem;
+    margin: 0;
 `
 const InputField = styled.input`
     ::placeholder { 
         color: lightgray;
         opacity: 1; /* Firefox */
+        font-size: 0.9rem;
+        font-weight: 200;
     }
-    display: block;
-    width: 350px;
-    font-size: 1rem;
-    border: 1px solid lightgray;
+    width: 95%;
+    max-width: 950px;
+    font-size: 1.2rem;
+    font-weight: 200;
+    border: none;
+    border-bottom: 1px solid lightgray;
     background: white;
     padding: 0.5rem;
-    margin: 1rem;
+    margin: 0.5rem 0;
     &:focus {
         outline: none;
-        border: 1px solid #808080;
+        border-bottom: 1px solid #3b5787;
     }
 `
 const FormButton = styled.button`
     background: transparent;
+    width: 150px;
     font-size: 1rem;
     font-weight: 200;
     padding: 1rem 1.5rem;
+    margin: 2rem 1rem 1rem 1rem;
     color: ${ props => props.disabled ? 'lightgray' : '#808080' };
     border: 1px solid ${ props => props.disabled ? 'lightgray' : '#808080' };
     transition: all 0.1s ease-in-out;
@@ -77,8 +85,9 @@ const Text = styled.p`
     color: #808080;
     font-weight: 200;
     margin: 0;
-    padding: 0;
+    padding: 1rem 1rem 4rem 1rem;
 `
+
 const ErrorText = styled.div`
     font-size: 1rem;
     line-height: 1.7rem;
