@@ -36,20 +36,10 @@ class SignOutButton extends React.Component {
     onHandelClick = (event) => {
         const {onLogoutSuccess, authToken, history} = this.props
 
-        // auth.logoutUser(authToken)
-        // .then((response) => {
-        //     localStorage.removeItem('mToken')
-        //     localStorage.removeItem('userId')
-        //     localStorage.removeItem('cAppKey')
-        //     localStorage.removeItem('cAppSecret')
-        //     localStorage.removeItem('cAppMaster')
-
-        //     onLogoutSuccess(authToken)
-        //     history.push(routes.HOME);
-        // })
-        // .catch((error) => {
-        //     console.error(error);
-        // })
+        localStorage.removeItem('token')
+        localStorage.removeItem('userid') 
+        onLogoutSuccess(authToken)
+        history.push(routes.HOME);
 
         event.preventDefault();
     }

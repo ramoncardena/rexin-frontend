@@ -149,15 +149,14 @@ class SignInForm extends Component {
         auth.login(credentials)
         .then( res => {
             res.json().then( data => {
-                if (data.success) {
+                if (!data.errors) {
                     onLoginSuccess(data)
                     localStorage.setItem('token', data.token)
-                    localStorage.setItem('userid', data.user.id)
+                    localStorage.setItem('userid', data.user._id)
                     history.push(routes.HOME);
                 }
                 else {
-                    console.log(data.error)
-                    this.setState({'error': data.error});
+                    this.setState({'error': data.errors.msg});
                 }
             });
         })

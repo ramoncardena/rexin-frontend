@@ -17,7 +17,7 @@ const INITIAL_STATE = {
 const applyLoginSuccess = (state, action) => (Object.assign({},{
     ...state,
     authToken: action.data.token,
-    userId: action.data.user.id
+    userId: action.data.user._id
 }));
 
 
