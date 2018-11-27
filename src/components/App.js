@@ -14,6 +14,7 @@ import HomePage from '../pages/HomePage'
 import SignInPage from '../pages/SignInPage'
 import SignUpPage from '../pages/SignUpPage'
 import PasswordForgetPage from '../pages/PasswordForgetPage'
+import VerifyPage from '../pages/VerifyPage'
 import FooterBar from './FooterBar'
 
 import logo from '../images/logo.png'
@@ -111,6 +112,10 @@ class App extends Component {
                             <Route
                                 exact path={routes.PASSWORD_RESET}
                                 component={() => <PasswordForgetPage />}
+                            />
+                            <Route
+                                exact path={routes.VERIFY + '/:id'}
+                                component={() => <VerifyPage />}
                             />
                             {/* <Route  component={Error404} /> */}
                         </Switch>

@@ -23,5 +23,10 @@
     "Sign_Up_Password_Confirm": "Confirme contraseña",
     "Password_Reset_Title": "Restablecer contraseña",
     "Password_Reset_Intro": "Por favor, rellene el siguiente campo con su dirección de correo y le enviaremos un correo electrónico con las instrucciones para resablecer su contraseña.",
+    "Verify_Title": "Account Verification",
+    "Verify_Success_H1": "Thanks for verifing your acount!",
+    "Verify_Success_Text": "Welcome to our family, you can now login and enjoy all our features.",
+    "Verify_Fail_H1": "Something went wrong verifing your acount!",
+    "Verify_Fail_Text": "We are sorry, but it looks like we are having dificulties to verify your account.",
     "Home_Title": "¡Hola Mundo!"
 }

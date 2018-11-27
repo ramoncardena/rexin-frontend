@@ -45,13 +45,12 @@ const StyledNavRight = styled.div`
 `
 const StyledTitle = styled.div`
     margin-left: 5px;
-`
-
-const StyledLink = styled(Link)`
-    margin: 0;
-    padding: 0;
-    color: ${ props => props.primaryColor };
-    text-decoration: none;
+    a {
+        margin: 0;
+        padding: 0;
+        color: ${ props => props.primaryColor };
+        text-decoration: none;
+    }
 `
 
 const TabletPortaitUp = props => <MediaQuery {...props} minWidth={600} />;
@@ -138,17 +137,17 @@ class NavBar extends Component {
 
 /* Component: NAVLOGO */
 const NavLogo = ({src, description}) => (
-    <StyledLink to="/">
+    <Link to="/">
         <img src={src} alt={description} />
-    </StyledLink>
+    </Link>
 );
 
 /* Component: NAVTITLE */
 const NavTitle = ({title, primaryColor, secondaryColor}) => (
-    <StyledTitle>
-        <StyledLink to="/" primaryColor={primaryColor}> 
+    <StyledTitle primaryColor={primaryColor}>
+        <Link to="/"> 
             {title}
-        </StyledLink>
+        </Link>
     </StyledTitle>
 );
 

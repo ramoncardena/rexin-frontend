@@ -5,6 +5,7 @@ import { translate } from 'react-i18next';
 import { Link, withRouter } from 'react-router-dom';
 import styled from 'styled-components'
 
+import { auth } from '../../api'
 import * as routes from '../../constants/routes';
 
 const PageContainer = styled.div`
@@ -134,7 +135,7 @@ class SignUpPage extends Component {
 }
 
 const INITIAL_STATE = {
-    username: '',
+    fullname: '',
     email: '',
     passwordOne: '',
     passwordTwo: '',
@@ -152,7 +153,7 @@ class SignUpForm extends Component {
 
     onSubmit = (event) => {
         const {
-            username,
+            fullname,
             email,
             passwordOne,
         } = this.state;
@@ -162,20 +163,20 @@ class SignUpForm extends Component {
         } = this.props;
 
         const newUser = {
-            "username": email,
-            "password": passwordOne,
-            "fullname": username
+            "name": fullname,
+            "email": email,
+            "password": passwordOne
         }
 
-        // users.createUser(newUser)
-        // .then( res => {
-        //     console.dir(res)
-        //     history.push(routes.HOME);
-        // })
-        // .catch( error => {
-        //     console.log(error.response.data.error)
-        //     this.setState(byPropKey('error', error));
-        // })
+        auth.register(newUser)
+        .then( res => {
+            console.dir(res)
+            history.push(routes.HOME);
+        })
+        .catch( error => {
+            console.log(error)
+            this.setState(byPropKey('error', error));
+        })
       
     
         event.preventDefault();
@@ -185,7 +186,7 @@ class SignUpForm extends Component {
         const {t} = this.props
 
         const {
-            username,
+            fullname,
             email,
             passwordOne,
             passwordTwo,
@@ -196,13 +197,13 @@ class SignUpForm extends Component {
             passwordOne !== passwordTwo ||
             passwordOne === '' ||
             email === '' ||
-            username === '';
+            fullname === '';
 
         return (
             <form onSubmit={this.onSubmit}>
                 <InputField
-                    value={username}
-                    onChange={event => this.setState(byPropKey('username', event.target.value))}
+                    value={fullname}
+                    onChange={event => this.setState(byPropKey('fullname', event.target.value))}
                     type="text"
                     placeholder={ t('Sign_Up_Full_Name') }
                 />
