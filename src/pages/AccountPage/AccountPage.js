@@ -24,14 +24,6 @@ const PageContainer = styled.div`
     margin: 80px 0 0 0;
 `
 
-const OrderItemLabel = styled.span`
-    margin: 0 0 0 0;
-    padding: 0;
-    font-size: 0.8rem;
-    line-height: 0.5rem;
-    font-style: italic;
-`
-
 const VerticalContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -39,37 +31,6 @@ const VerticalContainer = styled.div`
     padding: 1rem;
 `
 
-const UserName = styled.h2`
-    font-size: 2rem;
-    line-height: 3rem;
-    padding: 0;
-    margin: 0;
-    color: #808080;
-`
-
-const UserFullName = styled.p`
-    font-size: 2rem;
-    font-weight: 200;
-    line-height: 3rem;
-    padding: 0;
-    margin: 0;
-`
-
-// const UserUsername = styled.p`
-//     font-size: 1.5rem;
-//     font-weight: 200;
-//     line-height: 2.5rem;
-//     padding: 0;
-//     margin: 0;
-// `
-
-const UserPhone = styled.p`
-    font-size: 1.5rem;
-    font-weight: 200;
-    line-height: 2.5rem;
-    padding: 0;
-    margin: 0;
-`
 const TwoColumns = styled.div`
   display: flex;
   flex-direction: row;
@@ -94,12 +55,30 @@ const RightColumn = styled.div`
     text-align: center;
     padding: 2rem;
   `
-// const Title = styled.p`
-//     font-size: 1.3rem;
-//     line-height: auto;
-//     margin: 0;
-//     padding: 0;
-//   `
+
+const ItemLabel = styled.span`
+    margin: 0;
+    padding: 0 0 5px 0;
+    font-size: 1rem;
+    line-height: 0.5rem;
+    font-style: italic;
+`
+
+const BigItem = styled.p`
+    font-size: 1.5rem;
+    line-height: 2.5rem;
+    padding: 0 0 1.5rem 0;
+    margin: 0;
+    color: #808080;
+`
+
+const NormalItem = styled.p`
+    font-size: 1.2rem;
+    font-weight: 200;
+    padding: 0 0 1.5rem 0;
+    margin: 0;
+`
+
 const Text = styled.p`
     font-size: 1rem;
     font-weight: 200;
@@ -107,10 +86,7 @@ const Text = styled.p`
     padding: 1rem;
     margin: 0;
 `
-const Spacer = styled.div`
-    display: block;
-    height: ${ props => props.size ? props => props.size : '1rem'};
-`
+
 const StyledForm = styled.form`
     max-width: 900px;
     width: 100%;
@@ -171,12 +147,12 @@ const FormButton = styled.button`
 `
 
 const ErrorText = styled.div`
-font-size: 1rem;
-line-height: 1.7rem;
-color: red;
-font-weight: 200;
-margin: 0;
-padding: 1rem;
+    font-size: 1rem;
+    line-height: 1.7rem;
+    color: red;
+    font-weight: 200;
+    margin: 0;
+    padding: 1rem;
 `
 
 const Note = styled.p`
@@ -186,10 +162,13 @@ const Note = styled.p`
 `
 
 const INITIAL_STATE = {
-    user: null
+    user: null,
+    error: false
 };
 
 class AccountPage extends Component {
+    _isMounted = false
+
     constructor(props) {
         super(props)
 
@@ -197,21 +176,25 @@ class AccountPage extends Component {
     }
 
     componentDidMount() {
-        const { authToken } = this.props;
-
+        this._isMounted = true
+        const { authToken } = this.props
+        
         profile.retrieve(authToken)
         .then((response) => response.json())
         .then((responseJson) => {
-            console.dir(responseJson) 
-            this.setState({user: responseJson})
+            if (this._isMounted) this.setState({user: responseJson})
         })
         .catch((error) => {
-            console.error(error);
+            if (this._isMounted) this.setState({user: null, error: true})
         })
     }
 
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
     render() {
-        const { user } = this.state
+        const { user, error } = this.state
         const { history, authToken, onLogoutSuccess } = this.props
         return(
             <div>
@@ -222,44 +205,40 @@ class AccountPage extends Component {
 
                 <PageContainer>
                     { !!user
-                        ?   <TwoColumns>
-                                <LeftColumn>
-                                {   user.phone && 
-                                    <VerticalContainer>
-                                        
-                                        <OrderItemLabel>Your Name</OrderItemLabel>
-                                        <UserName> {user.name} </UserName>
-                                        <Spacer size='1.5rem'/>
-                                        <OrderItemLabel>Your Email</OrderItemLabel>
-                                        <UserFullName> {user.email} </UserFullName>
-                                        <Spacer size='1.5rem'/>
-                                        <OrderItemLabel>Phone</OrderItemLabel>
-                                        {user.phone!=="" && <UserPhone> {user.phone} </UserPhone>}
-                                        <Spacer size='1.5rem'/>
-                                        {/* <Spacer size='1.5rem'/>
-                                        <OrderItemLabel>Country</OrderItemLabel>
-                                        {user.country!="" && <UserPhone> {user.country} </UserPhone>}
-                                        <OrderItemLabel>City</OrderItemLabel>
-                                        {user.city!="" && <UserUsername> {user.city} </UserUsername>}
-                                        <Spacer size='1.5rem'/> */}
-                                        
-                                    </VerticalContainer>
-                                }
-                                </LeftColumn>
-                                <RightColumn>
-                                        <PasswordForm 
-                                            history = { history } 
-                                            user = { user }
-                                            authToken = { authToken }
-                                            onLogoutSuccess = { onLogoutSuccess }
-                                        />
-                                        <Spacer size='3rem' />
-                                        <Text>
-                                            You can contact us at support@dtools.com
-                                        </Text>
-                                </RightColumn>
-                            </TwoColumns>
-                                
+                        ?   !error 
+                                ?   <TwoColumns>
+                                        <LeftColumn>
+                                            <VerticalContainer>
+                                                
+                                                <ItemLabel>Your Name</ItemLabel>
+                                                <BigItem> {user.name} </BigItem>
+                                                <ItemLabel>Your Email</ItemLabel>
+                                                <NormalItem> {user.email} </NormalItem>
+                                                <ItemLabel>Phone</ItemLabel>
+                                                {user.phone!=="" && <NormalItem> {user.phone} </NormalItem>}
+                                                <ItemLabel>Country</ItemLabel>
+                                                {user.country!=="" && <NormalItem> {user.country} </NormalItem>}
+                                                <ItemLabel>City</ItemLabel>
+                                                {user.city!=="" && <NormalItem> {user.city} </NormalItem>}
+                                                
+                                            </VerticalContainer>
+                                        </LeftColumn>
+                                        <RightColumn>
+                                            <PasswordForm 
+                                                history = { history } 
+                                                user = { user }
+                                                authToken = { authToken }
+                                                onLogoutSuccess = { onLogoutSuccess }
+                                            />
+                                            <Text>
+                                                You can contact us at support@dtools.com
+                                            </Text>
+                                        </RightColumn>
+                                    </TwoColumns>
+                                :
+                                    <ErrorText> 
+                                        Sorry, some kind of error has ocurred!
+                                    </ErrorText>
                         :   <Loader type="Oval" color="#808080" height="50" width="50" />
                     }
                 </PageContainer>
