@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 import Loader from 'react-loader-spinner'
 
 
-// import * as routes from '../../constants/routes';
+import * as routes from '../../constants/routes';
 import { profile } from '../../api'
 import withAuthorization from '../../utils/withAuthorization'
 
@@ -160,6 +160,24 @@ const Note = styled.p`
     color: lightgray;
     font-style: italic;
 `
+const EditProfileButton = styled.button`
+    background: transparent;
+    font-size: 1rem;
+    max-width: 150px;
+    font-weight: 200;
+    padding: 1rem 1.5rem;
+    margin: 2rem 0 2rem 0;
+    color: ${ props => props.disabled ? 'lightgray' : '#808080' };
+    border: 1px solid ${ props => props.disabled ? 'lightgray' : '#808080' };
+    transition: all 0.1s ease-in-out;
+    &:focus {
+        outline: none;
+    }
+    &:active {
+        transform: scale(0.9);
+        border: 1px solid  #808080;
+    }
+`
 
 const INITIAL_STATE = {
     user: null,
@@ -173,6 +191,7 @@ class AccountPage extends Component {
         super(props)
 
         this.state = { ...INITIAL_STATE };
+        this.handleEditProfile = this.handleEditProfile.bind(this)
     }
 
     componentDidMount() {
@@ -191,6 +210,11 @@ class AccountPage extends Component {
 
     componentWillUnmount() {
         this._isMounted = false;
+    }
+
+    handleEditProfile() {
+        const { history } = this.props
+        history.push(routes.EDIT_PROFILE)
     }
 
     render() {
@@ -220,7 +244,12 @@ class AccountPage extends Component {
                                                 {user.country!=="" && <NormalItem> {user.country} </NormalItem>}
                                                 <ItemLabel>City</ItemLabel>
                                                 {user.city!=="" && <NormalItem> {user.city} </NormalItem>}
-                                                
+                                                <EditProfileButton
+                                                    disabled={false} 
+                                                    onClick={ () => this.handleEditProfile() }
+                                                >
+                                                    Edit Profile
+                                                </EditProfileButton>
                                             </VerticalContainer>
                                         </LeftColumn>
                                         <RightColumn>

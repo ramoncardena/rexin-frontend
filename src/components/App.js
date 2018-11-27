@@ -16,6 +16,7 @@ import SignUpPage from '../pages/SignUpPage'
 import PasswordForgetPage from '../pages/PasswordForgetPage'
 import VerifyPage from '../pages/VerifyPage'
 import AccountPage from '../pages/AccountPage'
+import EditProfilePage from '../pages/EditProfilePage'
 import FooterBar from './FooterBar'
 
 import logo from '../images/logo.png'
@@ -125,6 +126,10 @@ class App extends Component {
                             <Route
                                 exact path={routes.ACCOUNT}
                                 component={() => <AccountPage />}
+                            />
+                            <Route
+                                exact path={routes.EDIT_PROFILE}
+                                component={() => <EditProfilePage />}
                             />
                             {/* <Route  component={Error404} /> */}
                         </Switch>
