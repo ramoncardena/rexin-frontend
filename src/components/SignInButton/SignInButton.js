@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components';
 import Icon from 'react-icons-kit'
-import {logIn} from 'react-icons-kit/feather/logIn'
 import {userCheck} from 'react-icons-kit/feather/userCheck'
 
 const StyledButton = styled(Link)`
@@ -23,11 +22,6 @@ const StyledButton = styled(Link)`
     }
     transition: all 0.1s ease-in-out;
 `
-const StyledIcon = styled(Icon)`
-    margin: 0;
-    padding: 0;
-`
-
 
 const SignInButton = ({textcolor, hovercolor, link}) =>
     <StyledButton to={link} textcolor={textcolor} hovercolor={hovercolor}>

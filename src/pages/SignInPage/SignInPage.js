@@ -11,7 +11,6 @@ import { PasswordForgetLink } from '../PasswordForgetPage';
 
 import {auth} from '../../api'
 import * as routes from '../../constants/routes';
-import * as config from '../../config.js';
 
 const PageContainer = styled.div`
     display: flex;

@@ -63,6 +63,7 @@ class NavBar extends Component {
     render() {
         const { authToken } = this.props
         const menuElements = this.props.elements
+        const privateElements = this.props.privates
         const currLang = i18next.languages[0]
 
         return (
@@ -84,6 +85,12 @@ class NavBar extends Component {
                                 primaryColor={this.props.primaryColor} 
                                 secondaryColor={this.props.secondaryColor}
                             />
+                            { authToken &&
+                                <NavMenu items={privateElements} 
+                                primaryColor={this.props.primaryColor} 
+                                secondaryColor={this.props.secondaryColor}
+                            />
+                            }
                         </TabletLandscapeUp>
 
                         <TabletPortaitUp>

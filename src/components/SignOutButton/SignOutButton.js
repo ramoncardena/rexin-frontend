@@ -29,11 +29,7 @@ const StyledButton = styled.button`
 
 
 class SignOutButton extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-    
-    onHandelClick = (event) => {
+        onHandelClick = (event) => {
         const {onLogoutSuccess, authToken, history} = this.props
 
         localStorage.removeItem('token')

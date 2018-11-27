@@ -7,7 +7,8 @@ import { withRouter } from 'react-router-dom';
 import Loader from 'react-loader-spinner'
 
 
-import * as routes from '../../constants/routes';
+// import * as routes from '../../constants/routes';
+import { profile } from '../../api'
 import withAuthorization from '../../utils/withAuthorization'
 
 const PageContainer = styled.div`
@@ -54,13 +55,13 @@ const UserFullName = styled.p`
     margin: 0;
 `
 
-const UserUsername = styled.p`
-    font-size: 1.5rem;
-    font-weight: 200;
-    line-height: 2.5rem;
-    padding: 0;
-    margin: 0;
-`
+// const UserUsername = styled.p`
+//     font-size: 1.5rem;
+//     font-weight: 200;
+//     line-height: 2.5rem;
+//     padding: 0;
+//     margin: 0;
+// `
 
 const UserPhone = styled.p`
     font-size: 1.5rem;
@@ -93,12 +94,12 @@ const RightColumn = styled.div`
     text-align: center;
     padding: 2rem;
   `
-const Title = styled.p`
-    font-size: 1.3rem;
-    line-height: auto;
-    margin: 0;
-    padding: 0;
-  `
+// const Title = styled.p`
+//     font-size: 1.3rem;
+//     line-height: auto;
+//     margin: 0;
+//     padding: 0;
+//   `
 const Text = styled.p`
     font-size: 1rem;
     font-weight: 200;
@@ -196,18 +197,13 @@ class AccountPage extends Component {
     }
 
     componentDidMount() {
-        const { userId, authToken } = this.props;
+        const { authToken } = this.props;
 
-        users.retrieveUser(userId, authToken)
+        profile.retrieve(authToken)
         .then((response) => response.json())
         .then((responseJson) => {
-            console.dir(responseJson)
-            if (!responseJson.hasOwnProperty("error")) {
-               this.setState({user: responseJson})
-            }
-            else {
-                console.error(responseJson);
-            }
+            console.dir(responseJson) 
+            this.setState({user: responseJson})
         })
         .catch((error) => {
             console.error(error);
@@ -220,30 +216,35 @@ class AccountPage extends Component {
         return(
             <div>
                 <Helmet>
-                    <title>dTools - Account</title>
+                    <title>Personal Account</title>
                     <meta name="description" content="dTools." />
                 </Helmet>
-                <HeaderHero smalltitle="" bigtitle='Account' cover="180px" image={headerBackground} scroller={false}/>
+
                 <PageContainer>
-                    { user
+                    { !!user
                         ?   <TwoColumns>
                                 <LeftColumn>
+                                {   user.phone && 
                                     <VerticalContainer>
-                                        <OrderItemLabel>Laboratory</OrderItemLabel>
+                                        
+                                        <OrderItemLabel>Your Name</OrderItemLabel>
                                         <UserName> {user.name} </UserName>
                                         <Spacer size='1.5rem'/>
-                                        <OrderItemLabel>Contact</OrderItemLabel>
-                                        <UserFullName> {user.firstname} {' '} {user.familyname} </UserFullName>
-                                        <Spacer size='1.5rem'/>
-                                        <OrderItemLabel>Username</OrderItemLabel>
-                                        <UserUsername> {user.username} </UserUsername>
+                                        <OrderItemLabel>Your Email</OrderItemLabel>
+                                        <UserFullName> {user.email} </UserFullName>
                                         <Spacer size='1.5rem'/>
                                         <OrderItemLabel>Phone</OrderItemLabel>
-                                        <UserPhone> {user.phone} </UserPhone>
+                                        {user.phone!=="" && <UserPhone> {user.phone} </UserPhone>}
                                         <Spacer size='1.5rem'/>
-                                        <OrderItemLabel>Signup Date</OrderItemLabel>
-                                        <UserPhone> {new Date(user._kmd.ect).toDateString()} </UserPhone>
+                                        {/* <Spacer size='1.5rem'/>
+                                        <OrderItemLabel>Country</OrderItemLabel>
+                                        {user.country!="" && <UserPhone> {user.country} </UserPhone>}
+                                        <OrderItemLabel>City</OrderItemLabel>
+                                        {user.city!="" && <UserUsername> {user.city} </UserUsername>}
+                                        <Spacer size='1.5rem'/> */}
+                                        
                                     </VerticalContainer>
+                                }
                                 </LeftColumn>
                                 <RightColumn>
                                         <PasswordForm 
@@ -285,54 +286,54 @@ class PasswordForm extends Component {
     }
 
     onPasswordChange = (event) => {
-        const {
-            password
-        } = this.state;
+        // const {
+        //     password
+        // } = this.state;
 
-        const {
-            authToken,
-            user,
-            history,
-            onLogoutSuccess
-        } = this.props;
+        // const {
+        //     authToken,
+        //     user,
+        //     history,
+        //     onLogoutSuccess
+        // } = this.props;
         
         
-        const data = Object.assign({},{
-            username: user.username,
-            firstname: user.firstname,
-            familyname: user.familyname,
-            name: user.name,
-            phone: user.phone,
-            password: password,
-            _key: user._key,
-            _secret: user._secret,
-            _master: user._master
-        })
+        // const data = Object.assign({},{
+        //     username: user.username,
+        //     firstname: user.firstname,
+        //     familyname: user.familyname,
+        //     name: user.name,
+        //     phone: user.phone,
+        //     password: password,
+        //     _key: user._key,
+        //     _secret: user._secret,
+        //     _master: user._master
+        // })
         
-        this.setState({isLoading: true})
-        users.updateUser(authToken, user._id, data)
-        .then((response) => response.json())
-        .then((responseJson) => {
-            if (! responseJson.hasOwnProperty("error")) {
-                console.log(responseJson)
-                localStorage.removeItem('mToken')
-                localStorage.removeItem('userId')
-                localStorage.removeItem('cAppKey')
-                localStorage.removeItem('cAppSecret')
-                localStorage.removeItem('cAppMaster')
+        // this.setState({isLoading: true})
+        // users.updateUser(authToken, user._id, data)
+        // .then((response) => response.json())
+        // .then((responseJson) => {
+        //     if (! responseJson.hasOwnProperty("error")) {
+        //         console.log(responseJson)
+        //         localStorage.removeItem('mToken')
+        //         localStorage.removeItem('userId')
+        //         localStorage.removeItem('cAppKey')
+        //         localStorage.removeItem('cAppSecret')
+        //         localStorage.removeItem('cAppMaster')
 
-                onLogoutSuccess(authToken)
-                history.push(routes.SIGN_IN);
-            }
-            else {
-                this.setState(byPropKey('error', responseJson))
-                this.setState({isLoading: false})
-            }
-        })
-        .catch((error) => {
-            this.setState({isLoading: false})
-            console.error(error);
-        })
+        //         onLogoutSuccess(authToken)
+        //         history.push(routes.SIGN_IN);
+        //     }
+        //     else {
+        //         this.setState(byPropKey('error', responseJson))
+        //         this.setState({isLoading: false})
+        //     }
+        // })
+        // .catch((error) => {
+        //     this.setState({isLoading: false})
+        //     console.error(error);
+        // })
 
         event.preventDefault();
     }
@@ -379,8 +380,8 @@ class PasswordForm extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    authToken: state.kinveyAuthState.authToken,
-    userId: state.kinveyAuthState.userId
+    authToken: state.authState.authToken,
+    userId: state.authState.userId
 });
 
 const mapDispatchToProps = (dispatch) => ({

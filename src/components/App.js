@@ -15,6 +15,7 @@ import SignInPage from '../pages/SignInPage'
 import SignUpPage from '../pages/SignUpPage'
 import PasswordForgetPage from '../pages/PasswordForgetPage'
 import VerifyPage from '../pages/VerifyPage'
+import AccountPage from '../pages/AccountPage'
 import FooterBar from './FooterBar'
 
 import logo from '../images/logo.png'
@@ -66,6 +67,9 @@ class App extends Component {
             { title:  t('Main_Menu_Item_3'), link: "/" },
             { title:  t('Main_Menu_Item_4'), link: "/" }
         ]
+        const privateMenu = [
+            { title:  t('Main_Menu_Account'), link: routes.ACCOUNT }
+        ]
         const footerMenu = [
             { title: t('Footer_Menu_Legal'), link: '/' },
             { title: t('Footer_Menu_Cookies'), link: '/' },
@@ -85,6 +89,7 @@ class App extends Component {
                             siteTitle={ navbarTitle } 
                             siteDescription={ siteDescription}
                             elements={ mainMenu } 
+                            privates={ privateMenu } 
                             aboutIcon={ true }
                             aboutLink="/"
                             contactIcon={ true }
@@ -116,6 +121,10 @@ class App extends Component {
                             <Route
                                 exact path={routes.VERIFY + '/:id'}
                                 component={() => <VerifyPage />}
+                            />
+                            <Route
+                                exact path={routes.ACCOUNT}
+                                component={() => <AccountPage />}
                             />
                             {/* <Route  component={Error404} /> */}
                         </Switch>

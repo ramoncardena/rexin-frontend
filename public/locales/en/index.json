@@ -10,6 +10,7 @@
     "Main_Menu_Item_2": "Two",
     "Main_Menu_Item_3": "Three",
     "Main_Menu_Item_4": "Four",
+    "Main_Menu_Account": "Account",
     "Footer_Menu_Legal": "Legal",
     "Footer_Menu_Cookies": "Cookies",
     "Footer_Menu_About": "About",
@@ -24,9 +25,11 @@
     "Password_Reset_Title": "Rassword reset",
     "Password_Reset_Intro": "Fill the field below with your email address and I will send you an email with the instructions to reset your password.",
     "Verify_Title": "Account Verification",
+    "Verify_Intro": "You landed in this page because you requested an account. Click the following button to verify your account:",
     "Verify_Success_H1": "Thanks for verifing your acount!",
     "Verify_Success_Text": "Welcome to our family, you can now login and enjoy all our features.",
     "Verify_Fail_H1": "Something went wrong verifing your acount!",
     "Verify_Fail_Text": "We are sorry, but it looks like we are having dificulties to verify your account.",
+    "Verify_Button": "Verify",
     "Home_Title": "Hello World!"
 }

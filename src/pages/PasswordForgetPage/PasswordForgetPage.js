@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux';
 import { Helmet } from "react-helmet";
 import { translate } from 'react-i18next';
 import styled from 'styled-components'
@@ -144,7 +143,7 @@ class PasswordForgetForm extends Component {
     }
 
     onSubmit = (event) => {
-        const { email } = this.state
+        // const { email } = this.state
 
         // auth.doPasswordReset(email)
         //   .then(() => {
