@@ -5,16 +5,18 @@ import { Icon } from 'react-icons-kit'
 import { menu } from 'react-icons-kit/feather/menu'
 import {x} from 'react-icons-kit/feather/x'
 
-const StyledMenuIcon = styled(Icon)`
-    cursor: pointer;
-    margin: 0 0 0 1.5rem;
-    padding: 0;
-    color: ${ props => props.color };
-    &:hover {
-      color: ${ props => props.hovercolor };
+const StyledMenuIcon = styled.div`
+    div {
+        cursor: pointer;
+        margin: 0 0 0 1.5rem;
+        padding: 0;
+        color: ${ props => props.color };
+        &:hover {
+        color: ${ props => props.hovercolor };
+        }
+        opacity: ${props => props.folded ? '1' : '0'};
+        transition: all 0.3s ease-in-out;
     }
-    opacity: ${props => props.folded ? '1' : '0'};
-    transition: all 0.3s ease-in-out;
 `
 
 const StyledLink = styled(Link)`
@@ -67,15 +69,15 @@ const StyledModal = styled.div`
     box-shadow: ${props => props.folded ? '0' : '1px 0px 5px 1px rgba(0,0,0,0.1)'};
 `
 
-const StyledCloseIcon = styled(Icon)`
-    align-self: flex-end;
-    cursor: pointer;
-    margin: 0;
-    padding: 1.45rem 0.905rem 0 0;
-    color: ${ props => props.color };
-    &:hover {
-        color: ${ props => props.hovercolor };
-    }
+const StyledCloseIcon = styled.div` 
+        align-self: flex-end;
+        cursor: pointer;
+        margin: 0;
+        padding: 1.45rem 0.905rem 0 0;
+        color: ${ props => props.color };
+        &:hover {
+            color: ${ props => props.hovercolor };
+        }
 `
 
 const StyledMenu = styled.ul`
@@ -93,11 +95,14 @@ const StyledMenuItem = styled.li`
     padding: 0;
 `
 
+const INITIAL_STATE = {
+    folded: true
+};
 
 class ModalMenu extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {folded: true};
+        this.state = {...INITIAL_STATE};
         this.handleMenuClick = this.handleMenuClick.bind(this);
      }
 
@@ -120,22 +125,21 @@ class ModalMenu extends React.Component {
         return(
             <div>
                 <StyledMenuIcon 
-                    icon={menu} 
-                    size={24}  
                     folded={this.state.folded} 
                     onClick={this.handleMenuClick}
                     color={this.props.primaryColor}
                     hovercolor={this.props.secondaryColor}
-                />
+                >
+                <Icon icon={menu} size={24}/>
+                </StyledMenuIcon>
                 <StyledModal folded={this.state.folded}>
                     <StyledCloseIcon 
-                        icon={x} 
-                        size={28} 
                         onClick={this.handleMenuClick} 
                         folded={this.state.folded}
                         color={this.props.primaryColor}
-                        hovercolor={this.props.secondaryColor}
-                    />
+                        hovercolor={this.props.secondaryColor}>
+                        <Icon icon={x}  size={28}/>
+                    </StyledCloseIcon>
                     <StyledMenu folded={this.state.folded}>
                         {listItems}
                     </StyledMenu>
