@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-// import MediaQuery from 'react-responsive'
 import i18next from 'i18next'
 
 import NavMenu from '../NavMenu'
@@ -53,27 +52,26 @@ const StyledTitle = styled.div`
     }
 `
 
-const TabletPortaitUp = styled.div`
+const TabletPortaitUp = styled.span`
+    display: inherit;
     @media screen and (max-width: 600px) {
         display: none;
     }
 `
 
 const TabletLandscapeUp = styled.div`
+    display: inherit;
     @media screen and (max-width: 960px) {
         display: none;
     }
 `
 
-const TabletLandscapeDown = styled.div`
+const TabletLandscapeDown = styled.span`
+    display: inherit;
     @media screen and (min-width: 900px) {
         display: none;
     }
 `
-
-// const TabletPortaitUp = props => <MediaQuery {...props} minWidth={600} />;
-// const TabletLandscapeUp = props => <MediaQuery {...props} minWidth={900} />;
-// const TabletLandscapeDown = props => <MediaQuery {...props} maxWidth={900} />;
 
 /* Component: NAVBAR */
 class NavBar extends Component { 
