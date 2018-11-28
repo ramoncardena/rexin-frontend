@@ -172,7 +172,8 @@ class EditProfilePage extends Component {
                             <FormContainer>
                                 <PasswordForm 
                                     history={history} 
-                                    id={userId}
+                                    user= {user}
+                                    authToken= {authToken}
                                 />
                             </FormContainer>
                         </PageContainer>
@@ -319,20 +320,21 @@ class PasswordForm extends Component {
 
         const {
             history,
-            id
+            user,
+            authToken
         } = this.props;
         
         
         const data = Object.assign({},{
-            id: id,
+            name: user.name,
             password: password
         })
 
-        users.patch(data)
+        profile.patch(authToken, data)
         .then((response) => response.json())
         .then((responseJson) => {
             console.dir(responseJson)
-            // history.push(routes.ACCOUNT)
+            history.push(routes.ACCOUNT)
         })
         .catch((error) => {
             console.dir(error)
