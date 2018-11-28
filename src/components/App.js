@@ -16,6 +16,7 @@ import SignUpPage from '../pages/SignUpPage'
 import PasswordForgetPage from '../pages/PasswordForgetPage'
 import VerifyPage from '../pages/VerifyPage'
 import AccountPage from '../pages/AccountPage'
+import AdminPage from '../pages/AdminPage'
 import EditProfilePage from '../pages/EditProfilePage'
 import FooterBar from './FooterBar'
 
@@ -71,6 +72,10 @@ class App extends Component {
         const privateMenu = [
             { title:  t('Main_Menu_Account'), link: routes.ACCOUNT }
         ]
+        const adminMenu = [
+
+            { title:  t('Main_Menu_Admin'), link: routes.ADMIN }
+        ]
         const footerMenu = [
             { title: t('Footer_Menu_Legal'), link: '/' },
             { title: t('Footer_Menu_Cookies'), link: '/' },
@@ -91,6 +96,7 @@ class App extends Component {
                             siteDescription={ siteDescription}
                             elements={ mainMenu } 
                             privates={ privateMenu } 
+                            admins={ adminMenu }
                             aboutIcon={ true }
                             aboutLink="/"
                             contactIcon={ true }
@@ -126,6 +132,10 @@ class App extends Component {
                             <Route
                                 exact path={routes.ACCOUNT}
                                 component={() => <AccountPage />}
+                            />
+                            <Route
+                                exact path={routes.ADMIN}
+                                component={() => <AdminPage />}
                             />
                             <Route
                                 exact path={routes.EDIT_PROFILE}

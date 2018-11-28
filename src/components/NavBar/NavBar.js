@@ -75,11 +75,13 @@ const TabletLandscapeDown = styled.span`
 
 /* Component: NAVBAR */
 class NavBar extends Component { 
-    
+    _isAdmin = true;
+
     render() {
         const { authToken } = this.props
         const menuElements = this.props.elements
         const privateElements = this.props.privates
+        const adminElements = this.props.admins
         const currLang = i18next.languages[0]
 
         return (
@@ -105,7 +107,13 @@ class NavBar extends Component {
                                 <NavMenu items={privateElements} 
                                 primaryColor={this.props.primaryColor} 
                                 secondaryColor={this.props.secondaryColor}
-                            />
+                                />
+                            }
+                            { this._isAdmin &&
+                                <NavMenu items={adminElements} 
+                                primaryColor={this.props.primaryColor} 
+                                secondaryColor={this.props.secondaryColor}
+                                />
                             }
                         </TabletLandscapeUp>
 
