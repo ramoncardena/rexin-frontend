@@ -26,3 +26,12 @@ export const verify = (id) => fetch(config.BASE_URL + '/verify', {
     },
     body:  JSON.stringify(id)  
 })
+
+export const reset = (data) => fetch(config.BASE_URL + '/reset', {
+    method: 'POST',
+    mode: 'cors', 
+    headers: {
+        'Content-Type' : 'application/json'
+    },
+    body:  JSON.stringify(data)  
+})

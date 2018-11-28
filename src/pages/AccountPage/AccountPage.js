@@ -19,7 +19,7 @@ const PageContainer = styled.div`
     justify-content: center;
     flex: 1;
     width: 100%;
-    height: 640px;
+    min-height: 640px;
     text-align: center;
     margin: 80px 0 0 0;
 `
@@ -240,10 +240,10 @@ class AccountPage extends Component {
                                                 <NormalItem> {user.email} </NormalItem>
                                                 <ItemLabel>Phone</ItemLabel>
                                                 {user.phone!=="" && <NormalItem> {user.phone} </NormalItem>}
-                                                <ItemLabel>Country</ItemLabel>
-                                                {user.country!=="" && <NormalItem> {user.country} </NormalItem>}
                                                 <ItemLabel>City</ItemLabel>
                                                 {user.city!=="" && <NormalItem> {user.city} </NormalItem>}
+                                                <ItemLabel>Country</ItemLabel>
+                                                {user.country!=="" && <NormalItem> {user.country} </NormalItem>}
                                                 <EditProfileButton
                                                     disabled={false} 
                                                     onClick={ () => this.handleEditProfile() }
