@@ -6,7 +6,6 @@ import { translate } from 'react-i18next';
 import styled from 'styled-components'
 import { withRouter } from 'react-router-dom';
 
-import * as routes from '../../constants/routes';
 import withAuthorization from '../../utils/withAuthorization'
 
 const PageContainer = styled.div`

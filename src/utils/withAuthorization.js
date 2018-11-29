@@ -9,23 +9,27 @@ import * as routes from '../constants/routes';
 const withAuthorization = (authCondition) => (Component) => {
     class withAuthorization extends React.Component {
         componentDidMount() {
-            const {authToken } = this.props
+            const { onTokenRecover } = this.props
+            const sToken = localStorage.getItem('token')
 
-            profile.role(authToken)
-            .then((response) => response.json())
-            .then((profile) => {
-                if (!authCondition(authToken, profile.role)) {
-                    console.log("Redirecting to Sign In!")
-                    this.props.history.push(routes.SIGN_IN);
-                 
-                }
-            })
-            .catch((error) => {
-                if (!authCondition(authToken, "")) {
-                    console.log("Redirecting to Sign In!")
-                    this.props.history.push(routes.SIGN_IN);
-                }
-            })
+            if (sToken) {
+                onTokenRecover(sToken)
+                profile.retrieve(sToken)
+                .then((response) => response.json())
+                .then((profile) => {
+                    if (!authCondition(sToken, profile.role)) {
+                        this.props.history.push(routes.SIGN_IN)
+                    }
+                })
+                .catch((error) => {
+                    if (!authCondition(sToken, "")) {
+                        this.props.history.push(routes.SIGN_IN);
+                    }
+                })
+            }
+            else {
+                this.props.history.push(routes.SIGN_IN);
+            }
         }
 
         render() {
