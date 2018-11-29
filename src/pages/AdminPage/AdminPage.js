@@ -25,6 +25,13 @@ const Title = styled.h1`
 `
 
 class AdminPage extends Component {
+     
+    componentDidMount() {
+        const {onNavigationEnded, location} = this.props
+        if (location) onNavigationEnded(location.pathname)
+        
+    }
+
     render() {
         const { t } = this.props;
         return (
@@ -43,14 +50,19 @@ class AdminPage extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    authToken: state.authState.authToken
+    authToken: state.authState.authToken,
+    navPath: state.navState.path
 });
 
+const mapDispatchToProps = (dispatch) => ({
+    onLogoutSuccess: (token) => dispatch({ type: 'LOGOUT_SUCCESS', token }),
+    onNavigationEnded: (path) => dispatch({ type: 'NAVIGATION_ENDED', path})
+});
 
 const authCondition = (token, role) => !!token && ["admin"].includes(role)
 
 export default  compose(
         withAuthorization(authCondition),
-        connect(mapStateToProps),
+        connect(mapStateToProps, mapDispatchToProps),
         translate('index')
 )(withRouter(AdminPage))

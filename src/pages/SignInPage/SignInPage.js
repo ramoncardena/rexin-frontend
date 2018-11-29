@@ -101,6 +101,11 @@ const ErrorText = styled.div`
 `
 
 class SignInPage extends Component {
+    componentDidMount() {
+        const {onNavigationEnded, location} = this.props
+        if (location) onNavigationEnded(location.pathname)
+        
+    }
     
     render() {
         const { t, history, onLoginSuccess, authToken } = this.props
@@ -226,7 +231,8 @@ const mapStateToProps = (state) => ({
 });
   
 const mapDispatchToProps = (dispatch) => ({
-    onLoginSuccess: (data) => dispatch({ type: 'LOGIN_SUCCESS', data})
+    onLoginSuccess: (data) => dispatch({ type: 'LOGIN_SUCCESS', data}),
+    onNavigationEnded: (path) => dispatch({ type: 'NAVIGATION_ENDED', path})
 });
 
 export default compose(

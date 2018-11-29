@@ -74,24 +74,55 @@ const TabletLandscapeDown = styled.span`
     }
 `
 
+const INITIAL_STATE = {
+    isAdmin: false
+}
+
 /* Component: NAVBAR */
 class NavBar extends Component { 
-    _isAdmin = false;
+    _isMounted = false
 
-    componentDidMount() {
+    _checkAdmin = () => {
         const { authToken } = this.props
-        console.dir(this.props)
-        if (authToken) {
+
+        if (authToken!=null) {
             profile.retrieve(authToken)
             .then((response) => response.json())
             .then((item) => {
-                if (item.role==="admin") this._isAdmin = true;
+                if (this._isMounted && item.role === "admin") this.setState({isAdmin: true})
             })
+            .catch((err) => {
+                if (this._isMounted) this.setState({isAdmin: false})
+            })
+        }
+        else {
+            if (this._isMounted) this.setState({isAdmin: false})
         }
     }
 
+    constructor(props) {
+        super(props)
+        
+        this.state = { ...INITIAL_STATE };
+    }
+
+    componentWillReceiveProps(){
+        this._isMounted = true
+        this._checkAdmin()
+    }
+
+    componentDidMount() {
+        this._isMounted = true
+        this._checkAdmin()
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
     render() {
-        const { authToken } = this.props
+        const { authToken} = this.props
+        const { isAdmin } = this.state
         const menuElements = this.props.elements
         const privateElements = this.props.privates
         const adminElements = this.props.admins
@@ -108,6 +139,8 @@ class NavBar extends Component {
                             primaryColor={this.props.primaryColor} 
                             secondaryColor={this.props.secondaryColor} 
                         />
+                        <span>{ this.state.isAdmin ? "-> TRUE": "-> FALSE"}</span>
+
                     </StyledNavLeft>
 
                     <StyledNavRight>
@@ -122,7 +155,7 @@ class NavBar extends Component {
                                 secondaryColor={this.props.secondaryColor}
                                 />
                             }
-                            { this._isAdmin &&
+                            { authToken && isAdmin &&
                                 <NavMenu items={adminElements} 
                                 primaryColor={this.props.primaryColor} 
                                 secondaryColor={this.props.secondaryColor}
@@ -194,8 +227,6 @@ const NavTitle = ({title, primaryColor, secondaryColor}) => (
     </StyledTitle>
 );
 
-
-
 const mapStateToProps = (state) => ({
     authToken: state.authState.authToken,
 });
@@ -205,7 +236,5 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar)
-
-
 
 

@@ -34,5 +34,13 @@
     "Verify_Button": "Verify",
     "Home_Title": "Hello World!",
     "Admin_Title": "Administration",
-    "Admin_H1": "Hello Administrator!"
+    "Admin_H1": "Hello Administrator!",
+    "One_Title": "Page One",
+    "One_H1": "Welcome to Page One!",
+    "Two_Title": "Page Two",
+    "Two_H1": "Welcome to Page Two!",
+    "Three_Title": "Page Three",
+    "Three_H1": "Welcome to Page Three!",
+    "Four_Title": "Page Four",
+    "Four_H1": "Welcome to Page Four!"
 }

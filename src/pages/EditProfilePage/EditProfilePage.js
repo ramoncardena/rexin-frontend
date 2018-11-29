@@ -122,12 +122,14 @@ class EditProfilePage extends Component {
 
     componentDidMount() {
         this._isMounted = true
-        const { authToken } = this.props
+        const { authToken, onNavigationEnded, location} = this.props
         
+        if (location) onNavigationEnded(location.pathname)
+
         profile.retrieve(authToken)
         .then((response) => response.json())
         .then((responseJson) => {
-            console.dir(responseJson)
+            // console.dir(responseJson)
             if (this._isMounted) this.setState({user: responseJson})
         })
         .catch((error) => {
@@ -333,7 +335,7 @@ class PasswordForm extends Component {
         profile.patch(authToken, data)
         .then((response) => response.json())
         .then((responseJson) => {
-            console.dir(responseJson)
+            // console.dir(responseJson)
             history.push(routes.ACCOUNT)
         })
         .catch((error) => {
@@ -384,16 +386,21 @@ class PasswordForm extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    authToken: state.authState.authToken
+    authToken: state.authState.authToken,
+    navPath: state.navState.path
 });
 
+const mapDispatchToProps = (dispatch) => ({
+    onLogoutSuccess: (token) => dispatch({ type: 'LOGOUT_SUCCESS', token }),
+    onNavigationEnded: (path) => dispatch({ type: 'NAVIGATION_ENDED', path})
+});
 
 const authCondition = (authToken) => !!authToken
 
 export default compose(
     withAuthorization(authCondition),
     translate('index'),
-    connect(mapStateToProps)
+    connect(mapStateToProps, mapDispatchToProps)
 )(withRouter(EditProfilePage))
 
 export {

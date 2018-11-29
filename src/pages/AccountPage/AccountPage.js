@@ -92,8 +92,10 @@ class AccountPage extends Component {
 
     componentDidMount() {
         this._isMounted = true
-        const { authToken } = this.props
+        const { authToken, location, onNavigationEnded } = this.props
         
+        if (location) onNavigationEnded(location.pathname)
+
         profile.retrieve(authToken)
         .then((response) => response.json())
         .then((responseJson) => {
@@ -160,11 +162,13 @@ class AccountPage extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    authToken: state.authState.authToken
+    authToken: state.authState.authToken,
+    navPath: state.navState.path
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    onLogoutSuccess: (token) => dispatch({ type: 'LOGOUT_SUCCESS', token })
+    onLogoutSuccess: (token) => dispatch({ type: 'LOGOUT_SUCCESS', token }),
+    onNavigationEnded: (path) => dispatch({ type: 'NAVIGATION_ENDED', path})
 });
 
 const authCondition = (authToken) => !!authToken

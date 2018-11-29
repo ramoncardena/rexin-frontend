@@ -11,6 +11,10 @@ import * as config from '../config';
 
 import NavBar from './NavBar'
 import HomePage from '../pages/HomePage'
+import OnePage from '../pages/OnePage'
+import TwoPage from '../pages/TwoPage'
+import ThreePage from '../pages/ThreePage'
+import FourPage from '../pages/FourPage'
 import SignInPage from '../pages/SignInPage'
 import SignUpPage from '../pages/SignUpPage'
 import PasswordForgetPage from '../pages/PasswordForgetPage'
@@ -45,28 +49,18 @@ const BottomNavigation = styled.footer`
 `
 
 class App extends Component {
-    componentDidMount() {
-        const { onTokenRecover } = this.props;
-
-        if (localStorage.getItem('token')) {
-            const sessionData = {
-                authToken: localStorage.getItem('token')
-            }
-            onTokenRecover(sessionData)
-        }
-    }
-
+    
     render() {
-        const { t } = this.props;
+        const { t, navPath } = this.props;
 
         const navbarTitle = t('Navbar_Title')
         const siteDescription = t('Site_Description')
 
         const mainMenu = [
-            { title: t('Main_Menu_Item_1'), link: "/" },
-            { title:  t('Main_Menu_Item_2'), link: "/" },
-            { title:  t('Main_Menu_Item_3'), link: "/" },
-            { title:  t('Main_Menu_Item_4'), link: "/" }
+            { title: t('Main_Menu_Item_1'), link: routes.PAGE_ONE },
+            { title:  t('Main_Menu_Item_2'), link: routes.PAGE_TWO },
+            { title:  t('Main_Menu_Item_3'), link: routes.PAGE_THREE },
+            { title:  t('Main_Menu_Item_4'), link: routes.PAGE_FOUR }
         ]
         const privateMenu = [
             { title:  t('Main_Menu_Account'), link: routes.ACCOUNT }
@@ -84,9 +78,8 @@ class App extends Component {
 
         const copyright = t('Copyright_Notice')
 
-
         return (
-        <Router>
+            <Router>
                 <SiteContainer>
                     <TopNavigation>
                         <NavBar 
@@ -95,7 +88,7 @@ class App extends Component {
                             siteDescription={ siteDescription}
                             elements={ mainMenu } 
                             privates={ privateMenu } 
-                            admins={ adminMenu }
+                            admins={ adminMenu }r
                             aboutIcon={ true }
                             aboutLink="/"
                             contactIcon={ true }
@@ -104,13 +97,32 @@ class App extends Component {
                             homeLink={ routes.HOME }
                             loginRoute={ routes.SIGN_IN }
                             primaryColor={ config.primaryColor} 
-                            secondaryColor={ config.secondaryColor } />
+                            secondaryColor={ config.secondaryColor }
+                            navPath={ navPath }
+                        />
                     </TopNavigation>
                     <div className="container">
+                        Path: {navPath}
                         <Switch>
                             <Route
                                 exact path={routes.HOME}
                                 component={() => <HomePage />}
+                            />
+                            <Route
+                                exact path={routes.PAGE_ONE}
+                                component={() => <OnePage />}
+                            />
+                            <Route
+                                exact path={routes.PAGE_TWO}
+                                component={() => <TwoPage />}
+                            />
+                            <Route
+                                exact path={routes.PAGE_THREE}
+                                component={() => <ThreePage />}
+                            />
+                            <Route
+                                exact path={routes.PAGE_FOUR}
+                                component={() => <FourPage />}
                             />
                             <Route
                                 exact path={routes.SIGN_IN}
@@ -172,14 +184,12 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    authToken: state.authState.authToken
+    authToken: state.authState.authToken,
+    navPath: state.navState.navPath
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    onTokenRecover: (data) => dispatch({ type: 'TOKEN_RECOVER', data})
-});
 
 export default compose(
     translate('index'),
-    connect(mapStateToProps, mapDispatchToProps)
+    connect(mapStateToProps)
 )(App);
