@@ -102,7 +102,6 @@ class App extends Component {
                         />
                     </TopNavigation>
                     <div className="container">
-                        Path: {navPath}
                         <Switch>
                             <Route
                                 exact path={routes.HOME}

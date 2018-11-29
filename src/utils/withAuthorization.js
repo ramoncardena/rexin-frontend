@@ -6,8 +6,18 @@ import { withRouter } from 'react-router-dom';
 import { profile } from '../api'
 import * as routes from '../constants/routes';
 
+const INITIAL_STATE = {
+    isResolved : false
+}
+
 const withAuthorization = (authCondition) => (Component) => {
     class withAuthorization extends React.Component {
+
+        constructor(props) {
+            super(props)
+            this.state = INITIAL_STATE
+        }
+
         componentDidMount() {
             const { onTokenRecover } = this.props
             const sToken = localStorage.getItem('token')
@@ -19,6 +29,9 @@ const withAuthorization = (authCondition) => (Component) => {
                 .then((profile) => {
                     if (!authCondition(sToken, profile.role)) {
                         this.props.history.push(routes.SIGN_IN)
+                    }
+                    else {
+                    this.setState({isResolved : true})
                     }
                 })
                 .catch((error) => {
@@ -33,12 +46,12 @@ const withAuthorization = (authCondition) => (Component) => {
         }
 
         render() {
-            return this.props.authToken ? <Component /> : null;
+            return this.state.isResolved ? <Component /> : null;
         }
     }
 
     const mapStateToProps = (state) => ({
-        authToken: state.authState.authToken,
+        authToken: state.authState.authToken
     });
 
     const mapDispatchToProps = (dispatch) => ({

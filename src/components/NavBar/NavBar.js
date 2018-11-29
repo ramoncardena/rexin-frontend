@@ -139,7 +139,6 @@ class NavBar extends Component {
                             primaryColor={this.props.primaryColor} 
                             secondaryColor={this.props.secondaryColor} 
                         />
-                        <span>{ this.state.isAdmin ? "-> TRUE": "-> FALSE"}</span>
 
                     </StyledNavLeft>
 
