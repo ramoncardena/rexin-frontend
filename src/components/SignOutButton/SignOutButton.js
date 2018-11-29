@@ -31,9 +31,7 @@ const StyledButton = styled.button`
 class SignOutButton extends React.Component {
         onHandelClick = (event) => {
         const {onLogoutSuccess, authToken, history} = this.props
-
         localStorage.removeItem('token')
-        localStorage.removeItem('userid') 
         onLogoutSuccess(authToken)
         history.push(routes.HOME);
 

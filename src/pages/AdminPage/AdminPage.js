@@ -43,8 +43,7 @@ class AdminPage extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    authToken: state.authState.authToken,
-    userId: state.authState.userId
+    authToken: state.authState.authToken
 });
 
 

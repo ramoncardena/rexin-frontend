@@ -168,7 +168,6 @@ class SignInForm extends Component {
                 if (!data.errors) {
                     onLoginSuccess(data)
                     localStorage.setItem('token', data.token)
-                    localStorage.setItem('userid', data.user._id)
                     history.push(routes.HOME);
                 }
                 else {

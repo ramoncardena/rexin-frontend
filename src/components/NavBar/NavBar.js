@@ -11,6 +11,7 @@ import SignInButton from '../SignInButton'
 import ModalMenu from '../ModalMenu'
 import LangSelector from '../LangSelector'
 
+import * as profile from '../../api/profile'
 
 const StyledNavBar = styled.div`
     width: 100%;
@@ -75,7 +76,19 @@ const TabletLandscapeDown = styled.span`
 
 /* Component: NAVBAR */
 class NavBar extends Component { 
-    _isAdmin = true;
+    _isAdmin = false;
+
+    componentDidMount() {
+        const { authToken } = this.props
+        console.dir(this.props)
+        if (authToken) {
+            profile.retrieve(authToken)
+            .then((response) => response.json())
+            .then((item) => {
+                if (item.role==="admin") this._isAdmin = true;
+            })
+        }
+    }
 
     render() {
         const { authToken } = this.props

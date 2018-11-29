@@ -145,7 +145,7 @@ class EditProfilePage extends Component {
     }
 
     render() {
-        const { t, history, authToken, userId } = this.props;
+        const { t, history, authToken } = this.props;
         const { user } = this.state
         return (
             <div>
@@ -384,8 +384,7 @@ class PasswordForm extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    authToken: state.authState.authToken,
-    userId: state.authState.userId
+    authToken: state.authState.authToken
 });
 
 

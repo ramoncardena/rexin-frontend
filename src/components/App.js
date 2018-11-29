@@ -46,14 +46,13 @@ const BottomNavigation = styled.footer`
 
 class App extends Component {
     componentDidMount() {
-        const { onSessionRecover } = this.props;
+        const { onTokenRecover } = this.props;
 
-        if (localStorage.getItem('token') && localStorage.getItem('userid')) {
+        if (localStorage.getItem('token')) {
             const sessionData = {
-                authToken: localStorage.getItem('token'),
-                userId: localStorage.getItem('userid')
+                authToken: localStorage.getItem('token')
             }
-            onSessionRecover(sessionData)
+            onTokenRecover(sessionData)
         }
     }
 
@@ -173,12 +172,11 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    authToken: state.authState.authToken,
-    userId: state.authState.userId
+    authToken: state.authState.authToken
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    onSessionRecover: (data) => dispatch({ type: 'SESSION_RECOVER', data})
+    onTokenRecover: (data) => dispatch({ type: 'TOKEN_RECOVER', data})
 });
 
 export default compose(
