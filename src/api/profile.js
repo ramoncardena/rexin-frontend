@@ -17,3 +17,13 @@ export const patch = (token, data) => fetch(config.BASE_URL + '/profile', {
     },
     body:  JSON.stringify(data)  
 })
+
+
+export const role = async (token) => fetch(config.BASE_URL + '/profile', {
+    method: 'GET',
+    mode: 'cors', 
+    headers: {
+        'Authorization' : 'Bearer ' + token
+    }
+})
+

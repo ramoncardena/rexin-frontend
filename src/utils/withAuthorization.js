@@ -3,22 +3,29 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withRouter } from 'react-router-dom';
 
+import { profile } from '../api'
 import * as routes from '../constants/routes';
 
 const withAuthorization = (authCondition) => (Component) => {
     class withAuthorization extends React.Component {
         componentDidMount() {
-            const {authToken, onTokenRecover} = this.props
+            const {authToken } = this.props
 
-            if (!authCondition(authToken)) {
-                    if (localStorage.getItem('token')) {
-                        onTokenRecover(localStorage.getItem('token'))
-                    }
-                    else {
-                        console.log("Redirecting to Sign In!")
-                        this.props.history.push(routes.SIGN_IN);
-                    }
-            }
+            profile.role(authToken)
+            .then((response) => response.json())
+            .then((profile) => {
+                if (!authCondition(authToken, profile.role)) {
+                    console.log("Redirecting to Sign In!")
+                    this.props.history.push(routes.SIGN_IN);
+                 
+                }
+            })
+            .catch((error) => {
+                if (!authCondition(authToken, "")) {
+                    console.log("Redirecting to Sign In!")
+                    this.props.history.push(routes.SIGN_IN);
+                }
+            })
         }
 
         render() {

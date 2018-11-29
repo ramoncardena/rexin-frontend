@@ -32,5 +32,7 @@
     "Verify_Fail_H1": "Something went wrong verifing your acount!",
     "Verify_Fail_Text": "We are sorry, but it looks like we are having dificulties to verify your account.",
     "Verify_Button": "Verify",
-    "Home_Title": "Hello World!"
+    "Home_Title": "Hello World!",
+    "Admin_Title": "Administration",
+    "Admin_H1": "Hello Administrator!"
 }

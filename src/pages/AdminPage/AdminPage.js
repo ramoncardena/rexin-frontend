@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
+import { compose } from 'recompose'
 import { Helmet } from "react-helmet";
 import { translate } from 'react-i18next';
 import styled from 'styled-components'
+import { withRouter } from 'react-router-dom';
+
+import * as routes from '../../constants/routes';
+import withAuthorization from '../../utils/withAuthorization'
 
 const PageContainer = styled.div`
     display: flex;
@@ -25,17 +31,28 @@ class AdminPage extends Component {
         return (
             <div>
                 <Helmet>
-                    <title>{ t('Page_Title') }</title>
+                    <title>{ t('Admin_Title') }</title>
                     <meta name="description" content="Basic web scaffolding" />
                 </Helmet>
 
                 <PageContainer>
-                    <Title>{ t('Home_Title') }</Title>
+                    <Title>{ t('Admin_H1') }</Title>
                 </PageContainer>
             </div>
         );
     }
 }
 
+const mapStateToProps = (state) => ({
+    authToken: state.authState.authToken,
+    userId: state.authState.userId
+});
 
-export default translate('index')(AdminPage)
+
+const authCondition = (token, role) => !!token && ["admin"].includes(role)
+
+export default  compose(
+        withAuthorization(authCondition),
+        connect(mapStateToProps),
+        translate('index')
+)(withRouter(AdminPage))

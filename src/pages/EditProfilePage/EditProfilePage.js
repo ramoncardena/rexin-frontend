@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import Loader from 'react-loader-spinner'
 
 import * as routes from '../../constants/routes';
-import { profile, auth, users } from '../../api'
+import { profile } from '../../api'
 import withAuthorization from '../../utils/withAuthorization'
 
 const PageContainer = styled.div`
