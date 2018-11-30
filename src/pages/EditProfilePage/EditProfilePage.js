@@ -152,23 +152,24 @@ class EditProfilePage extends Component {
         return (
             <div>
                 <Helmet>
-                    <title>{ t('Page_Title') }</title>
+                    <title>{ t('Edit_Profile_Title') }</title>
                     <meta name="description" content="Basic web scaffolding" />
                 </Helmet>
                 { user
                     ?
                         <PageContainer>
                             <Title>
-                                Edit Profile
+                                { t('Edit_Profile_H1') }
                             </Title>
                             <Text>
-                                To update your profile, edit the fields and click update.
+                                { t('Edit_Profile_Intro') }
                             </Text>
                             <FormContainer>
                                 <EditForm 
                                         history={history} 
                                         user= {user}
                                         authToken= {authToken}
+                                        t= {t}
                                     />
                             </FormContainer>
                             <FormContainer>
@@ -176,6 +177,7 @@ class EditProfilePage extends Component {
                                     history={history} 
                                     user= {user}
                                     authToken= {authToken}
+                                    t= {t}
                                 />
                             </FormContainer>
                         </PageContainer>
@@ -260,6 +262,8 @@ class EditForm extends Component {
             isLoading
         } = this.state;
 
+        const { t } = this.props;
+
         const isInvalid =
             name === '';
 
@@ -269,30 +273,30 @@ class EditForm extends Component {
                     value={name}
                     onChange={event => this.setState(byPropKey('name', event.target.value))}
                     type="text"
-                    placeholder="Given Name"
+                    placeholder={ t('Account_Name') }
                 />
                 <InputField
                     value={phone}
                     onChange={event => this.setState(byPropKey('phone', event.target.value))}
                     type="text"
-                    placeholder="Phone Number"
+                    placeholder={ t('Account_Phone') }
                 />
                 <InputField
                     value={city}
                     onChange={event => this.setState(byPropKey('city', event.target.value))}
                     type="text"
-                    placeholder="City"
+                    placeholder={ t('Account_City') }
                 />
                 <InputField
                     value={country}
                     onChange={event => this.setState(byPropKey('country', event.target.value))}
                     type="text"
-                    placeholder="Country"
+                    placeholder={ t('Account_Country') }
                 />
                 <FormButton disabled={isInvalid} type="submit">
                     { !!isLoading
                         ?   <Loader type="Oval" color='#2E4C6D' height="16" width="16" /> 
-                        :   'Update'
+                        :   t('Edit_Profile_Update_Button') 
                     }
                 </FormButton>
                 <ErrorText>
@@ -353,6 +357,8 @@ class PasswordForm extends Component {
             isLoading
         } = this.state;
 
+        const { t } = this.props;
+
         const isInvalid =
             password !== confirmation ||
             password === '';
@@ -363,18 +369,18 @@ class PasswordForm extends Component {
                     value={password}
                     onChange={event => this.setState(byPropKey('password', event.target.value))}
                     type="password"
-                    placeholder="New Password"
+                    placeholder={ t('Edit_Profile_New_Password') }
                 />
                 <InputField
                     value={confirmation}
                     onChange={event => this.setState(byPropKey('confirmation', event.target.value))}
                     type="password"
-                    placeholder="Confirm New Password"
+                    placeholder={ t('Edit_Profile_Password_Confirm') }
                 />
                 <FormButton disabled={isInvalid} type="submit">
                     { !!isLoading
                         ?   <Loader type="Oval" color='#2E4C6D' height="16" width="16" /> 
-                        :   'Change Password'
+                        :   t('Edit_Profile_Change_Password_Button')
                     }
                 </FormButton>
                 <ErrorText>

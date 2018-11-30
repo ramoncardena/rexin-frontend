@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import { Helmet } from 'react-helmet'
+import { translate } from 'react-i18next';
 import styled from 'styled-components'
 import { withRouter } from 'react-router-dom';
 import Loader from 'react-loader-spinner'
@@ -22,6 +23,9 @@ const PageContainer = styled.div`
     height: 640px;
     text-align: center;
     margin: 80px 0 0 0;
+`
+const Title = styled.h1`
+    color: #808080;
 `
 
 const ItemLabel = styled.span`
@@ -117,10 +121,11 @@ class AccountPage extends Component {
 
     render() {
         const { user, error } = this.state
+        const { t } = this.props
         return(
             <div>
                 <Helmet>
-                    <title>Personal Account</title>
+                    <title>{ t('Account_Title') }</title>
                     <meta name="description" content="dTools." />
                 </Helmet>
 
@@ -128,27 +133,30 @@ class AccountPage extends Component {
                         ?   !error 
                                 ?  
                                     <PageContainer>   
-                                        <ItemLabel>Your Name</ItemLabel>
+                                        <Title>
+                                            { t('Account_H1') }
+                                        </Title>
+                                        <ItemLabel>{ t('Account_Name') }</ItemLabel>
                                         <BigItem> {user.name} </BigItem>
-                                        <ItemLabel>Your Email</ItemLabel>
+                                        <ItemLabel>{ t('Account_Email') }</ItemLabel>
                                         <NormalItem> {user.email} </NormalItem>
-                                        <ItemLabel>Phone</ItemLabel>
+                                        <ItemLabel>{ t('Account_Phone') }</ItemLabel>
                                         {user.phone!=="" && <NormalItem> {user.phone} </NormalItem>}
-                                        <ItemLabel>City</ItemLabel>
+                                        <ItemLabel>{ t('Account_City') }</ItemLabel>
                                         {user.city!=="" && <NormalItem> {user.city} </NormalItem>}
-                                        <ItemLabel>Country</ItemLabel>
+                                        <ItemLabel>{ t('Account_Country') }</ItemLabel>
                                         {user.country!=="" && <NormalItem> {user.country} </NormalItem>}
                                         <EditProfileButton
                                             disabled={false} 
                                             onClick={ () => this.handleEditProfile() }
                                         >
-                                            Edit Profile
+                                            { t('Account_Edit_Button') }
                                         </EditProfileButton>
                                     </PageContainer>
                                 :
                                     <PageContainer>   
                                         <ErrorText> 
-                                            Sorry, some kind of error has ocurred!
+                                            { t('Account_General_Error') }
                                         </ErrorText>
                                     </PageContainer>
                         :   
@@ -175,5 +183,6 @@ const authCondition = (authToken) => !!authToken
 
 export default compose(
     withAuthorization(authCondition),
-    connect(mapStateToProps, mapDispatchToProps)
+    connect(mapStateToProps, mapDispatchToProps),
+    translate('index')
 )(withRouter(AccountPage))

@@ -20,9 +20,10 @@ import SignUpPage from '../pages/SignUpPage'
 import PasswordForgetPage from '../pages/PasswordForgetPage'
 import VerifyPage from '../pages/VerifyPage'
 import AccountPage from '../pages/AccountPage'
-import AdminPage from '../pages/AdminPage'
 import EditProfilePage from '../pages/EditProfilePage'
 import FooterBar from './FooterBar'
+
+import AdminPage from '../admin/AdminPage'
 
 import logo from '../images/logo.png'
 
