@@ -58,5 +58,10 @@
     "Three_Title": "Página Tres",
     "Three_H1": "¡Bienvenidos a la página Tres!",
     "Four_Title": "Página Cuatro",
-    "Four_H1": "¡Bienvenidos a la página Cuatro!"
+    "Four_H1": "¡Bienvenidos a la página Cuatro!",
+    "UNDEFINED_ERROR":  "¡Lo sentimos, algo no ha funcionado!",
+    "EMAIL_IS_NOT_VALID": "Dirección de email incorrecta",
+    "WRONG_PASSWORD": "Contraseña incorrecta",
+    "USER_DOES_NOT_EXISTS": "El usuario no existe",
+    "IS_EMPTY": "No puede estar vacío"
 }

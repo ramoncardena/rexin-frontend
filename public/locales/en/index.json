@@ -58,5 +58,10 @@
     "Three_Title": "Page Three",
     "Three_H1": "Welcome to Page Three!",
     "Four_Title": "Page Four",
-    "Four_H1": "Welcome to Page Four!"
+    "Four_H1": "Welcome to Page Four!",
+    "UNDEFINED_ERROR":  "Sorry, something went wrong!",
+    "EMAIL_IS_NOT_VALID": "Email address not valid",
+    "WRONG_PASSWORD": "Password is wrong",
+    "USER_DOES_NOT_EXISTS": "User doesn't exists",
+    "IS_EMPTY": "Can't be empty"
 }

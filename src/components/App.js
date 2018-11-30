@@ -30,6 +30,7 @@ import logo from '../images/logo.png'
 const SiteContainer = styled.div`
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     height: 100%;
     background: transparent;
 `
@@ -102,7 +103,6 @@ class App extends Component {
                             navPath={ navPath }
                         />
                     </TopNavigation>
-                    <div className="container">
                         <Switch>
                             <Route
                                 exact path={routes.HOME}
@@ -154,7 +154,6 @@ class App extends Component {
                             />
                             {/* <Route  component={Error404} /> */}
                         </Switch>
-                    </div>
 
                     <BottomNavigation>
                         <FooterBar
