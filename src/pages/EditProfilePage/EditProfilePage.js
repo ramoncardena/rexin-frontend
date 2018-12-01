@@ -206,7 +206,7 @@ const INITIAL_SIGNUP_FORM_STATE = {
     country: '',
     isLoading: false,
     error: '',
-    namelValidation: '',
+    nameValidation: '',
     phoneValidation: '',
     cityValidation: '',
     countryValidation: '',
@@ -266,7 +266,6 @@ class EditForm extends Component {
             this.setState(byPropKey('error', "UNDEFINED_ERROR"));
         })
        
-
         event.preventDefault();
     }
 
@@ -342,7 +341,7 @@ class EditForm extends Component {
                     }
                 </FormButton>
                 <ErrorText>
-                    { error && <p>{t(error)}</p> }
+                    { error && <p> {t(error)} </p> }
                 </ErrorText>
             </StyledForm>
         );
@@ -381,12 +380,18 @@ class PasswordForm extends Component {
 
         profile.patch(authToken, data)
         .then((response) => response.json())
-        .then((responseJson) => {
-            // console.dir(responseJson)
-            history.push(routes.ACCOUNT)
+        .then((data) => {
+            if (!data.errors) {
+                history.push(routes.ACCOUNT)
+            }
+            else {
+                this.setState({ error: apiError.message(data.errors) })
+                this.setState({ passwordValidation: apiError.validationMessage(data.errors, 'name') })
+            }
         })
         .catch((error) => {
             console.dir(error)
+            this.setState(byPropKey('error', "UNDEFINED_ERROR"));
         })
 
         event.preventDefault();
@@ -435,7 +440,7 @@ class PasswordForm extends Component {
                     }
                 </FormButton>
                 <ErrorText>
-                    { error && <p>{error.message}</p> }
+                    { error && <p> {t(error)} </p> }
                 </ErrorText>
             </StyledForm>
         );

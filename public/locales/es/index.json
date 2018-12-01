@@ -20,6 +20,7 @@
     "Login_Intro": "Por favor, introduzca su usuario y contraseña para iniciar sesión.",
     "Login_Forgot_Password": "¿Olvidó su contraseña?",
     "Login_New_Account_Link": "¿No tiene una cuenta?",
+    "Sign_Up_H1": "Registrarse",
     "Sign_Up_Intro": "Por favor, rellene los siguientes campos para crear su nueva cuenta",
     "Sign_Up_Full_Name": "Nombre completo",
     "Sign_Up_Password_Confirm": "Confirme contraseña",
@@ -76,5 +77,6 @@
     "ID_MALFORMED": "Id incorrecto",
     "BAD_FORMAT_FOR_FILTER_USE_JSON_FORMAT": "Formato incorrecto",
     "STRING_TOO_LONG_MAX_140": "Demasiado largo (máx. 140)",
-    "NOT_A_VALID_URL": "Dirección incorrecta"
+    "NOT_A_VALID_URL": "Dirección incorrecta",
+    " email. EMAIL_IS_NOT_VALID": "El usuario no existe"
 }

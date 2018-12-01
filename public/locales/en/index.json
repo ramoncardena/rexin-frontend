@@ -20,6 +20,7 @@
     "Login_Intro": "Please, enter your email address and password to sign in into your account.",
     "Login_Forgot_Password": "Forgot Password?",
     "Login_New_Account_Link": "Don't have an account?",
+    "Sign_Up_H1": "Sign Up",
     "Sign_Up_Intro": "Please, fill the form below to create a new account.",
     "Sign_Up_Full_Name": "Full Name",
     "Sign_Up_Password_Confirm": "Confirm Password",
@@ -76,5 +77,6 @@
     "ID_MALFORMED": "Id malformed",
     "BAD_FORMAT_FOR_FILTER_USE_JSON_FORMAT": "Bad format",
     "STRING_TOO_LONG_MAX_140": "String too long (max. 140)",
-    "NOT_A_VALID_URL": "Invalid address"
+    "NOT_A_VALID_URL": "Invalid address",
+    "User validation failed: email: EMAIL_IS_NOT_VALID": "Email address not valid"
 }
