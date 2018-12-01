@@ -15,44 +15,39 @@ import * as apiError from '../../utils/apiError'
 const PageContainer = styled.div`
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
-    flex: 1;
-    width: 100%;
+    flex-wrap: nowrap;
+    align-self: center;
+    max-width: 1300px;
     min-height: 640px;
-    text-align: center;
-    margin: 120px 0 0 0;
-`
-const Title = styled.h1`
-    color: #808080;
+    margin: 80px auto 0 auto; 
 `
 const FormContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: nowrap;
-    max-width: 750px;
-    padding: 2rem;
-    margin: 0;
+    text-align: center;
+`
+const StyledForm = styled.form`
+    width: 100%;
+`
+
+const InputGroup = styled.div`
+    padding: 0.5rem;
+    max-width: 640px;
+    margin: auto;
 `
 
 const InputField = styled.input`
     ::placeholder { 
         color: lightgray;
-        opacity: 1; /* Firefox */
+        opacity: 1; 
         font-size: 0.9rem;
-        font-weight: 200;
     }
-    width: 95%;
-    max-width: 950px;
     font-size: 1.2rem;
-    font-weight: 200;
+    width: 90%;
     border: none;
     border-bottom: 1px solid lightgray;
     background: white;
-    padding: 0.5rem;
+    padding: 0.5rem 0;
     margin: 0.5rem 0;
     &:focus {
         outline: none;
@@ -61,13 +56,13 @@ const InputField = styled.input`
 `
 const FormButton = styled.button`
     background: transparent;
-    width: auto;
+    max-width: 300px;
     font-size: 1rem;
     font-weight: 200;
     padding: 1rem 1.5rem;
     margin: 2rem 1rem 1rem 1rem;
-    color: ${ props => props.disabled ? 'lightgray' : '#808080' };
-    border: 1px solid ${ props => props.disabled ? 'lightgray' : '#808080' };
+    color: ${ props => props.disabled ? 'lightgray' : props => props.primaryColor };
+    border: 1px solid ${ props => props.disabled ? 'lightgray' : props => props.primaryColor };
     transition: all 0.1s ease-in-out;
     &:focus {
         outline: none;
@@ -78,23 +73,22 @@ const FormButton = styled.button`
     }
     ${ props => !props.disabled && `
         &:hover {
-            transform: scale(1.1);
+            transform: scale(1.05);
             background:  transparent;
-            color: #808080;
-            border: 1px solid  #808080;
         }
         `
     }
 `
+
 const Text = styled.p`
     font-size: 1.3rem;
     line-height: 1.7rem;
-    width: 60%;
     color: #808080;
-    font-weight: 200;
     margin: 0;
-    padding: 0;
+    padding: 1rem 1rem 3rem 1rem;
+    text-align: center;
 `
+
 const ErrorText = styled.div`
     font-size: 1rem;
     line-height: 1.7rem;
@@ -102,6 +96,15 @@ const ErrorText = styled.div`
     font-weight: 200;
     margin: 0;
     padding: 1rem;
+`
+const FormError = styled.div`
+    color: red;
+    font-weight: 200;
+`
+
+const Title = styled.h1`
+    color: #808080;
+    text-align: center;
 `
 
 const INITIAL_PAGE_STATE = {
@@ -202,7 +205,11 @@ const INITIAL_SIGNUP_FORM_STATE = {
     city: '',
     country: '',
     isLoading: false,
-    error: null,
+    error: '',
+    namelValidation: '',
+    phoneValidation: '',
+    cityValidation: '',
+    countryValidation: '',
 };
 
 class EditForm extends Component {
@@ -242,11 +249,21 @@ class EditForm extends Component {
         
         profile.patch(authToken, data)
         .then((response) => response.json())
-        .then((responseJson) => {
-            history.push(routes.ACCOUNT)
+        .then((data) => {
+            if (!data.errors) {
+                history.push(routes.ACCOUNT)
+            }
+            else {
+                this.setState({ error: apiError.message(data.errors) })
+                this.setState({ nameValidation: apiError.validationMessage(data.errors, 'name') })
+                this.setState({ phoneValidation: apiError.validationMessage(data.errors, 'phone') })
+                this.setState({ cityValidation: apiError.validationMessage(data.errors, 'city') })
+                this.setState({ countryValidation: apiError.validationMessage(data.errors, 'country') })
+            }
         })
         .catch((error) => {
             console.dir(error)
+            this.setState(byPropKey('error', "UNDEFINED_ERROR"));
         })
        
 
@@ -260,40 +277,64 @@ class EditForm extends Component {
             city,
             country,
             error,
-            isLoading
+            isLoading,
+            nameValidation,
+            phoneValidation,
+            cityValidation,
+            countryValidation,
         } = this.state;
 
         const { t } = this.props;
 
         const isInvalid =
-            name === '';
+            phone === '';
 
         return (
-            <form onSubmit={this.onUpdate}>
-                <InputField
-                    value={name}
-                    onChange={event => this.setState(byPropKey('name', event.target.value))}
-                    type="text"
-                    placeholder={ t('Account_Name') }
-                />
-                <InputField
-                    value={phone}
-                    onChange={event => this.setState(byPropKey('phone', event.target.value))}
-                    type="text"
-                    placeholder={ t('Account_Phone') }
-                />
-                <InputField
-                    value={city}
-                    onChange={event => this.setState(byPropKey('city', event.target.value))}
-                    type="text"
-                    placeholder={ t('Account_City') }
-                />
-                <InputField
-                    value={country}
-                    onChange={event => this.setState(byPropKey('country', event.target.value))}
-                    type="text"
-                    placeholder={ t('Account_Country') }
-                />
+            <StyledForm onSubmit={this.onUpdate}>
+                <InputGroup>
+                    <InputField
+                        value={name}
+                        onChange={event => this.setState(byPropKey('name', event.target.value))}
+                        type="text"
+                        placeholder={ t('Account_Name') }
+                    />
+                    { nameValidation && 
+                        <FormError>{ t(nameValidation) }</FormError>
+                    }
+                </InputGroup>
+                <InputGroup>
+                    <InputField
+                        value={phone}
+                        onChange={event => this.setState(byPropKey('phone', event.target.value))}
+                        type="text"
+                        placeholder={ t('Account_Phone') }
+                    />
+                    { phoneValidation && 
+                        <FormError>{ t(phoneValidation) }</FormError>
+                    }
+                </InputGroup>
+                <InputGroup>
+                    <InputField
+                        value={city}
+                        onChange={event => this.setState(byPropKey('city', event.target.value))}
+                        type="text"
+                        placeholder={ t('Account_City') }
+                    />
+                    { cityValidation && 
+                        <FormError>{ t(cityValidation) }</FormError>
+                    }
+                </InputGroup>
+                <InputGroup>
+                    <InputField
+                        value={country}
+                        onChange={event => this.setState(byPropKey('country', event.target.value))}
+                        type="text"
+                        placeholder={ t('Account_Country') }
+                    />
+                    { countryValidation && 
+                        <FormError>{ t(countryValidation) }</FormError>
+                    }
+                </InputGroup>
                 <FormButton disabled={isInvalid} type="submit">
                     { !!isLoading
                         ?   <Loader type="Oval" color='#2E4C6D' height="16" width="16" /> 
@@ -301,9 +342,9 @@ class EditForm extends Component {
                     }
                 </FormButton>
                 <ErrorText>
-                    { error && <p>{error.message}</p> }
+                    { error && <p>{t(error)}</p> }
                 </ErrorText>
-            </form>
+            </StyledForm>
         );
     }
 }
@@ -311,7 +352,8 @@ class EditForm extends Component {
 const INITIAL_PASSWORD_FORM_STATE = {
     password: '',
     confirmation: '',
-    isLoading: false
+    isLoading: false,
+    passwordValidation: ''
 }
 
 class PasswordForm extends Component {
@@ -355,7 +397,8 @@ class PasswordForm extends Component {
             password,
             confirmation,
             error,
-            isLoading
+            isLoading,
+            passwordValidation
         } = this.state;
 
         const { t } = this.props;
@@ -365,19 +408,26 @@ class PasswordForm extends Component {
             password === '';
 
         return (
-            <form onSubmit={this.onPasswordChange}>
-                <InputField
-                    value={password}
-                    onChange={event => this.setState(byPropKey('password', event.target.value))}
-                    type="password"
-                    placeholder={ t('Edit_Profile_New_Password') }
-                />
-                <InputField
-                    value={confirmation}
-                    onChange={event => this.setState(byPropKey('confirmation', event.target.value))}
-                    type="password"
-                    placeholder={ t('Edit_Profile_Password_Confirm') }
-                />
+            <StyledForm onSubmit={this.onPasswordChange}>
+                <InputGroup>
+                    <InputField
+                        value={password}
+                        onChange={event => this.setState(byPropKey('password', event.target.value))}
+                        type="password"
+                        placeholder={ t('Edit_Profile_New_Password') }
+                    />
+                    { passwordValidation && 
+                        <FormError>{ t(passwordValidation) }</FormError>
+                    }
+                </InputGroup>
+                <InputGroup>
+                    <InputField
+                        value={confirmation}
+                        onChange={event => this.setState(byPropKey('confirmation', event.target.value))}
+                        type="password"
+                        placeholder={ t('Edit_Profile_Password_Confirm') }
+                    />
+                </InputGroup>
                 <FormButton disabled={isInvalid} type="submit">
                     { !!isLoading
                         ?   <Loader type="Oval" color='#2E4C6D' height="16" width="16" /> 
@@ -387,7 +437,7 @@ class PasswordForm extends Component {
                 <ErrorText>
                     { error && <p>{error.message}</p> }
                 </ErrorText>
-            </form>
+            </StyledForm>
         );
     }
 }
