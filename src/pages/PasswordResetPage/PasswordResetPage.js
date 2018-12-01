@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { compose } from 'recompose';
 import { Helmet } from "react-helmet";
 import { translate } from 'react-i18next';
-import { Link, withRouter } from 'react-router-dom';
 import styled from 'styled-components'
+import Loader from 'react-loader-spinner'
+import { withRouter } from 'react-router-dom';
 
 import { auth } from '../../api'
-import * as routes from '../../constants/routes';
 import * as apiError from '../../utils/apiError'
 
 const PageContainer = styled.div`
@@ -87,6 +87,14 @@ const Text = styled.p`
     text-align: center;
 `
 
+const ResponseText = styled.div`
+    font-size: 1.1rem;
+    line-height: 1.7rem;
+    color: #808080;
+    margin: 0;
+    padding: 1rem;
+`
+
 const ErrorText = styled.div`
     font-size: 1rem;
     line-height: 1.7rem;
@@ -105,99 +113,87 @@ const Title = styled.h1`
     text-align: center;
 `
 
-const StyledSignUpLink = styled.p`
-    color: ${ props => props.textcolor };
-    a {
-        color: ${ props => props.linkcolor };
-        text-decoration: none;
-        &:hover {
-            color: ${ props => props.hovercolor };
-            text-decoration: none;
-            font-weight: bold;
-        }
-    }
-`
 
-class SignUpPage extends Component {
-    
+class PasswordResetPage extends Component {
+
     render() {
-        const { t, history } = this.props
-    
-        return (
-            <div>
+        const { id } = this.props.match.params
+        const { t } = this.props
+
+        return(
+             <div>
                 <Helmet>
-                    <title> { t('Global_Sign_Up') } </title>
+                    <title>{ t('Password_Reset_Title') }</title>
                     <meta name="description" content="Ramon Cardena - Professional web development." />
                 </Helmet>
                 <PageContainer>
                     <Title>
-                        { t('Sign_Up_H1') }
+                        { t('Password_Reset_H1') }
                     </Title>
                     <Text>
-                        { t('Sign_Up_Intro') }
+                        { t('Password_Reset_Intro') }
                     </Text>
                     <FormContainer>
-                        <SignUpForm t={t} history={history} />
+                        <PasswordResetForm t={t} id={id}/>
                     </FormContainer>
                 </PageContainer>
             </div>
         )
     }
 }
+   
 
-const INITIAL_STATE = {
-    fullname: '',
-    email: '',
-    passwordOne: '',
-    passwordTwo: '',
-    error: '',
-    nameValidation: '',
-    emailValidation: '',
-    passwordValidation: ''
-};
 const byPropKey = (propertyName, value) => () => ({
-    [propertyName]: value,
-});
+  [propertyName]: value,
+})
 
-class SignUpForm extends Component {
+
+const INITIAL_PASSWORD_FORM_STATE = {
+    isLoading: false,
+    password: '',
+    confirmation: '',
+    error: '',
+    passwordValidation: '',
+    response: '',
+}
+
+class PasswordResetForm extends Component {
     constructor(props) {
         super(props);
-        this.state = { ...INITIAL_STATE };
+
+        this.state = { ...INITIAL_PASSWORD_FORM_STATE };
     }
 
-    onSubmit = (event) => {
+    onPasswordChange = (event) => {
         const {
-            fullname,
-            email,
-            passwordOne,
+            password
         } = this.state;
 
         const {
-            history,
+            t,
+            id
         } = this.props;
+        
+        
+        const payload = Object.assign({},{
+            id: id,
+            password: password
+        })
 
-        const newUser = {
-            "name": fullname,
-            "email": email,
-            "password": passwordOne
-        }
-
-        auth.register(newUser)
+        auth.reset(payload)
         .then((response) => response.json())
         .then((data) => {
             console.dir(data)
             if (!data.errors) {
-                history.push(routes.HOME);
+                this.setState({ response: t('Password_Reset_Response')})
             }
             else {
                 this.setState({ error: apiError.message(data.errors) })
-                this.setState({ nameValidation: apiError.validationMessage(data.errors, 'name') })
-                this.setState({ emailValidation: apiError.validationMessage(data.errors, 'email') })
                 this.setState({ passwordValidation: apiError.validationMessage(data.errors, 'password') })
             }
         })
-        .catch( error => {
-            console.log(error)
+        .catch((error) => {
+            console.dir(error)
             this.setState(byPropKey('error', "UNDEFINED_ERROR"));
         })
 
@@ -205,56 +201,29 @@ class SignUpForm extends Component {
     }
 
     render() {
-        const {t} = this.props
-
         const {
-            fullname,
-            email,
-            passwordOne,
-            passwordTwo,
+            password,
+            confirmation,
             error,
-            nameValidation,
-            emailValidation,
-            passwordValidation
+            isLoading,
+            passwordValidation,
+            response
         } = this.state;
 
-        const isInvalid =
-            passwordOne !== passwordTwo ||
-            passwordOne === '' ||
-            email === '' ||
-            fullname === '';
+        const { t } = this.props;
 
+        const isInvalid =
+            password !== confirmation ||
+            password === '';
 
         return (
-            <StyledForm onSubmit={this.onSubmit}>
-             <InputGroup>
-                    <InputField
-                        value={fullname}
-                        onChange={event => this.setState(byPropKey('fullname', event.target.value))}
-                        type="text"
-                        placeholder={ t('Sign_Up_Full_Name') }
-                    />
-                    { nameValidation && 
-                        <FormError>{ t(nameValidation) }</FormError>
-                    }
-                </InputGroup>
+            <StyledForm onSubmit={this.onPasswordChange}>
                 <InputGroup>
                     <InputField
-                        value={email}
-                        onChange={event => this.setState(byPropKey('email', event.target.value))}
-                        type="text"
-                        placeholder={ t('Global_Email_Address') }
-                    />
-                    { emailValidation && 
-                        <FormError>{ t(emailValidation) }</FormError>
-                    }
-                </InputGroup>
-                <InputGroup>
-                    <InputField
-                        value={passwordOne}
-                        onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
+                        value={password}
+                        onChange={event => this.setState(byPropKey('password', event.target.value))}
                         type="password"
-                        placeholder={ t('Global_Password') }
+                        placeholder={ t('Edit_Profile_New_Password') }
                     />
                     { passwordValidation && 
                         <FormError>{ t(passwordValidation) }</FormError>
@@ -262,37 +231,34 @@ class SignUpForm extends Component {
                 </InputGroup>
                 <InputGroup>
                     <InputField
-                        value={passwordTwo}
-                        onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
+                        value={confirmation}
+                        onChange={event => this.setState(byPropKey('confirmation', event.target.value))}
                         type="password"
-                        placeholder={ t('Sign_Up_Password_Confirm') }
+                        placeholder={ t('Edit_Profile_Password_Confirm') }
                     />
                 </InputGroup>
                 <FormButton disabled={isInvalid} type="submit">
-                    { t('Global_Sign_Up') }
+                    { !!isLoading
+                        ?   <Loader type="Oval" color='#2E4C6D' height="16" width="16" /> 
+                        :   t('Edit_Profile_Change_Password_Button')
+                    }
                 </FormButton>
                 <ErrorText>
-                    { error && <p> { t(error) } </p> }
+                    { error && <p> {t(error)} </p> }
                 </ErrorText>
+                <ResponseText>
+                    { response }
+                </ResponseText>
             </StyledForm>
         );
     }
 }
 
-const SignUpLink = ({t, textcolor, hovercolor, linkcolor}) =>
-    <StyledSignUpLink textcolor={textcolor} linkcolor={linkcolor} hovercolor={hovercolor}>
-        { t('Login_New_Account_Link') }
-        {' '}
-        <Link to={routes.SIGN_UP}>{ t('Global_Sign_Up') }</Link>
-    </StyledSignUpLink>
-
-
-
 export default compose(
-    translate('index')
-)(withRouter(SignUpPage));
+    translate('index'),
+    withRouter
+)(PasswordResetPage)
 
 export {
-    SignUpForm,
-    SignUpLink,
-};
+  PasswordResetForm
+}

@@ -4,62 +4,62 @@ import { translate } from 'react-i18next';
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
+import { auth } from '../../api'
+import * as apiError from '../../utils/apiError'
 import * as routes from '../../constants/routes'
-
 
 const PageContainer = styled.div`
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
-    flex: 1;
-    width: 100%;
-    height: 640px;
-    text-align: center;
-    margin: 80px 0 0 0;
+    flex-wrap: nowrap;
+    align-self: center;
+    max-width: 1300px;
+    min-height: 640px;
+    margin: 80px auto 0 auto; 
 `
 
 const FormContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: nowrap;
-    max-width: 750px;
-    padding: 2rem;
-    margin: 0;
+    text-align: center;
 `
+const StyledForm = styled.form`
+    width: 100%;
+`
+
+const InputGroup = styled.div`
+    padding: 0.5rem;
+    max-width: 640px;
+    margin: auto;
+`
+
 const InputField = styled.input`
     ::placeholder { 
         color: lightgray;
-        opacity: 1; /* Firefox */
+        opacity: 1; 
         font-size: 0.9rem;
-        font-weight: 200;
     }
-    width: 95%;
-    max-width: 950px;
     font-size: 1.2rem;
-    font-weight: 200;
+    width: 90%;
     border: none;
     border-bottom: 1px solid lightgray;
     background: white;
-    padding: 0.5rem;
+    padding: 0.5rem 0;
     margin: 0.5rem 0;
     &:focus {
         outline: none;
         border-bottom: 1px solid #3b5787;
     }
 `
-
 const FormButton = styled.button`
     background: transparent;
+    max-width: 300px;
     font-size: 1rem;
     font-weight: 200;
     padding: 1rem 1.5rem;
     margin: 2rem 1rem 1rem 1rem;
-    color: ${ props => props.disabled ? 'lightgray' : '#808080' };
-    border: 1px solid ${ props => props.disabled ? 'lightgray' : '#808080' };
+    color: ${ props => props.disabled ? 'lightgray' : props => props.primaryColor };
+    border: 1px solid ${ props => props.disabled ? 'lightgray' : props => props.primaryColor };
     transition: all 0.1s ease-in-out;
     &:focus {
         outline: none;
@@ -70,22 +70,28 @@ const FormButton = styled.button`
     }
     ${ props => !props.disabled && `
         &:hover {
-            transform: scale(1.1);
+            transform: scale(1.05);
             background:  transparent;
-            color: #808080;
-            border: 1px solid  #808080;
         }
         `
     }
 `
+
 const Text = styled.p`
     font-size: 1.3rem;
     line-height: 1.7rem;
-    width: 60%;
     color: #808080;
-    font-weight: 200;
     margin: 0;
-    padding: 1rem 1rem 4rem 1rem;
+    padding: 1rem 1rem 3rem 1rem;
+    text-align: center;
+`
+
+const ResponseText = styled.div`
+    font-size: 1.1rem;
+    line-height: 1.7rem;
+    color: #808080;
+    margin: 0;
+    padding: 1rem;
 `
 
 const ErrorText = styled.div`
@@ -95,6 +101,15 @@ const ErrorText = styled.div`
     font-weight: 200;
     margin: 0;
     padding: 1rem;
+`
+const FormError = styled.div`
+    color: red;
+    font-weight: 200;
+`
+
+const Title = styled.h1`
+    color: #808080;
+    text-align: center;
 `
 
 const StyledForgetLink = styled.p`
@@ -113,12 +128,15 @@ const StyledForgetLink = styled.p`
 const PasswordForgetPage = ({t}) =>
     <div>
         <Helmet>
-            <title>{ t('Password_Reset_Title') }</title>
+            <title>{ t('Password_Forget_Title') }</title>
             <meta name="description" content="Ramon Cardena - Professional web development." />
         </Helmet>
         <PageContainer>
+            <Title>
+                { t('Password_Forget_H1') }
+            </Title>
             <Text>
-                { t('Password_Reset_Intro') }
+                { t('Password_Forget_Intro') }
             </Text>
             <FormContainer>
                 <PasswordForgetForm t={t} />
@@ -132,7 +150,9 @@ const byPropKey = (propertyName, value) => () => ({
 
 const INITIAL_STATE = {
   email: '',
-  error: null,
+  error: '',
+  emailValidation: '',
+  response: ''
 }
 
 class PasswordForgetForm extends Component {
@@ -143,15 +163,28 @@ class PasswordForgetForm extends Component {
     }
 
     onSubmit = (event) => {
-        // const { email } = this.state
+        const { t } = this.props
 
-        // auth.doPasswordReset(email)
-        //   .then(() => {
-        //     this.setState({ ...INITIAL_STATE })
-        //   })
-        //   .catch(error => {
-        //     this.setState(byPropKey('error', error))
-        //   })
+        const payload = {
+            email: this.state.email
+        }
+        
+        auth.forgot(payload)
+        .then((response) => response.json())
+        .then((data) => {
+            console.dir(data)
+            if (!data.errors) {
+                this.setState({ response: t('Password_Forget_Response')})
+            }
+            else {
+                this.setState({ error: apiError.message(data.errors) })
+                this.setState({ emailValidation: apiError.validationMessage(data.errors, 'email') })
+            }
+        })
+        .catch( error => {
+            console.log(error)
+            this.setState(byPropKey('error', "UNDEFINED_ERROR"));
+        })
 
         event.preventDefault()
     }
@@ -162,32 +195,42 @@ class PasswordForgetForm extends Component {
         const {
             email,
             error,
+            emailValidation,
+            response
         } = this.state
 
         const isInvalid = email === ''
 
         return (
-        <form onSubmit={this.onSubmit}>
-            <InputField
-            value={this.state.email}
-            onChange={event => this.setState(byPropKey('email', event.target.value))}
-            type="text"
-            placeholder={ t('Global_Email_Address') }
-            />
+        <StyledForm onSubmit={this.onSubmit}>
+            <InputGroup>
+                <InputField
+                value={this.state.email}
+                onChange={event => this.setState(byPropKey('email', event.target.value))}
+                type="text"
+                placeholder={ t('Global_Email_Address') }
+                />
+                { emailValidation && 
+                    <FormError>{ t(emailValidation) }</FormError>
+                }
+            </InputGroup>
             <FormButton disabled={isInvalid} type="submit">
-                { t('Password_Reset_Title') }
+                { t('Password_Forget_Title') }
             </FormButton>
             <ErrorText>
-            { error && <p>{error.message}</p> }
+                { error && <p> { t(error) } </p> }
             </ErrorText>
-        </form>
+            <ResponseText>
+                { response }
+            </ResponseText>
+        </StyledForm>
         )
     }
 }
 
 const PasswordForgetLink = ({t, textcolor, hovercolor, linkcolor}) =>
   <StyledForgetLink  textcolor={textcolor} linkcolor={linkcolor} hovercolor={hovercolor}>
-    <Link to={routes.PASSWORD_RESET}>{ t('Login_Forgot_Password') }</Link>
+    <Link to={routes.PASSWORD_FORGET}>{ t('Login_Forgot_Password') }</Link>
   </StyledForgetLink>
 
 export default translate('index')(PasswordForgetPage)

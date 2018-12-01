@@ -18,6 +18,7 @@ import FourPage from '../pages/FourPage'
 import SignInPage from '../pages/SignInPage'
 import SignUpPage from '../pages/SignUpPage'
 import PasswordForgetPage from '../pages/PasswordForgetPage'
+import PasswordResetPage from '../pages/PasswordResetPage'
 import VerifyPage from '../pages/VerifyPage'
 import AccountPage from '../pages/AccountPage'
 import EditProfilePage from '../pages/EditProfilePage'
@@ -133,8 +134,12 @@ class App extends Component {
                                 component={() => <SignUpPage />}
                             />
                             <Route
-                                exact path={routes.PASSWORD_RESET}
+                                exact path={routes.PASSWORD_FORGET}
                                 component={() => <PasswordForgetPage />}
+                            />
+                            <Route
+                                exact path={routes.PASSWORD_RESET + '/:id'}
+                                component={() => <PasswordResetPage />}
                             />
                             <Route
                                 exact path={routes.VERIFY + '/:id'}
@@ -152,7 +157,7 @@ class App extends Component {
                                 exact path={routes.EDIT_PROFILE}
                                 component={() => <EditProfilePage />}
                             />
-                            {/* <Route  component={Error404} /> */}
+                            {/* <Route  component={() => <Error404Page />} /> */}
                         </Switch>
 
                     <BottomNavigation>

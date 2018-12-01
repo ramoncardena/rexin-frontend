@@ -35,3 +35,12 @@ export const reset = (data) => fetch(config.BASE_URL + '/reset', {
     },
     body:  JSON.stringify(data)  
 })
+
+export const forgot = (data) => fetch(config.BASE_URL + '/forgot', {
+    method: 'POST',
+    mode: 'cors', 
+    headers: {
+        'Content-Type' : 'application/json'
+    },
+    body:  JSON.stringify(data)  
+})
