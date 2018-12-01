@@ -6,27 +6,30 @@ import styled from 'styled-components'
 import { translate } from 'react-i18next'
 import './App.css';
 
-import * as routes from '../constants/routes';
-import * as config from '../config';
+import * as routes from './constants/routes';
+import * as config from './config';
 
-import NavBar from './NavBar'
-import HomePage from '../pages/HomePage'
-import OnePage from '../pages/OnePage'
-import TwoPage from '../pages/TwoPage'
-import ThreePage from '../pages/ThreePage'
-import FourPage from '../pages/FourPage'
-import SignInPage from '../pages/SignInPage'
-import SignUpPage from '../pages/SignUpPage'
-import PasswordForgetPage from '../pages/PasswordForgetPage'
-import PasswordResetPage from '../pages/PasswordResetPage'
-import VerifyPage from '../pages/VerifyPage'
-import AccountPage from '../pages/AccountPage'
-import EditProfilePage from '../pages/EditProfilePage'
-import FooterBar from './FooterBar'
+// Components
+import NavBar from './components/NavBar'
+import FooterBar from './components/FooterBar'
+// Pages
+import HomePage from './pages/HomePage'
+import OnePage from './pages/OnePage'
+import TwoPage from './pages/TwoPage'
+import ThreePage from './pages/ThreePage'
+import FourPage from './pages/FourPage'
+// Account Pages
+import SignInPage from './pages/account/SignInPage'
+import SignUpPage from './pages/account/SignUpPage'
+import PasswordForgetPage from './pages/account/PasswordForgetPage'
+import PasswordResetPage from './pages/account/PasswordResetPage'
+import VerifyPage from './pages/account/VerifyPage'
+import AccountPage from './pages/account/AccountPage'
+import EditProfilePage from './pages/account/EditProfilePage'
+// Admin Pages
+import AdminPage from './pages/admin/AdminPage'
 
-import AdminPage from '../admin/AdminPage'
-
-import logo from '../images/logo.png'
+import logo from './images/logo.png'
 
 const SiteContainer = styled.div`
     display: flex;

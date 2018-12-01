@@ -4,9 +4,9 @@ import { translate } from 'react-i18next';
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-import { auth } from '../../api'
-import * as apiError from '../../utils/apiError'
-import * as routes from '../../constants/routes'
+import { auth } from '../../../api'
+import * as apiError from '../../../utils/apiError'
+import * as routes from '../../../constants/routes'
 
 const PageContainer = styled.div`
     display: flex;

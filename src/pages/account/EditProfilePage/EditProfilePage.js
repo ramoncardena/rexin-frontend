@@ -7,10 +7,10 @@ import { translate } from 'react-i18next';
 import styled from 'styled-components'
 import Loader from 'react-loader-spinner'
 
-import * as routes from '../../constants/routes';
-import { profile } from '../../api'
-import withAuthorization from '../../utils/withAuthorization'
-import * as apiError from '../../utils/apiError'
+import * as routes from '../../../constants/routes';
+import { profile } from '../../../api'
+import withAuthorization from '../../../utils/withAuthorization'
+import * as apiError from '../../../utils/apiError'
 
 const PageContainer = styled.div`
     display: flex;

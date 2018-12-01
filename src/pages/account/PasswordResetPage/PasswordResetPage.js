@@ -6,8 +6,8 @@ import styled from 'styled-components'
 import Loader from 'react-loader-spinner'
 import { withRouter } from 'react-router-dom';
 
-import { auth } from '../../api'
-import * as apiError from '../../utils/apiError'
+import { auth } from '../../../api'
+import * as apiError from '../../../utils/apiError'
 
 const PageContainer = styled.div`
     display: flex;

@@ -8,9 +8,9 @@ import { withRouter } from 'react-router-dom';
 import Loader from 'react-loader-spinner'
 
 
-import * as routes from '../../constants/routes';
-import { profile } from '../../api'
-import withAuthorization from '../../utils/withAuthorization'
+import * as routes from '../../../constants/routes';
+import { profile } from '../../../api'
+import withAuthorization from '../../../utils/withAuthorization'
 
 const PageContainer = styled.div`
     display: flex;

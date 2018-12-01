@@ -6,7 +6,7 @@ import { translate } from 'react-i18next';
 import styled from 'styled-components'
 import { withRouter } from 'react-router-dom';
 
-import withAuthorization from '../../utils/withAuthorization'
+import withAuthorization from '../../../utils/withAuthorization'
 
 const PageContainer = styled.div`
     display: flex;
