@@ -22,7 +22,7 @@ const Title = styled.h1`
     color: #808080;
 `
 
-class HomePage extends Component {
+class FourPage extends Component {
 
     componentDidMount() {
         const {onNavigationEnded, location} = this.props
@@ -35,12 +35,12 @@ class HomePage extends Component {
         return (
             <div>
                 <Helmet>
-                    <title>{ t('Page_Title') }</title>
+                    <title>{ t('Four_Title') }</title>
                     <meta name="description" content="Basic web scaffolding" />
                 </Helmet>
 
                 <PageContainer>
-                    <Title>{ t('Home_Title') }</Title>
+                    <Title>{ t('Four_H1') }</Title>
                 </PageContainer>
             </div>
         );
@@ -59,4 +59,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default compose(
     translate('index'),
     connect(mapStateToProps, mapDispatchToProps)
-)(withRouter(HomePage))
+)(withRouter(FourPage))

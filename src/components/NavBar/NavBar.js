@@ -1,14 +1,17 @@
 import React, {Component} from 'react'
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import MediaQuery from 'react-responsive'
 import i18next from 'i18next'
 
 import NavMenu from '../NavMenu'
 import NavIconMenu from '../NavIconMenu'
+import SignOutButton from '../SignOutButton'
+import SignInButton from '../SignInButton'
 import ModalMenu from '../ModalMenu'
 import LangSelector from '../LangSelector'
 
+import * as profile from '../../api/profile'
 
 const StyledNavBar = styled.div`
     width: 100%;
@@ -42,24 +45,87 @@ const StyledNavRight = styled.div`
 `
 const StyledTitle = styled.div`
     margin-left: 5px;
+    a {
+        margin: 0;
+        padding: 0;
+        color: ${ props => props.primaryColor };
+        text-decoration: none;
+    }
 `
 
-const StyledLink = styled(Link)`
-    margin: 0;
-    padding: 0;
-    color: ${ props => props.primaryColor };
-    text-decoration: none;
+const TabletPortaitUp = styled.span`
+    display: inherit;
+    @media screen and (max-width: 600px) {
+        display: none;
+    }
 `
 
-const TabletPortaitUp = props => <MediaQuery {...props} minWidth={600} />;
-const TabletLandscapeUp = props => <MediaQuery {...props} minWidth={900} />;
-const TabletLandscapeDown = props => <MediaQuery {...props} maxWidth={900} />;
+const TabletLandscapeUp = styled.div`
+    display: inherit;
+    @media screen and (max-width: 960px) {
+        display: none;
+    }
+`
+
+const TabletLandscapeDown = styled.span`
+    display: inherit;
+    @media screen and (min-width: 900px) {
+        display: none;
+    }
+`
+
+const INITIAL_STATE = {
+    isAdmin: false
+}
 
 /* Component: NAVBAR */
 class NavBar extends Component { 
-    
+    _isMounted = false
+
+    _checkAdmin = () => {
+        const { authToken } = this.props
+
+        if (authToken!=null) {
+            profile.retrieve(authToken)
+            .then((response) => response.json())
+            .then((item) => {
+                if (this._isMounted && item.role === "admin") this.setState({isAdmin: true})
+            })
+            .catch((err) => {
+                if (this._isMounted) this.setState({isAdmin: false})
+            })
+        }
+        else {
+            if (this._isMounted) this.setState({isAdmin: false})
+        }
+    }
+
+    constructor(props) {
+        super(props)
+        
+        this.state = { ...INITIAL_STATE };
+    }
+
+    componentWillReceiveProps(){
+        this._isMounted = true
+        this._checkAdmin()
+    }
+
+    componentDidMount() {
+        this._isMounted = true
+        this._checkAdmin()
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
     render() {
+        const { authToken} = this.props
+        const { isAdmin } = this.state
         const menuElements = this.props.elements
+        const privateElements = this.props.privates
+        const adminElements = this.props.admins
         const currLang = i18next.languages[0]
 
         return (
@@ -73,6 +139,7 @@ class NavBar extends Component {
                             primaryColor={this.props.primaryColor} 
                             secondaryColor={this.props.secondaryColor} 
                         />
+
                     </StyledNavLeft>
 
                     <StyledNavRight>
@@ -81,6 +148,18 @@ class NavBar extends Component {
                                 primaryColor={this.props.primaryColor} 
                                 secondaryColor={this.props.secondaryColor}
                             />
+                            { authToken &&
+                                <NavMenu items={privateElements} 
+                                primaryColor={this.props.primaryColor} 
+                                secondaryColor={this.props.secondaryColor}
+                                />
+                            }
+                            { authToken && isAdmin &&
+                                <NavMenu items={adminElements} 
+                                primaryColor={this.props.primaryColor} 
+                                secondaryColor={this.props.secondaryColor}
+                                />
+                            }
                         </TabletLandscapeUp>
 
                         <TabletPortaitUp>
@@ -102,10 +181,22 @@ class NavBar extends Component {
                             secondaryColor={this.props.secondaryColor}
                         />
                        
+                        { authToken
+                            ?   <SignOutButton 
+                                    textcolor={this.props.primaryColor} 
+                                    hovercolor={this.props.secondaryColor}
+                                />
+                            :   <SignInButton 
+                                    link={this.props.loginRoute} 
+                                    textcolor={this.props.primaryColor} 
+                                    hovercolor={this.props.secondaryColor}
+                                />
+                        }
+                        
+
                         <TabletLandscapeDown>
                             <ModalMenu 
                                 items={menuElements} 
-                                folded={true}
                                 primaryColor={this.props.primaryColor}
                                 secondaryColor={this.props.secondaryColor}
                             />
@@ -121,23 +212,28 @@ class NavBar extends Component {
 
 /* Component: NAVLOGO */
 const NavLogo = ({src, description}) => (
-    <StyledLink to="/">
+    <Link to="/">
         <img src={src} alt={description} />
-    </StyledLink>
+    </Link>
 );
 
 /* Component: NAVTITLE */
 const NavTitle = ({title, primaryColor, secondaryColor}) => (
-    <StyledTitle>
-        <StyledLink to="/" primaryColor={primaryColor}> 
+    <StyledTitle primaryColor={primaryColor}>
+        <Link to="/"> 
             {title}
-        </StyledLink>
+        </Link>
     </StyledTitle>
 );
 
+const mapStateToProps = (state) => ({
+    authToken: state.authState.authToken,
+});
 
-export default NavBar
+const mapDispatchToProps = (dispatch) => ({
+    onLogoutSuccess: (token) => dispatch({ type: 'LOGOUT_SUCCESS', token}),
+});
 
-
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar)
 
 

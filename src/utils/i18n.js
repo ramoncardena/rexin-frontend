@@ -6,7 +6,7 @@ import { reactI18nextModule } from "react-i18next";
 const options = {
     fallbackLng: ['en', 'es'],
 
-    ns: ['nav', 'index', 'webs'],
+    ns: ['index', 'errors'],
     defaultNS: "index",
 
     debug: true,
