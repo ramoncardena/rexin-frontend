@@ -10,6 +10,7 @@ import Loader from 'react-loader-spinner'
 import * as routes from '../../constants/routes';
 import { profile } from '../../api'
 import withAuthorization from '../../utils/withAuthorization'
+import * as apiError from '../../utils/apiError'
 
 const PageContainer = styled.div`
     display: flex;
@@ -406,8 +407,10 @@ const authCondition = (authToken) => !!authToken
 export default compose(
     withAuthorization(authCondition),
     translate('index'),
-    connect(mapStateToProps, mapDispatchToProps)
-)(withRouter(EditProfilePage))
+    connect(mapStateToProps, mapDispatchToProps),
+    withRouter,
+    translate('index')
+)(EditProfilePage)
 
 export {
     EditForm,

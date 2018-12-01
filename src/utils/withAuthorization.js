@@ -47,6 +47,7 @@ const INITIAL_STATE = {
 
 const withAuthorization = (authCondition) => (Component) => {
     class withAuthorization extends React.Component {
+        _isMounted = false
 
         constructor(props) {
             super(props)
@@ -54,6 +55,8 @@ const withAuthorization = (authCondition) => (Component) => {
         }
 
         componentDidMount() {
+            this._isMounted = true
+
             const { onTokenRecover } = this.props
             const sToken = localStorage.getItem('token')
 
@@ -66,7 +69,7 @@ const withAuthorization = (authCondition) => (Component) => {
                         this.props.history.push(routes.SIGN_IN)
                     }
                     else {
-                    this.setState({isResolved : true})
+                        if (this._isMounted) this.setState({isResolved : true})
                     }
                 })
                 .catch((error) => {
@@ -80,6 +83,10 @@ const withAuthorization = (authCondition) => (Component) => {
             }
         }
 
+        componentWillUnmount() {
+            this._isMounted = false;
+        }
+        
         render() {
             return this.state.isResolved 
                 ? 

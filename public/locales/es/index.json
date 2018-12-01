@@ -63,5 +63,18 @@
     "EMAIL_IS_NOT_VALID": "Dirección de email incorrecta",
     "WRONG_PASSWORD": "Contraseña incorrecta",
     "USER_DOES_NOT_EXISTS": "El usuario no existe",
-    "IS_EMPTY": "No puede estar vacío"
+    "IS_EMPTY": "No puede estar vacío",
+    "MISSING": "Es obligatorio",
+    "PASSWORD_TOO_SHORT_MIN_5": "Contraseña demasiado corta (mín. 5)",
+    "BLOCKED_USER": "El usuario está bloqueado",
+    "NOT_FOUND_OR_ALREADY_VERIFIED": "No se ha encontrado o ya ha sido verificado",
+    "PASSWORD_CHANGED": "La contraseña ha cambiado",
+    "NOT_FOUND": "No se ha encontrado",
+    "RESET_EMAIL_SENT": "Se ha enviado correo para restablecer contraseña",
+    "UNAUTHORIZED": "No tiene autorización",
+    "EMAIL_ALREADY_EXISTS": "El email ya existe",
+    "ID_MALFORMED": "Id incorrecto",
+    "BAD_FORMAT_FOR_FILTER_USE_JSON_FORMAT": "Formato incorrecto",
+    "STRING_TOO_LONG_MAX_140": "Demasiado largo (máx. 140)",
+    "NOT_A_VALID_URL": "Dirección incorrecta"
 }

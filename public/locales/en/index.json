@@ -63,5 +63,18 @@
     "EMAIL_IS_NOT_VALID": "Email address not valid",
     "WRONG_PASSWORD": "Password is wrong",
     "USER_DOES_NOT_EXISTS": "User doesn't exists",
-    "IS_EMPTY": "Can't be empty"
+    "IS_EMPTY": "Can't be empty",
+    "MISSING": "This is requiered",
+    "PASSWORD_TOO_SHORT_MIN_5": "Password too short (min. 5)",
+    "BLOCKED_USER": "User is blocked",
+    "NOT_FOUND_OR_ALREADY_VERIFIED": "Not found or already verified",
+    "PASSWORD_CHANGED": "Password changed",
+    "NOT_FOUND": "Not found",
+    "RESET_EMAIL_SENT": "Reset email sent",
+    "UNAUTHORIZED": "Unauthorized",
+    "EMAIL_ALREADY_EXISTS": "Email already exists",
+    "ID_MALFORMED": "Id malformed",
+    "BAD_FORMAT_FOR_FILTER_USE_JSON_FORMAT": "Bad format",
+    "STRING_TOO_LONG_MAX_140": "String too long (max. 140)",
+    "NOT_A_VALID_URL": "Invalid address"
 }
