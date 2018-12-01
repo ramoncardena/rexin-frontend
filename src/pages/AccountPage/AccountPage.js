@@ -141,11 +141,11 @@ class AccountPage extends Component {
                                         <ItemLabel>{ t('Account_Email') }</ItemLabel>
                                         <NormalItem> {user.email} </NormalItem>
                                         <ItemLabel>{ t('Account_Phone') }</ItemLabel>
-                                        {user.phone!=="" && <NormalItem> {user.phone} </NormalItem>}
+                                        {user.phone ? <NormalItem> {user.phone} </NormalItem> : <NormalItem> - </NormalItem>}
                                         <ItemLabel>{ t('Account_City') }</ItemLabel>
-                                        {user.city!=="" && <NormalItem> {user.city} </NormalItem>}
+                                        {user.city ? <NormalItem> {user.city} </NormalItem> : <NormalItem> - </NormalItem>}
                                         <ItemLabel>{ t('Account_Country') }</ItemLabel>
-                                        {user.country!=="" && <NormalItem> {user.country} </NormalItem>}
+                                        {user.country ? <NormalItem> {user.country} </NormalItem> : <NormalItem> - </NormalItem> }
                                         <EditProfileButton
                                             disabled={false} 
                                             onClick={ () => this.handleEditProfile() }

@@ -287,7 +287,7 @@ class EditForm extends Component {
         const { t } = this.props;
 
         const isInvalid =
-            phone === '';
+            name === '';
 
         return (
             <StyledForm onSubmit={this.onUpdate}>
