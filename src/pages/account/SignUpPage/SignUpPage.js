@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { compose } from 'recompose';
-import { Helmet } from "react-helmet";
+import { Helmet } from 'react-helmet';
 import { translate } from 'react-i18next';
 import { Link, withRouter } from 'react-router-dom';
-import styled from 'styled-components'
+import styled from 'styled-components';
 
-import { auth } from '../../../api'
+import { auth } from '../../../api';
 import * as routes from '../../../constants/routes';
-import * as apiError from '../../../utils/apiError'
+import * as apiError from '../../../utils/apiError';
+import * as config from '../../../config';
 
 const PageContainer = styled.div`
     display: flex;
@@ -18,26 +19,26 @@ const PageContainer = styled.div`
     align-self: center;
     max-width: 1300px;
     min-height: 640px;
-    margin: 80px auto 0 auto; 
-`
+    margin: 80px auto 0 auto;
+`;
 
 const FormContainer = styled.div`
     text-align: center;
-`
+`;
 const StyledForm = styled.form`
     width: 100%;
-`
+`;
 
 const InputGroup = styled.div`
     padding: 0.5rem;
     max-width: 640px;
     margin: auto;
-`
+`;
 
 const InputField = styled.input`
-    ::placeholder { 
+    ::placeholder {
         color: lightgray;
-        opacity: 1; 
+        opacity: 1;
         font-size: 0.9rem;
     }
     font-size: 1.2rem;
@@ -49,9 +50,9 @@ const InputField = styled.input`
     margin: 0.5rem 0;
     &:focus {
         outline: none;
-        border-bottom: 1px solid #3b5787;
+        border-bottom: 1px solid ${props => props.primaryColor};
     }
-`
+`;
 const FormButton = styled.button`
     background: transparent;
     max-width: 300px;
@@ -59,33 +60,27 @@ const FormButton = styled.button`
     font-weight: 200;
     padding: 1rem 1.5rem;
     margin: 2rem 1rem 1rem 1rem;
-    color: ${ props => props.disabled ? 'lightgray' : props => props.primaryColor };
-    border: 1px solid ${ props => props.disabled ? 'lightgray' : props => props.primaryColor };
+    color: ${props =>
+        props.disabled ? 'lightgray' : props => props.primaryColor};
+    border: 1px solid
+        ${props => (props.disabled ? 'lightgray' : props => props.primaryColor)};
     transition: all 0.1s ease-in-out;
     &:focus {
         outline: none;
     }
     &:active {
         transform: scale(0.9);
-        border: 1px solid  #808080;
+        border: 1px solid ${props => props.primaryColor};
     }
-    ${ props => !props.disabled && `
-        &:hover {
-            transform: scale(1.05);
-            background:  transparent;
-        }
-        `
-    }
-`
+`;
 
 const Text = styled.p`
     font-size: 1.3rem;
     line-height: 1.7rem;
-    color: #808080;
     margin: 0;
     padding: 1rem 1rem 3rem 1rem;
     text-align: center;
-`
+`;
 
 const ErrorText = styled.div`
     font-size: 1rem;
@@ -94,54 +89,52 @@ const ErrorText = styled.div`
     font-weight: 200;
     margin: 0;
     padding: 1rem;
-`
+`;
 const FormError = styled.div`
     color: red;
     font-weight: 200;
-`
+`;
 
 const Title = styled.h1`
-    color: #808080;
+    color: ${props => props.color};
     text-align: center;
-`
+`;
 
 const StyledSignUpLink = styled.p`
-    color: ${ props => props.textcolor };
+    color: ${props => props.textcolor};
     a {
-        color: ${ props => props.linkcolor };
+        color: ${props => props.linkcolor};
         text-decoration: none;
         &:hover {
-            color: ${ props => props.hovercolor };
+            color: ${props => props.hovercolor};
             text-decoration: none;
             font-weight: bold;
         }
     }
-`
+`;
 
 class SignUpPage extends Component {
-    
     render() {
-        const { t, history } = this.props
-    
+        const { t, history } = this.props;
+
         return (
             <div>
                 <Helmet>
-                    <title> { t('Global_Sign_Up') } </title>
-                    <meta name="description" content="Ramon Cardena - Professional web development." />
+                    <title> {t('Sign_Up_Title')} </title>
+                    <meta
+                        name="description"
+                        content={t('Sign_Up_SEO_Description')}
+                    />
                 </Helmet>
                 <PageContainer>
-                    <Title>
-                        { t('Sign_Up_H1') }
-                    </Title>
-                    <Text>
-                        { t('Sign_Up_Intro') }
-                    </Text>
+                    <Title color={config.primaryColor}>{t('Sign_Up_H1')}</Title>
+                    <Text>{t('Sign_Up_Intro')}</Text>
                     <FormContainer>
                         <SignUpForm t={t} history={history} />
                     </FormContainer>
                 </PageContainer>
             </div>
-        )
+        );
     }
 }
 
@@ -156,7 +149,7 @@ const INITIAL_STATE = {
     passwordValidation: ''
 };
 const byPropKey = (propertyName, value) => () => ({
-    [propertyName]: value,
+    [propertyName]: value
 });
 
 class SignUpForm extends Component {
@@ -165,47 +158,56 @@ class SignUpForm extends Component {
         this.state = { ...INITIAL_STATE };
     }
 
-    onSubmit = (event) => {
-        const {
-            fullname,
-            email,
-            passwordOne,
-        } = this.state;
+    onSubmit = event => {
+        const { fullname, email, passwordOne } = this.state;
 
-        const {
-            history,
-        } = this.props;
+        const { history } = this.props;
 
         const newUser = {
-            "name": fullname,
-            "email": email,
-            "password": passwordOne
-        }
+            name: fullname,
+            email: email,
+            password: passwordOne
+        };
 
+        // Backend: Register user
         auth.register(newUser)
-        .then((response) => response.json())
-        .then((data) => {
-            console.dir(data)
-            if (!data.errors) {
-                history.push(routes.HOME);
-            }
-            else {
-                this.setState({ error: apiError.message(data.errors) })
-                this.setState({ nameValidation: apiError.validationMessage(data.errors, 'name') })
-                this.setState({ emailValidation: apiError.validationMessage(data.errors, 'email') })
-                this.setState({ passwordValidation: apiError.validationMessage(data.errors, 'password') })
-            }
-        })
-        .catch( error => {
-            console.log(error)
-            this.setState(byPropKey('error', "UNDEFINED_ERROR"));
-        })
+            .then(response => response.json())
+            .then(data => {
+                console.dir(data);
+                if (!data.errors) {
+                    history.push(routes.HOME);
+                } else {
+                    this.setState({ error: apiError.message(data.errors) });
+                    this.setState({
+                        nameValidation: apiError.validationMessage(
+                            data.errors,
+                            'name'
+                        )
+                    });
+                    this.setState({
+                        emailValidation: apiError.validationMessage(
+                            data.errors,
+                            'email'
+                        )
+                    });
+                    this.setState({
+                        passwordValidation: apiError.validationMessage(
+                            data.errors,
+                            'password'
+                        )
+                    });
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                this.setState(byPropKey('error', 'UNDEFINED_ERROR'));
+            });
 
         event.preventDefault();
-    }
+    };
 
     render() {
-        const {t} = this.props
+        const { t } = this.props;
 
         const {
             fullname,
@@ -224,75 +226,96 @@ class SignUpForm extends Component {
             email === '' ||
             fullname === '';
 
-
         return (
             <StyledForm onSubmit={this.onSubmit}>
-             <InputGroup>
+                <InputGroup>
                     <InputField
                         value={fullname}
-                        onChange={event => this.setState(byPropKey('fullname', event.target.value))}
+                        primaryColor={config.primaryColor}
+                        onChange={event =>
+                            this.setState(
+                                byPropKey('fullname', event.target.value)
+                            )
+                        }
                         type="text"
-                        placeholder={ t('Sign_Up_Full_Name') }
+                        placeholder={t('Sign_Up_Full_Name')}
                     />
-                    { nameValidation && 
-                        <FormError>{ t(nameValidation) }</FormError>
-                    }
+                    {nameValidation && (
+                        <FormError>{t(nameValidation)}</FormError>
+                    )}
                 </InputGroup>
                 <InputGroup>
                     <InputField
                         value={email}
-                        onChange={event => this.setState(byPropKey('email', event.target.value))}
+                        primaryColor={config.primaryColor}
+                        onChange={event =>
+                            this.setState(
+                                byPropKey('email', event.target.value)
+                            )
+                        }
                         type="text"
-                        placeholder={ t('Global_Email_Address') }
+                        placeholder={t('Global_Email_Address')}
                     />
-                    { emailValidation && 
-                        <FormError>{ t(emailValidation) }</FormError>
-                    }
+                    {emailValidation && (
+                        <FormError>{t(emailValidation)}</FormError>
+                    )}
                 </InputGroup>
                 <InputGroup>
                     <InputField
                         value={passwordOne}
-                        onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
+                        primaryColor={config.primaryColor}
+                        onChange={event =>
+                            this.setState(
+                                byPropKey('passwordOne', event.target.value)
+                            )
+                        }
                         type="password"
-                        placeholder={ t('Global_Password') }
+                        placeholder={t('Global_Password')}
                     />
-                    { passwordValidation && 
-                        <FormError>{ t(passwordValidation) }</FormError>
-                    }
+                    {passwordValidation && (
+                        <FormError>{t(passwordValidation)}</FormError>
+                    )}
                 </InputGroup>
                 <InputGroup>
                     <InputField
                         value={passwordTwo}
-                        onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
+                        primaryColor={config.primaryColor}
+                        onChange={event =>
+                            this.setState(
+                                byPropKey('passwordTwo', event.target.value)
+                            )
+                        }
                         type="password"
-                        placeholder={ t('Sign_Up_Password_Confirm') }
+                        placeholder={t('Sign_Up_Password_Confirm')}
                     />
                 </InputGroup>
-                <FormButton disabled={isInvalid} type="submit">
-                    { t('Global_Sign_Up') }
+                <FormButton
+                    disabled={isInvalid}
+                    type="submit"
+                    primaryColor={config.primaryColor}
+                >
+                    {t('Global_Sign_Up')}
                 </FormButton>
-                <ErrorText>
-                    { error && <p> { t(error) } </p> }
-                </ErrorText>
+                <ErrorText>{error && <p> {t(error)} </p>}</ErrorText>
             </StyledForm>
         );
     }
 }
 
-const SignUpLink = ({t, textcolor, hovercolor, linkcolor}) =>
-    <StyledSignUpLink textcolor={textcolor} linkcolor={linkcolor} hovercolor={hovercolor}>
-        { t('Login_New_Account_Link') }
-        {' '}
-        <Link to={routes.SIGN_UP}>{ t('Global_Sign_Up') }</Link>
+const SignUpLink = ({ t, textcolor, hovercolor, linkcolor }) => (
+    <StyledSignUpLink
+        textcolor={config.textColor}
+        linkcolor={config.primaryColor}
+        hovercolor={config.hoverColor}
+    >
+        {t('Sign_In_New_Account_Link')}{' '}
+        <Link to={routes.SIGN_UP}>{t('Global_Sign_Up')}</Link>
     </StyledSignUpLink>
-
-
+);
 
 export default compose(
-    translate('index')
-)(withRouter(SignUpPage));
+    translate('index'),
+    withRouter
+)(SignUpPage);
 
-export {
-    SignUpForm,
-    SignUpLink,
-};
+export { SignUpForm, SignUpLink };

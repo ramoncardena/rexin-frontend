@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux'
-import { compose } from 'recompose'
-import { Helmet } from "react-helmet";
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
+import { Helmet } from 'react-helmet';
 import { translate } from 'react-i18next';
-import styled from 'styled-components'
+import styled from 'styled-components';
+
+import * as config from '../../config';
 
 const PageContainer = styled.div`
     display: flex;
@@ -17,17 +19,16 @@ const PageContainer = styled.div`
     height: 640px;
     text-align: center;
     margin: 80px 0 0 0;
-`
+`;
 const Title = styled.h1`
-    color: #808080;
-`
+    color: ${props => props.color};
+`;
 
 class OnePage extends Component {
-
-    componentDidMount() {
-        const {onNavigationEnded, location} = this.props
-        if (location) onNavigationEnded(location.pathname)
-        
+    // Update redux state with location to allow navbar update.
+    componentDidMount() {
+        const { onNavigationEnded, location } = this.props;
+        if (location) onNavigationEnded(location.pathname);
     }
 
     render() {
@@ -35,28 +36,36 @@ class OnePage extends Component {
         return (
             <div>
                 <Helmet>
-                    <title>{ t('One_Title') }</title>
-                    <meta name="description" content="Basic web scaffolding" />
+                    <title>{t('One_Title')}</title>
+                    <meta
+                        name="description"
+                        content={t('One_SEO_Description')}
+                    />
                 </Helmet>
 
                 <PageContainer>
-                    <Title>{ t('One_H1') }</Title>
+                    <Title color={config.primaryColor}>{t('One_H1')}</Title>
+                    <p>{t('One_Demo_Text')}</p>
                 </PageContainer>
             </div>
         );
     }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     authToken: state.authState.authToken,
     navPath: state.navState.navPath
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    onNavigationEnded: (path) => dispatch({ type: 'NAVIGATION_ENDED', path}),
+const mapDispatchToProps = dispatch => ({
+    onNavigationEnded: path => dispatch({ type: 'NAVIGATION_ENDED', path })
 });
 
 export default compose(
     translate('index'),
-    connect(mapStateToProps, mapDispatchToProps)
-)(withRouter(OnePage))
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    ),
+    withRouter
+)(OnePage);

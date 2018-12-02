@@ -7,15 +7,15 @@ const StyledLink = styled(Link)`
     margin: 0 0 0 1.5rem;
     padding: 0;
     text-decoration: none;
-    color: ${ props => props.textcolor };
+    color: ${props => props.textcolor};
     &:before {
-        content: "";
+        content: '';
         position: absolute;
         width: 100%;
         height: 1px;
         bottom: 0;
         left: 0;
-        background-color: ${ props => props.textcolor };
+        background-color: ${props => props.textcolor};
         visibility: hidden;
         -webkit-transform: scaleX(0);
         transform: scaleX(0);
@@ -27,11 +27,11 @@ const StyledLink = styled(Link)`
         -webkit-transform: scaleX(1);
         transform: scaleX(1);
     }
-`
+`;
 const StyledMenuItem = styled.li`
     margin: 0;
     padding: 0;
-`
+`;
 const StyledMenu = styled.ul`
     display: flex;
     flex-direction: row;
@@ -40,35 +40,30 @@ const StyledMenu = styled.ul`
     list-style: none;
     margin: 0;
     padding: 0;
-`
+`;
 
 /* Component: NAVMENU */
-function NavMenu (props) {
+function NavMenu(props) {
     const navItems = props.items;
-    const listItems = navItems.map((item) =>
-        <NavMenuItem 
-            key={item.title} 
-            title={item.title} 
-            link={item.link} 
-            textcolor={props.primaryColor} 
+    const listItems = navItems.map(item => (
+        <NavMenuItem
+            key={item.title}
+            title={item.title}
+            link={item.link}
+            textcolor={props.primaryColor}
             hovercolor={props.secondaryColor}
         />
-    );
-    return (
-        <StyledMenu>
-            {listItems}
-        </StyledMenu>
-    );
-};
+    ));
+    return <StyledMenu>{listItems}</StyledMenu>;
+}
 
 export default NavMenu;
 
 /* Component: NAVMENUITEM */
-const NavMenuItem = ({title, link, textcolor, hovercolor}) => (
+const NavMenuItem = ({ title, link, textcolor, hovercolor }) => (
     <StyledMenuItem>
         <StyledLink to={link} textcolor={textcolor} hovercolor={hovercolor}>
             {title}
         </StyledLink>
     </StyledMenuItem>
 );
-

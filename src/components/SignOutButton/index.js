@@ -1,1 +1,1 @@
-export { default } from './SignOutButton.js'
+export { default } from './SignOutButton.js';

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
-import { compose } from 'recompose'
-import { Helmet } from "react-helmet";
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
+import { Helmet } from 'react-helmet';
 import { translate } from 'react-i18next';
-import styled from 'styled-components'
+import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
-import withAuthorization from '../../../utils/withAuthorization'
+import withAuthorization from '../../../utils/withAuthorization';
+import * as config from '../../../config';
 
 const PageContainer = styled.div`
     display: flex;
@@ -19,17 +20,16 @@ const PageContainer = styled.div`
     height: 640px;
     text-align: center;
     margin: 80px 0 0 0;
-`
+`;
 const Title = styled.h1`
-    color: #808080;
-`
+    color: ${props => props.color};
+`;
 
 class AdminPage extends Component {
-     
-    componentDidMount() {
-        const {onNavigationEnded, location} = this.props
-        if (location) onNavigationEnded(location.pathname)
-        
+    // Update redux state with location to allow navbar update.
+    componentDidMount() {
+        const { onNavigationEnded, location } = this.props;
+        if (location) onNavigationEnded(location.pathname);
     }
 
     render() {
@@ -37,32 +37,39 @@ class AdminPage extends Component {
         return (
             <div>
                 <Helmet>
-                    <title>{ t('Admin_Title') }</title>
-                    <meta name="description" content="Basic web scaffolding" />
+                    <title>{t('Admin_Title')}</title>
+                    <meta
+                        name="description"
+                        content={t('Admin_SEO_Description')}
+                    />
                 </Helmet>
 
                 <PageContainer>
-                    <Title>{ t('Admin_H1') }</Title>
+                    <Title color={config.primaryColor}>{t('Admin_H1')}</Title>
                 </PageContainer>
             </div>
         );
     }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     authToken: state.authState.authToken,
     navPath: state.navState.path
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    onLogoutSuccess: (token) => dispatch({ type: 'LOGOUT_SUCCESS', token }),
-    onNavigationEnded: (path) => dispatch({ type: 'NAVIGATION_ENDED', path})
+const mapDispatchToProps = dispatch => ({
+    onLogoutSuccess: token => dispatch({ type: 'LOGOUT_SUCCESS', token }),
+    onNavigationEnded: path => dispatch({ type: 'NAVIGATION_ENDED', path })
 });
 
-const authCondition = (token, role) => !!token && ["admin"].includes(role)
+const authCondition = (token, role) => !!token && ['admin'].includes(role);
 
-export default  compose(
-        withAuthorization(authCondition),
-        connect(mapStateToProps, mapDispatchToProps),
-        translate('index')
-)(withRouter(AdminPage))
+export default compose(
+    withAuthorization(authCondition),
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    ),
+    translate('index'),
+    withRouter
+)(AdminPage);

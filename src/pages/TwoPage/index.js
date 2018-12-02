@@ -1,1 +1,1 @@
-export { default } from './TwoPage'
+export { default } from './TwoPage';

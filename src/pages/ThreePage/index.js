@@ -1,1 +1,1 @@
-export { default } from './ThreePage'
+export { default } from './ThreePage';

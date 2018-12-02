@@ -1,1 +1,1 @@
-export { default } from './FooterMenu.js'
+export { default } from './FooterMenu.js';

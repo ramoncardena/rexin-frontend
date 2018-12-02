@@ -1,1 +1,1 @@
-export { default } from './OnePage'
+export { default } from './OnePage';

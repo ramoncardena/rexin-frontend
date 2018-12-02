@@ -1,1 +1,1 @@
-export { default } from './FourPage'
+export { default } from './FourPage';

@@ -1,1 +1,1 @@
-export { default } from './NavSocialMenu.js'
+export { default } from './NavSocialMenu.js';
