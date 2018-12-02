@@ -3,11 +3,10 @@ import { compose } from 'recompose';
 import { Helmet } from "react-helmet";
 import { translate } from 'react-i18next';
 import styled from 'styled-components'
-import { Link, withRouter } from 'react-router-dom';
-// import Loader from 'react-loader-spinner'
+import { withRouter } from 'react-router-dom';
 
 import { auth } from '../../../api'
-import * as routes from '../../../constants/routes';
+import * as apiError from '../../../utils/apiError'
 
 const PageContainer = styled.div`
     display: flex;
@@ -26,6 +25,7 @@ const Title = styled.h1`
     color: #808080;
     padding: 1rem;
 `
+
 const Text = styled.p`
     font-size: 1.3rem;
     line-height: 1.7rem;
@@ -35,6 +35,7 @@ const Text = styled.p`
     padding: 1rem;
     text-align: center;
 `
+
 const VerifyButton = styled.button`
     background: transparent;
     font-size: 1rem;
@@ -52,17 +53,26 @@ const VerifyButton = styled.button`
         border: 1px solid  #808080;
     }
 `
-const StyledLink = styled(Link)`
-    text-decoration: none;
+
+const ResponseText = styled.div`
+    font-size: 1.1rem;
+    line-height: 1.7rem;
+    color: #808080;
+    margin: 0;
     padding: 1rem;
+`
+
+const ErrorText = styled.div`
+    color: red;
+    font-weight: 200;
 `   
 
 const INITIAL_STATE = {
     verified: false,
-    result: null,
-    loading: true,
-    error: null
+    error: '',
+    response: ''
 };
+
 class VerifyPage extends Component {
 
     constructor(props) {
@@ -73,37 +83,31 @@ class VerifyPage extends Component {
 
     handleVerification() {
         const { id } = this.props.match.params
+        const { t } = this.props
 
         const payload = {
             "id": id
         }
 
         auth.verify(payload)
-        .then( res => {
-
-            if (res.status===200) {
-                this.setState({'verified' : true});
-                this.setState({'result' : true});
-                this.setState({'loading' : false});
+        .then((response) => response.json())
+        .then((data) => {
+            if (!data.errors) {
+                this.setState({ response: t('Verify_Success_Text')})
             }
             else {
-                this.setState({'verified' : true});
-                this.setState({'result' : false});
-                this.setState({'error' : res.statusText});
-                this.setState({'loading' : false});
+                this.setState({ error: apiError.message(data.errors) })
             }
         })
         .catch( error => {
             console.log(error)
-            this.setState({'verified' : true});
-            this.setState({'result' : false});
-            this.setState({'loading' : false});
+            this.setState({error: 'UNDEFINED_ERROR'});
         })
     }
 
     render() {
         const { t } = this.props
-        const { verified, result} = this.state
+        const { response, error} = this.state
 
         return (
             <div>
@@ -120,19 +124,12 @@ class VerifyPage extends Component {
                     > 
                         {  t('Verify_Button') } 
                     </VerifyButton>
-                    { verified === true
-                        ?   result === true
-                            ?   <div >
-                                    <Text>{ t('Verify_Success_H1') }</Text>
-                                    <Text>{ t('Verify_Success_Text') }</Text>
-                                    <Text> <StyledLink to={routes.SIGN_IN}>Got to Sign In page</StyledLink></Text>
-                                </div>
-                            :   <div>
-                                    <Text>{ t('Verify_Fail_H1') }</Text>
-                                    <Text>{ t('Verify_Fail_Text') }</Text>
-                                </div>
-                        : <div></div>
-                    }
+                    <ErrorText>
+                        { t(error) }
+                    </ErrorText>
+                    <ResponseText>
+                        { response }
+                    </ResponseText>
                 </PageContainer>
             </div>
         );
