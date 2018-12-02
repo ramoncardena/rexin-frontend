@@ -89,6 +89,14 @@ const Text = styled.p`
     text-align: center;
 `
 
+const ResponseText = styled.div`
+    font-size: 1.1rem;
+    line-height: 1.7rem;
+    color: #808080;
+    margin: 0;
+    padding: 1rem;
+`
+
 const ErrorText = styled.div`
     font-size: 1rem;
     line-height: 1.7rem;
@@ -352,7 +360,8 @@ const INITIAL_PASSWORD_FORM_STATE = {
     password: '',
     confirmation: '',
     isLoading: false,
-    passwordValidation: ''
+    passwordValidation: '',
+    response: ''
 }
 
 class PasswordForm extends Component {
@@ -367,7 +376,7 @@ class PasswordForm extends Component {
         } = this.state;
 
         const {
-            history,
+            t,
             user,
             authToken
         } = this.props;
@@ -381,12 +390,21 @@ class PasswordForm extends Component {
         profile.patch(authToken, data)
         .then((response) => response.json())
         .then((data) => {
+            console.dir(data)
             if (!data.errors) {
-                history.push(routes.ACCOUNT)
+                this.setState({ 
+                    response: t('Password_Reset_Response'),
+                    password: '',
+                    confirmation: ''
+                })
             }
             else {
-                this.setState({ error: apiError.message(data.errors) })
-                this.setState({ passwordValidation: apiError.validationMessage(data.errors, 'name') })
+                this.setState({ 
+                    error: apiError.message(data.errors),
+                    passwordValidation: apiError.validationMessage(data.errors, 'password'),
+                    password: '',
+                    confirmation: ''
+                })
             }
         })
         .catch((error) => {
@@ -403,7 +421,8 @@ class PasswordForm extends Component {
             confirmation,
             error,
             isLoading,
-            passwordValidation
+            passwordValidation,
+            response
         } = this.state;
 
         const { t } = this.props;
@@ -442,6 +461,9 @@ class PasswordForm extends Component {
                 <ErrorText>
                     { error && <p> {t(error)} </p> }
                 </ErrorText>
+                <ResponseText>
+                    { response }
+                </ResponseText>
             </StyledForm>
         );
     }
