@@ -1,28 +1,214 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import styled from 'styled-components';
+import { translate } from 'react-i18next';
+
 import './App.css';
+import * as routes from './constants/routes';
+import * as config from './config';
+
+// Components
+import NavBar from './components/NavBar';
+import FooterBar from './components/FooterBar';
+// Pages
+import HomePage from './pages/HomePage';
+import OnePage from './pages/OnePage';
+import TwoPage from './pages/TwoPage';
+import ThreePage from './pages/ThreePage';
+import FourPage from './pages/FourPage';
+// Account Pages
+import SignInPage from './pages/account/SignInPage';
+import SignUpPage from './pages/account/SignUpPage';
+import PasswordForgetPage from './pages/account/PasswordForgetPage';
+import PasswordResetPage from './pages/account/PasswordResetPage';
+import VerifyPage from './pages/account/VerifyPage';
+import AccountPage from './pages/account/AccountPage';
+import EditProfilePage from './pages/account/EditProfilePage';
+// Admin Pages
+import AdminPage from './pages/admin/AdminPage';
+
+import logo from './images/logo.png';
+
+const SiteContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+    background: transparent;
+    color: ${props => props.textColor};
+`;
+const TopNavigation = styled.nav`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    max-height: 80px;
+    overflow: visible;
+    z-index: 1000;
+`;
+const BottomNavigation = styled.footer`
+    margin: 0;
+    padding: 0;
+`;
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+    render() {
+        const { t, navPath } = this.props;
+
+        const navbarTitle = t('Navbar_Title');
+        const siteDescription = t('Site_Description');
+
+        const menuElements = [
+            { title: t('Main_Menu_Item_1'), link: routes.PAGE_ONE },
+            { title: t('Main_Menu_Item_2'), link: routes.PAGE_TWO },
+            { title: t('Main_Menu_Item_3'), link: routes.PAGE_THREE },
+            { title: t('Main_Menu_Item_4'), link: routes.PAGE_FOUR }
+        ];
+
+        const accountElements = [
+            { title: t('Main_Menu_Account'), link: routes.ACCOUNT }
+        ];
+
+        const adminElements = [
+            { title: t('Main_Menu_Admin'), link: routes.ADMIN }
+        ];
+
+        const footerMenu = [
+            { title: t('Footer_Menu_Legal'), link: '/' },
+            { title: t('Footer_Menu_Cookies'), link: '/' },
+            { title: t('Footer_Menu_About'), link: '/' },
+            { title: t('Footer_Menu_Contact'), link: '/' }
+        ];
+
+        const copyright = t('Copyright_Notice');
+
+        return (
+            <Router>
+                <SiteContainer textColor={config.textColor}>
+                    <TopNavigation>
+                        <NavBar
+                            siteLogo={logo}
+                            siteTitle={navbarTitle}
+                            siteDescription={siteDescription}
+                            menuElements={menuElements}
+                            accountElements={accountElements}
+                            adminElements={adminElements}
+                            aboutIcon={true}
+                            aboutLink="/"
+                            contactIcon={true}
+                            contactLink="/"
+                            homeIcon={true}
+                            homeLink={routes.HOME}
+                            loginRoute={routes.SIGN_IN}
+                            primaryColor={config.primaryColor}
+                            secondaryColor={config.secondaryColor}
+                            navPath={navPath}
+                        />
+                    </TopNavigation>
+                    <Switch>
+                        <Route
+                            exact
+                            path={routes.HOME}
+                            component={() => <HomePage />}
+                        />
+                        <Route
+                            exact
+                            path={routes.PAGE_ONE}
+                            component={() => <OnePage />}
+                        />
+                        <Route
+                            exact
+                            path={routes.PAGE_TWO}
+                            component={() => <TwoPage />}
+                        />
+                        <Route
+                            exact
+                            path={routes.PAGE_THREE}
+                            component={() => <ThreePage />}
+                        />
+                        <Route
+                            exact
+                            path={routes.PAGE_FOUR}
+                            component={() => <FourPage />}
+                        />
+                        <Route
+                            exact
+                            path={routes.SIGN_IN}
+                            component={() => <SignInPage />}
+                        />
+                        <Route
+                            exact
+                            path={routes.SIGN_UP}
+                            component={() => <SignUpPage />}
+                        />
+                        <Route
+                            exact
+                            path={routes.PASSWORD_FORGET}
+                            component={() => <PasswordForgetPage />}
+                        />
+                        <Route
+                            exact
+                            path={routes.PASSWORD_RESET + '/:id'}
+                            component={() => <PasswordResetPage />}
+                        />
+                        <Route
+                            exact
+                            path={routes.VERIFY + '/:id'}
+                            component={() => <VerifyPage />}
+                        />
+                        <Route
+                            exact
+                            path={routes.ACCOUNT}
+                            component={() => <AccountPage />}
+                        />
+                        <Route
+                            exact
+                            path={routes.ADMIN}
+                            component={() => <AdminPage />}
+                        />
+                        <Route
+                            exact
+                            path={routes.EDIT_PROFILE}
+                            component={() => <EditProfilePage />}
+                        />
+                        {/* <Route  component={() => <Error404Page />} /> */}
+                    </Switch>
+
+                    <BottomNavigation>
+                        <FooterBar
+                            primaryColor={config.primaryColor}
+                            secondaryColor={config.secondaryColor}
+                            copyright={copyright}
+                            border={false}
+                            menu={footerMenu}
+                            facebook={config.facebook.active}
+                            linkFacebook={config.facebook.link}
+                            twitter={config.twitter.active}
+                            linkTwitter={config.twitter.link}
+                            linkedin={config.linkedin.active}
+                            linkLinkedin={config.linkedin.link}
+                            github={config.github.active}
+                            linkGithub={config.github.link}
+                            instagram={config.instagram.active}
+                            linkInstagram={config.instagram.link}
+                        />
+                    </BottomNavigation>
+                </SiteContainer>
+            </Router>
+        );
+    }
 }
 
-export default App;
+const mapStateToProps = state => ({
+    authToken: state.authState.authToken,
+    navPath: state.navState.navPath
+});
+
+export default compose(
+    translate('index'),
+    connect(mapStateToProps)
+)(App);
