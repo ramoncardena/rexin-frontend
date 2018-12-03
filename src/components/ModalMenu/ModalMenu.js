@@ -116,20 +116,51 @@ class ModalMenu extends React.Component {
     }
 
     render() {
-        const menuItems = this.props.items;
-        const listItems = menuItems.map(item => (
-            <StyledMenuItem key={item.title}>
-                <StyledLink
-                    to={item.link}
-                    textcolor={this.props.primaryColor}
-                    hovercolor={this.props.secondaryColor}
-                    onClick={this.handleMenuClick}
-                >
-                    {item.title}
-                </StyledLink>
-            </StyledMenuItem>
-        ));
+        const { menuElements, accountElements, adminElements } = this.props;
+        const menuItems =
+            menuElements &&
+            menuElements.map(item => (
+                <StyledMenuItem key={item.title}>
+                    <StyledLink
+                        to={item.link}
+                        textcolor={this.props.primaryColor}
+                        hovercolor={this.props.secondaryColor}
+                        onClick={this.handleMenuClick}
+                    >
+                        {item.title}
+                    </StyledLink>
+                </StyledMenuItem>
+            ));
 
+        const accountItems =
+            accountElements &&
+            accountElements.map(item => (
+                <StyledMenuItem key={item.title}>
+                    <StyledLink
+                        to={item.link}
+                        textcolor={this.props.primaryColor}
+                        hovercolor={this.props.secondaryColor}
+                        onClick={this.handleMenuClick}
+                    >
+                        {item.title}
+                    </StyledLink>
+                </StyledMenuItem>
+            ));
+
+        const adminItems =
+            adminElements &&
+            adminElements.map(item => (
+                <StyledMenuItem key={item.title}>
+                    <StyledLink
+                        to={item.link}
+                        textcolor={this.props.primaryColor}
+                        hovercolor={this.props.secondaryColor}
+                        onClick={this.handleMenuClick}
+                    >
+                        {item.title}
+                    </StyledLink>
+                </StyledMenuItem>
+            ));
         return (
             <div>
                 <StyledMenuIcon
@@ -153,7 +184,9 @@ class ModalMenu extends React.Component {
                         <Icon icon={x} size={28} />
                     </StyledCloseIcon>
                     <StyledMenu folded={this.state.folded}>
-                        {listItems}
+                        {menuItems}
+                        {adminItems}
+                        {accountItems}
                     </StyledMenu>
                 </StyledModal>
             </div>

@@ -156,16 +156,16 @@ class NavBar extends Component {
                                 primaryColor={this.props.primaryColor}
                                 secondaryColor={this.props.secondaryColor}
                             />
-                            {authToken && (
+                            {authToken && isAdmin && (
                                 <NavMenu
-                                    items={accountElements}
+                                    items={adminElements}
                                     primaryColor={this.props.primaryColor}
                                     secondaryColor={this.props.secondaryColor}
                                 />
                             )}
-                            {authToken && isAdmin && (
+                            {authToken && (
                                 <NavMenu
-                                    items={adminElements}
+                                    items={accountElements}
                                     primaryColor={this.props.primaryColor}
                                     secondaryColor={this.props.secondaryColor}
                                 />
@@ -206,7 +206,15 @@ class NavBar extends Component {
 
                         <TabletLandscapeDown>
                             <ModalMenu
-                                items={menuElements}
+                                menuElements={menuElements}
+                                accountElements={
+                                    authToken ? accountElements : undefined
+                                }
+                                adminElements={
+                                    authToken && isAdmin
+                                        ? adminElements
+                                        : undefined
+                                }
                                 primaryColor={this.props.primaryColor}
                                 secondaryColor={this.props.secondaryColor}
                             />
