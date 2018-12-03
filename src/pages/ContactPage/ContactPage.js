@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { compose } from 'recompose';
 import { Helmet } from 'react-helmet';
 import { translate } from 'react-i18next';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import Loader from 'react-loader-spinner';
 
 import { utils } from '../../api';
 import * as apiError from '../../utils/apiError';
 import * as config from '../../config';
+import * as routes from '../../constants/routes';
 
 const PageContainer = styled.div`
     display: flex;
@@ -97,6 +98,10 @@ const FormButton = styled.button`
     }
 `;
 
+const Checkbox = styled.input`
+    padding: 0 2rem;
+`;
+
 const Text = styled.p`
     font-size: 1.3rem;
     line-height: 1.7rem;
@@ -159,6 +164,7 @@ const INITIAL_STATE = {
     fullname: '',
     email: '',
     message: '',
+    terms: false,
     error: '',
     response: '',
     fullnameValidation: '',
@@ -198,7 +204,8 @@ class ContactForm extends Component {
                         isLoading: false,
                         fullname: '',
                         email: '',
-                        message: ''
+                        message: '',
+                        terms: false
                     });
                 } else {
                     this.setState({
@@ -237,6 +244,7 @@ class ContactForm extends Component {
             fullname,
             email,
             message,
+            terms,
             error,
             response,
             fullnameValidation,
@@ -245,7 +253,8 @@ class ContactForm extends Component {
             isLoading
         } = this.state;
 
-        const isInvalid = message === '' || email === '' || fullname === '';
+        const isInvalid =
+            message === '' || email === '' || fullname === '' || !terms;
 
         return (
             <StyledForm onSubmit={this.onSubmit}>
@@ -258,7 +267,8 @@ class ContactForm extends Component {
                                 fullname: event.target.value,
                                 fullnameValidation: '',
                                 response: '',
-                                error: ''
+                                error: '',
+                                terms: false
                             })
                         }
                         type="text"
@@ -277,7 +287,8 @@ class ContactForm extends Component {
                                 email: event.target.value,
                                 emailValidation: '',
                                 response: '',
-                                error: ''
+                                error: '',
+                                terms: false
                             })
                         }
                         type="email"
@@ -296,7 +307,8 @@ class ContactForm extends Component {
                                 message: event.target.value,
                                 messageValidation: '',
                                 response: '',
-                                error: ''
+                                error: '',
+                                terms: false
                             })
                         }
                         type="text"
@@ -307,6 +319,22 @@ class ContactForm extends Component {
                         <FormError>{t(messageValidation)}</FormError>
                     )}
                 </InputGroup>
+
+                <InputGroup>
+                    <Checkbox
+                        name="terms"
+                        type="checkbox"
+                        checked={terms}
+                        onChange={event =>
+                            this.setState({ terms: event.target.checked })
+                        }
+                    />
+                    <label>
+                        {t('Contact_Terms')}
+                        <Link to={routes.HOME}>{t('Contact_Terms_Link')}</Link>
+                    </label>
+                </InputGroup>
+
                 <FormButton
                     disabled={isInvalid}
                     type="submit"

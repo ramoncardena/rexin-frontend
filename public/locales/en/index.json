@@ -75,6 +75,8 @@
     "Contact_Full_Name": "Full Name",
     "Contact_Email_Address": "Email Address",
     "Contact_Message": "Write your message here...",
+    "Contact_Terms": "I have read and I accept the ",
+    "Contact_Terms_Link": "Terms and Conditions",
     "Contact_Send_Button": "Send",
     "Contact_Response": "Your message has been sent.",
     "One_Title": "Page One",
