@@ -11,3 +11,4 @@ export const VERIFY = '/verify';
 export const ACCOUNT = '/account';
 export const EDIT_PROFILE = '/profile';
 export const ADMIN = '/admin';
+export const CONTACT = '/contact';

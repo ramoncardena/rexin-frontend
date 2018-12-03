@@ -68,6 +68,15 @@
     "Edit_Profile_New_Password": "New Password",
     "Edit_Profile_Password_Confirm": "Confirm New Password",
     "Edit_Profile_Change_Password_Button": "Change Password",
+    "Contact_Title": "Contact",
+    "Contact_H1": "Contact Us",
+    "Contact_SEO_Description": "React frontend with JWT authentication, i18n with i18next, and much more.",
+    "Contact_Intro": "Please, fill the form bellow to contact us and we will get back to you soon.",
+    "Contact_Full_Name": "Full Name",
+    "Contact_Email_Address": "Email Address",
+    "Contact_Message": "Write your message here...",
+    "Contact_Send_Button": "Send",
+    "Contact_Response": "Your message has been sent.",
     "One_Title": "Page One",
     "One_H1": "Welcome to Page One!",
     "One_Demo_Text": "Welcome to our amazing page one. We are thrilled to count on you onboard and we look fordward to doing business with you.",
@@ -99,5 +108,6 @@
     "ID_MALFORMED": "Id malformed",
     "BAD_FORMAT_FOR_FILTER_USE_JSON_FORMAT": "Bad format",
     "STRING_TOO_LONG_MAX_140": "String too long (max. 140)",
-    "NOT_A_VALID_URL": "Invalid address"
+    "NOT_A_VALID_URL": "Invalid address",
+    "MESSAGE_TOO_SHORT_MIN_5": "Message too short (Mín. 5)"
 }

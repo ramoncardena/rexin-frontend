@@ -67,6 +67,15 @@
     "Edit_Profile_New_Password": "Nueva contraseña",
     "Edit_Profile_Password_Confirm": "Confirmar nueva contraseña",
     "Edit_Profile_Change_Password_Button": "Cambiar contraseña",
+    "Contact_Title": "Contactar",
+    "Contact_H1": "Contacte con nosotros",
+    "Contact_SEO_Description": "Frontend con React con autenticación JWT, i18n con i18next y mucho más.",
+    "Contact_Intro": "Por favor, rellene el siguiente formulario y contactaremos con usted enseguida.",
+    "Contact_Full_Name": "Nombre completo",
+    "Contact_Email_Address": "Dirección de coreeo electrónico",
+    "Contact_Message": "Escriba aquí su mensaje...",
+    "Contact_Send_Button": "Envíar",
+    "Contact_Response": "Su solicitud se ha enviado correctamente.",
     "One_Title": "Página Uno",
     "One_H1": "¡Bienvenidos a la página Uno!",
     "One_SEO_Description": "Frontend con React con autenticación JWT, i18n con i18next y mucho más.",
@@ -98,5 +107,6 @@
     "ID_MALFORMED": "Id incorrecto",
     "BAD_FORMAT_FOR_FILTER_USE_JSON_FORMAT": "Formato incorrecto",
     "STRING_TOO_LONG_MAX_140": "Demasiado largo (máx. 140)",
-    "NOT_A_VALID_URL": "Dirección incorrecta"
+    "NOT_A_VALID_URL": "Dirección incorrecta",
+    "MESSAGE_TOO_SHORT_MIN_5": "Mensaje demasiado corto (Mín. 5)"
 }

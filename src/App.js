@@ -18,6 +18,7 @@ import OnePage from './pages/OnePage';
 import TwoPage from './pages/TwoPage';
 import ThreePage from './pages/ThreePage';
 import FourPage from './pages/FourPage';
+import ContactPage from './pages/ContactPage';
 // Account Pages
 import SignInPage from './pages/account/SignInPage';
 import SignUpPage from './pages/account/SignUpPage';
@@ -81,7 +82,7 @@ class App extends Component {
             { title: t('Footer_Menu_Legal'), link: '/' },
             { title: t('Footer_Menu_Cookies'), link: '/' },
             { title: t('Footer_Menu_About'), link: '/' },
-            { title: t('Footer_Menu_Contact'), link: '/' }
+            { title: t('Footer_Menu_Contact'), link: routes.CONTACT }
         ];
 
         const copyright = t('Copyright_Notice');
@@ -100,7 +101,7 @@ class App extends Component {
                             aboutIcon={true}
                             aboutLink="/"
                             contactIcon={true}
-                            contactLink="/"
+                            contactLink={routes.CONTACT}
                             homeIcon={true}
                             homeLink={routes.HOME}
                             loginRoute={routes.SIGN_IN}
@@ -134,6 +135,11 @@ class App extends Component {
                             exact
                             path={routes.PAGE_FOUR}
                             component={() => <FourPage />}
+                        />
+                        <Route
+                            exact
+                            path={routes.CONTACT}
+                            component={() => <ContactPage />}
                         />
                         <Route
                             exact
