@@ -133,6 +133,19 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 ## Internationalization
 
 ## Components
+### NavBar
+The Navbar component is a modular navbar with the following components:
+
+- Logo and Title on the left.
+- Navigation menu, account menu, admin menu, icon menu, sign-in/sign-out button and mobile buton on the right.
+
+### FooterBar
+The FooterBar compontent is a navbar with the following components:
+
+- Copyright notice on the left.
+- Navigation menu and social icons menu on the right.
+
+
 
 ## Pages
 
