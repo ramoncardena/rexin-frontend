@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
-import { translate } from 'react-i18next';
+import { withNamespaces } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 
 import { SignUpLink } from '../SignUpPage';
@@ -284,7 +284,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default compose(
-    translate('index'),
+    withNamespaces('index'),
     connect(
         mapStateToProps,
         mapDispatchToProps

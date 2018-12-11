@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { compose } from 'recompose';
 import { Helmet } from 'react-helmet';
-import { translate } from 'react-i18next';
+import { withNamespaces } from 'react-i18next';
 import styled from 'styled-components';
 import Loader from 'react-loader-spinner';
 import { withRouter } from 'react-router-dom';
@@ -261,7 +261,7 @@ class PasswordResetForm extends Component {
 }
 
 export default compose(
-    translate('index'),
+    withNamespaces('index'),
     withRouter
 )(PasswordResetPage);
 

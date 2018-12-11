@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
-import { translate } from 'react-i18next';
+import { withNamespaces } from 'react-i18next';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -237,6 +237,6 @@ const PasswordForgetLink = ({ t, textcolor, hovercolor, linkcolor }) => (
     </StyledForgetLink>
 );
 
-export default translate('index')(PasswordForgetPage);
+export default withNamespaces('index')(PasswordForgetPage);
 
 export { PasswordForgetForm, PasswordForgetLink };

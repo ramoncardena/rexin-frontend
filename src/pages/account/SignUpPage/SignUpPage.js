@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { compose } from 'recompose';
 import { Helmet } from 'react-helmet';
-import { translate } from 'react-i18next';
+import { withNamespaces } from 'react-i18next';
 import { Link, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -314,7 +314,7 @@ const SignUpLink = ({ t, textcolor, hovercolor, linkcolor }) => (
 );
 
 export default compose(
-    translate('index'),
+    withNamespaces('index'),
     withRouter
 )(SignUpPage);
 

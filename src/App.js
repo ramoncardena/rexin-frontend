@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import styled from 'styled-components';
-import { translate } from 'react-i18next';
+import { withNamespaces } from 'react-i18next';
 
 import './App.css';
 import * as routes from './constants/routes';
@@ -215,6 +215,6 @@ const mapStateToProps = state => ({
 });
 
 export default compose(
-    translate('index'),
+    withNamespaces('index'),
     connect(mapStateToProps)
 )(App);
