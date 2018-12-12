@@ -124,7 +124,7 @@ class App extends Component {
 
         return (
             <div>
-                <Helmet htmlAttributes={{ lang: currLng }} />;
+                <Helmet htmlAttributes={{ lang: currLng }} />
                 <Router>
                     <SiteContainer textColor={config.textColor}>
                         <TopNavigation>
