@@ -30,6 +30,11 @@ store.subscribe(() => {
     saveState(store.getState());
 });
 
+// i18n.on('languageChanged', function(lng) {
+//     console.log('-------------> ' + lng);
+//     // return <Helmet htmlAttributes={{ lang: lng }} />;
+// });
+
 ReactDOM.render(
     <I18nextProvider
         i18n={i18n}

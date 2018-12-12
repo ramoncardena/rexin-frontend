@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
+import { Helmet } from 'react-helmet';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 import { withNamespaces } from 'react-i18next';
 import './App.css';
 import * as routes from './constants/routes';
-
-import i18next from 'i18next';
 
 import * as config from './config';
 
@@ -60,18 +59,23 @@ const BottomNavigation = styled.footer`
 
 class App extends Component {
     render() {
-        const { t, navPath } = this.props;
+        const { t, i18n, navPath } = this.props;
 
         const navbarTitle = t('Navbar_Title');
         const siteDescription = t('Site_Description');
 
+        // i18next
         const allowedLanguages = '(es)';
         const defaultLanguage = 'en';
-
         const currentLanguage =
-            i18next.languages[0] === defaultLanguage
+            i18n.languages[0] === defaultLanguage
                 ? ''
-                : '/' + i18next.languages[0];
+                : '/' + i18n.languages[0];
+
+        var currLng = i18n.languages[0];
+        i18n.on('languageChanged', lng => {
+            currLng = lng;
+        });
 
         const menuElements = [
             {
@@ -119,263 +123,273 @@ class App extends Component {
         const copyright = t('Copyright_Notice');
 
         return (
-            <Router>
-                <SiteContainer textColor={config.textColor}>
-                    <TopNavigation>
-                        <NavBar
-                            siteLogo={logo}
-                            siteTitle={navbarTitle}
-                            siteHome={currentLanguage + routes.HOME}
-                            siteDescription={siteDescription}
-                            menuElements={menuElements}
-                            accountElements={accountElements}
-                            adminElements={adminElements}
-                            aboutIcon={true}
-                            aboutLink={currentLanguage + routes.HOME}
-                            contactIcon={true}
-                            contactLink={currentLanguage + routes.CONTACT}
-                            homeIcon={true}
-                            homeLink={currentLanguage + routes.HOME}
-                            loginRoute={currentLanguage + routes.SIGN_IN}
-                            primaryColor={config.primaryColor}
-                            secondaryColor={config.secondaryColor}
-                            navPath={navPath}
-                        />
-                    </TopNavigation>
-                    <Switch>
-                        <Route
-                            exact
-                            path={
-                                '/:lng' + allowedLanguages + '?' + routes.HOME
-                            }
-                            component={() => <HomePage />}
-                        />
-                        <Route
-                            exact
-                            path={routes.HOME}
-                            component={() => <HomePage />}
-                        />
+            <div>
+                <Helmet htmlAttributes={{ lang: currLng }} />;
+                <Router>
+                    <SiteContainer textColor={config.textColor}>
+                        <TopNavigation>
+                            <NavBar
+                                siteLogo={logo}
+                                siteTitle={navbarTitle}
+                                siteHome={currentLanguage + routes.HOME}
+                                siteDescription={siteDescription}
+                                menuElements={menuElements}
+                                accountElements={accountElements}
+                                adminElements={adminElements}
+                                aboutIcon={true}
+                                aboutLink={currentLanguage + routes.HOME}
+                                contactIcon={true}
+                                contactLink={currentLanguage + routes.CONTACT}
+                                homeIcon={true}
+                                homeLink={currentLanguage + routes.HOME}
+                                loginRoute={currentLanguage + routes.SIGN_IN}
+                                primaryColor={config.primaryColor}
+                                secondaryColor={config.secondaryColor}
+                                navPath={navPath}
+                                i18n={i18n}
+                            />
+                        </TopNavigation>
+                        <Switch>
+                            <Route
+                                exact
+                                path={
+                                    '/:lng' +
+                                    allowedLanguages +
+                                    '?' +
+                                    routes.HOME
+                                }
+                                component={() => <HomePage />}
+                            />
+                            <Route
+                                exact
+                                path={routes.HOME}
+                                component={() => <HomePage />}
+                            />
 
-                        {/* Page One */}
-                        <Route
-                            exact
-                            path={
-                                '/:lng' +
-                                allowedLanguages +
-                                '?' +
-                                routes.PAGE_ONE
-                            }
-                            component={() => <OnePage />}
-                        />
-                        <Route
-                            exact
-                            path={routes.PAGE_ONE}
-                            component={() => <OnePage />}
-                        />
+                            {/* Page One */}
+                            <Route
+                                exact
+                                path={
+                                    '/:lng' +
+                                    allowedLanguages +
+                                    '?' +
+                                    routes.PAGE_ONE
+                                }
+                                component={() => <OnePage />}
+                            />
+                            <Route
+                                exact
+                                path={routes.PAGE_ONE}
+                                component={() => <OnePage />}
+                            />
 
-                        <Route
-                            exact
-                            path={
-                                '/:lng' +
-                                allowedLanguages +
-                                '?' +
-                                routes.PAGE_TWO
-                            }
-                            component={() => <TwoPage />}
-                        />
-                        <Route
-                            exact
-                            path={routes.PAGE_TWO}
-                            component={() => <TwoPage />}
-                        />
-                        <Route
-                            exact
-                            path={
-                                '/:lng' +
-                                allowedLanguages +
-                                '?' +
-                                routes.PAGE_THREE
-                            }
-                            component={() => <ThreePage />}
-                        />
-                        <Route
-                            exact
-                            path={routes.PAGE_THREE}
-                            component={() => <ThreePage />}
-                        />
-                        <Route
-                            exact
-                            path={
-                                '/:lng' +
-                                allowedLanguages +
-                                '?' +
-                                routes.PAGE_FOUR
-                            }
-                            component={() => <FourPage />}
-                        />
-                        <Route
-                            exact
-                            path={routes.PAGE_FOUR}
-                            component={() => <FourPage />}
-                        />
-                        <Route
-                            exact
-                            path={
-                                '/:lng' +
-                                allowedLanguages +
-                                '?' +
-                                routes.CONTACT
-                            }
-                            component={() => <ContactPage />}
-                        />
-                        <Route
-                            exact
-                            path={routes.CONTACT}
-                            component={() => <ContactPage />}
-                        />
-                        <Route
-                            exact
-                            path={
-                                '/:lng' +
-                                allowedLanguages +
-                                '?' +
-                                routes.SIGN_IN
-                            }
-                            component={() => <SignInPage />}
-                        />
-                        <Route
-                            exact
-                            path={routes.SIGN_IN}
-                            component={() => <SignInPage />}
-                        />
-                        <Route
-                            exact
-                            path={
-                                '/:lng' +
-                                allowedLanguages +
-                                '?' +
-                                routes.SIGN_UP
-                            }
-                            component={() => <SignUpPage />}
-                        />
-                        <Route
-                            exact
-                            path={routes.SIGN_UP}
-                            component={() => <SignUpPage />}
-                        />
-                        <Route
-                            exact
-                            path={
-                                '/:lng' +
-                                allowedLanguages +
-                                '?' +
-                                routes.PASSWORD_FORGET
-                            }
-                            component={() => <PasswordForgetPage />}
-                        />
-                        <Route
-                            exact
-                            path={routes.PASSWORD_FORGET}
-                            component={() => <PasswordForgetPage />}
-                        />
-                        <Route
-                            exact
-                            path={
-                                '/:lng' +
-                                allowedLanguages +
-                                '?' +
-                                routes.PASSWORD_RESET +
-                                '/:id'
-                            }
-                            component={() => <PasswordResetPage />}
-                        />
-                        <Route
-                            exact
-                            path={routes.PASSWORD_RESET + '/:id'}
-                            component={() => <PasswordResetPage />}
-                        />
-                        <Route
-                            exact
-                            path={
-                                '/:lng' +
-                                allowedLanguages +
-                                '?' +
-                                routes.VERIFY +
-                                '/:id'
-                            }
-                            component={() => <VerifyPage />}
-                        />
-                        <Route
-                            exact
-                            path={routes.VERIFY + '/:id'}
-                            component={() => <VerifyPage />}
-                        />
-                        <Route
-                            exact
-                            path={
-                                '/:lng' +
-                                allowedLanguages +
-                                '?' +
-                                routes.ACCOUNT
-                            }
-                            component={() => <AccountPage />}
-                        />
-                        <Route
-                            exact
-                            path={routes.ACCOUNT}
-                            component={() => <AccountPage />}
-                        />
-                        <Route
-                            exact
-                            path={
-                                '/:lng' + allowedLanguages + '?' + routes.ADMIN
-                            }
-                            component={() => <AdminPage />}
-                        />
-                        <Route
-                            exact
-                            path={routes.ADMIN}
-                            component={() => <AdminPage />}
-                        />
-                        <Route
-                            exact
-                            path={
-                                '/:lng' +
-                                allowedLanguages +
-                                '?' +
-                                routes.EDIT_PROFILE
-                            }
-                            component={() => <EditProfilePage />}
-                        />
-                        <Route
-                            exact
-                            path={routes.EDIT_PROFILE}
-                            component={() => <EditProfilePage />}
-                        />
-                        <Route component={() => <div>Not found!</div>} />
-                    </Switch>
+                            <Route
+                                exact
+                                path={
+                                    '/:lng' +
+                                    allowedLanguages +
+                                    '?' +
+                                    routes.PAGE_TWO
+                                }
+                                component={() => <TwoPage />}
+                            />
+                            <Route
+                                exact
+                                path={routes.PAGE_TWO}
+                                component={() => <TwoPage />}
+                            />
+                            <Route
+                                exact
+                                path={
+                                    '/:lng' +
+                                    allowedLanguages +
+                                    '?' +
+                                    routes.PAGE_THREE
+                                }
+                                component={() => <ThreePage />}
+                            />
+                            <Route
+                                exact
+                                path={routes.PAGE_THREE}
+                                component={() => <ThreePage />}
+                            />
+                            <Route
+                                exact
+                                path={
+                                    '/:lng' +
+                                    allowedLanguages +
+                                    '?' +
+                                    routes.PAGE_FOUR
+                                }
+                                component={() => <FourPage />}
+                            />
+                            <Route
+                                exact
+                                path={routes.PAGE_FOUR}
+                                component={() => <FourPage />}
+                            />
+                            <Route
+                                exact
+                                path={
+                                    '/:lng' +
+                                    allowedLanguages +
+                                    '?' +
+                                    routes.CONTACT
+                                }
+                                component={() => <ContactPage />}
+                            />
+                            <Route
+                                exact
+                                path={routes.CONTACT}
+                                component={() => <ContactPage />}
+                            />
+                            <Route
+                                exact
+                                path={
+                                    '/:lng' +
+                                    allowedLanguages +
+                                    '?' +
+                                    routes.SIGN_IN
+                                }
+                                component={() => <SignInPage />}
+                            />
+                            <Route
+                                exact
+                                path={routes.SIGN_IN}
+                                component={() => <SignInPage />}
+                            />
+                            <Route
+                                exact
+                                path={
+                                    '/:lng' +
+                                    allowedLanguages +
+                                    '?' +
+                                    routes.SIGN_UP
+                                }
+                                component={() => <SignUpPage />}
+                            />
+                            <Route
+                                exact
+                                path={routes.SIGN_UP}
+                                component={() => <SignUpPage />}
+                            />
+                            <Route
+                                exact
+                                path={
+                                    '/:lng' +
+                                    allowedLanguages +
+                                    '?' +
+                                    routes.PASSWORD_FORGET
+                                }
+                                component={() => <PasswordForgetPage />}
+                            />
+                            <Route
+                                exact
+                                path={routes.PASSWORD_FORGET}
+                                component={() => <PasswordForgetPage />}
+                            />
+                            <Route
+                                exact
+                                path={
+                                    '/:lng' +
+                                    allowedLanguages +
+                                    '?' +
+                                    routes.PASSWORD_RESET +
+                                    '/:id'
+                                }
+                                component={() => <PasswordResetPage />}
+                            />
+                            <Route
+                                exact
+                                path={routes.PASSWORD_RESET + '/:id'}
+                                component={() => <PasswordResetPage />}
+                            />
+                            <Route
+                                exact
+                                path={
+                                    '/:lng' +
+                                    allowedLanguages +
+                                    '?' +
+                                    routes.VERIFY +
+                                    '/:id'
+                                }
+                                component={() => <VerifyPage />}
+                            />
+                            <Route
+                                exact
+                                path={routes.VERIFY + '/:id'}
+                                component={() => <VerifyPage />}
+                            />
+                            <Route
+                                exact
+                                path={
+                                    '/:lng' +
+                                    allowedLanguages +
+                                    '?' +
+                                    routes.ACCOUNT
+                                }
+                                component={() => <AccountPage />}
+                            />
+                            <Route
+                                exact
+                                path={routes.ACCOUNT}
+                                component={() => <AccountPage />}
+                            />
+                            <Route
+                                exact
+                                path={
+                                    '/:lng' +
+                                    allowedLanguages +
+                                    '?' +
+                                    routes.ADMIN
+                                }
+                                component={() => <AdminPage />}
+                            />
+                            <Route
+                                exact
+                                path={routes.ADMIN}
+                                component={() => <AdminPage />}
+                            />
+                            <Route
+                                exact
+                                path={
+                                    '/:lng' +
+                                    allowedLanguages +
+                                    '?' +
+                                    routes.EDIT_PROFILE
+                                }
+                                component={() => <EditProfilePage />}
+                            />
+                            <Route
+                                exact
+                                path={routes.EDIT_PROFILE}
+                                component={() => <EditProfilePage />}
+                            />
+                            <Route component={() => <div>Not found!</div>} />
+                        </Switch>
 
-                    <BottomNavigation>
-                        <FooterBar
-                            primaryColor={config.primaryColor}
-                            secondaryColor={config.secondaryColor}
-                            copyright={copyright}
-                            border={false}
-                            menu={footerMenu}
-                            facebook={config.facebook.active}
-                            linkFacebook={config.facebook.link}
-                            twitter={config.twitter.active}
-                            linkTwitter={config.twitter.link}
-                            linkedin={config.linkedin.active}
-                            linkLinkedin={config.linkedin.link}
-                            github={config.github.active}
-                            linkGithub={config.github.link}
-                            instagram={config.instagram.active}
-                            linkInstagram={config.instagram.link}
-                        />
-                    </BottomNavigation>
-                </SiteContainer>
-            </Router>
+                        <BottomNavigation>
+                            <FooterBar
+                                primaryColor={config.primaryColor}
+                                secondaryColor={config.secondaryColor}
+                                copyright={copyright}
+                                border={false}
+                                menu={footerMenu}
+                                facebook={config.facebook.active}
+                                linkFacebook={config.facebook.link}
+                                twitter={config.twitter.active}
+                                linkTwitter={config.twitter.link}
+                                linkedin={config.linkedin.active}
+                                linkLinkedin={config.linkedin.link}
+                                github={config.github.active}
+                                linkGithub={config.github.link}
+                                instagram={config.instagram.active}
+                                linkInstagram={config.instagram.link}
+                            />
+                        </BottomNavigation>
+                    </SiteContainer>
+                </Router>
+            </div>
         );
     }
 }
