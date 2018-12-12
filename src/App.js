@@ -65,8 +65,8 @@ class App extends Component {
         const siteDescription = t('Site_Description');
 
         // i18next
-        const allowedLanguages = '(es)';
-        const defaultLanguage = 'en';
+        const allowedLanguages = '(es)'; // use (lng1 | lng2 | lng3)
+        const defaultLanguage = config.defaultLanguage;
         const currentLanguage =
             i18n.languages[0] === defaultLanguage
                 ? ''

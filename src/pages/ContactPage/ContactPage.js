@@ -259,7 +259,7 @@ class ContactForm extends Component {
             isLoading
         } = this.state;
 
-        const defaultLanguage = 'en';
+        const defaultLanguage = config.defaultLanguage;
         const currentLanguage =
             i18n.languages[0] === defaultLanguage
                 ? ''

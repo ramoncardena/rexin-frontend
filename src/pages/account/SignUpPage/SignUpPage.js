@@ -175,7 +175,7 @@ class SignUpForm extends Component {
             .then(data => {
                 console.dir(data);
                 if (!data.errors) {
-                    const defaultLanguage = 'en';
+                    const defaultLanguage = config.defaultLanguage;
                     const currentLanguage =
                         i18n.languages[0] === defaultLanguage
                             ? ''
@@ -309,7 +309,7 @@ class SignUpForm extends Component {
 
 function SignUpLink(props) {
     const { t, i18n } = props;
-    const defaultLanguage = 'en';
+    const defaultLanguage = config.defaultLanguage;
     const currentLanguage =
         i18n.languages[0] === defaultLanguage ? '' : '/' + i18n.languages[0];
     return (

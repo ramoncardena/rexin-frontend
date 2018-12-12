@@ -7,6 +7,7 @@ import Icon from 'react-icons-kit';
 import { withNamespaces } from 'react-i18next';
 
 import * as routes from '../../constants/routes';
+import * as config from '../../config';
 
 import { userX } from 'react-icons-kit/feather/userX';
 
@@ -32,7 +33,7 @@ const StyledButton = styled.button`
 class SignOutButton extends React.Component {
     onHandelClick = event => {
         const { onLogoutSuccess, authToken, history, i18n } = this.props;
-        const defaultLanguage = 'en';
+        const defaultLanguage = config.defaultLanguage;
         const currentLanguage =
             i18n.languages[0] === defaultLanguage
                 ? ''

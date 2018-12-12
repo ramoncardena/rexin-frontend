@@ -60,7 +60,9 @@ const withAuthorization = authCondition => Component => {
             this._isMounted = true;
 
             const currentLanguage =
-                i18next.languages[0] === 'en' ? '' : '/' + i18next.languages[0];
+                i18next.languages[0] === config.defaultLanguage
+                    ? ''
+                    : '/' + i18next.languages[0];
             const { onTokenRecover } = this.props;
             const sToken = localStorage.getItem('token');
 

@@ -119,7 +119,7 @@ class AccountPage extends Component {
 
     handleEditProfile() {
         const { history, i18n } = this.props;
-        const defaultLanguage = 'en';
+        const defaultLanguage = config.defaultLanguage;
         const currentLanguage =
             i18n.languages[0] === defaultLanguage
                 ? ''

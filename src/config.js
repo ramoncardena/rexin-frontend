@@ -1,5 +1,7 @@
 export const version = '0.0.1';
 
+export const defaultLanguage = 'en';
+export const allLanguages = ['en', 'es'];
 export const primaryColor = '#808080';
 export const secondaryColor = '#647796';
 export const hoverColor = '#647796';

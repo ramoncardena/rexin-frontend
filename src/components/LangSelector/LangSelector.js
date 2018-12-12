@@ -5,6 +5,7 @@ import i18next from 'i18next';
 
 import { Icon } from 'react-icons-kit';
 import { flag } from 'react-icons-kit/feather/flag';
+import * as config from '../../config';
 
 const StyledDropdownLink = styled.button`
     color: ${props => props.textcolor};
@@ -67,7 +68,9 @@ class LangSelector extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            lang: i18next.languages[0] ? i18next.languages[0] : 'en'
+            lang: i18next.languages[0]
+                ? i18next.languages[0]
+                : config.defaultLanguage
         };
         this.handleEsClick = this.handleEsClick.bind(this);
         this.handleEnClick = this.handleEnClick.bind(this);

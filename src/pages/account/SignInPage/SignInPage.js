@@ -188,7 +188,7 @@ class SignInForm extends Component {
             .then(response => response.json())
             .then(data => {
                 if (!data.errors) {
-                    const defaultLanguage = 'en';
+                    const defaultLanguage = config.defaultLanguage;
                     const currentLanguage =
                         i18n.languages[0] === defaultLanguage
                             ? ''

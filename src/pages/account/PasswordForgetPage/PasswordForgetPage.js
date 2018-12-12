@@ -229,7 +229,7 @@ class PasswordForgetForm extends Component {
 
 function PasswordForgetLink(props) {
     const { t, i18n } = props;
-    const defaultLanguage = 'en';
+    const defaultLanguage = config.defaultLanguage;
     const currentLanguage =
         i18n.languages[0] === defaultLanguage ? '' : '/' + i18n.languages[0];
     return (
