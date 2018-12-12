@@ -9,18 +9,22 @@ This is a base template written on JavaScript with React.
 
 ## Features
 
--   Based on [React](https://github.com/facebook/react/).
+-   Based on [React](https://github.com/facebook/react/) with [Create React App](https://github.com/facebook/create-react-app).
 -   Global state management with [Redux](https://redux.js.org/)
--   Connected to REXIN Backend.
--   Authentication based on JWT.
--   Role based authorization.
 -   Internationalization with [i18next](https://github.com/i18next/react-i18next).
 -   Webfonts with [Webfontloader](https://github.com/typekit/webfontloader).
 -   Styling with [Styled-Components](https://www.styled-components.com/).
--   User registration workflow (Sign-up and Verification).
+-   Icons with [React Icon Kit](https://github.com/wmira/react-icons-kit).
+-   Connected to **Rexin Backend**.
+-   Authentication based on JWT.
+-   Role based authorization.
+-   User registration workflow (Sign-up and Verification by email).
 -   User management workflow (Sign-in, Edit Profile, Password Forgot and Password Reset).
 -   Admin page for users with Admin role.
--   Icons with [React Icon Kit](https://github.com/wmira/react-icons-kit).
+-   Contact form through Rexin Backend and [Mailgun](https://www.mailgun.com/).
+-   Root url for default language and folders for aditional ones.
+-   Google crawler friendly.
+-   SEO ready.
 -   ESLint for good coding practices.
 -   Code formatting using Prettier and ESLint.
 
