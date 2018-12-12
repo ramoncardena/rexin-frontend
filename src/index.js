@@ -7,7 +7,6 @@ import rootReducer from './reducers';
 import App from './App';
 import { loadState, saveState } from './utils/localStorage';
 import * as serviceWorker from './serviceWorker';
-
 import { I18nextProvider } from 'react-i18next';
 import i18n from './utils/i18n';
 
@@ -32,14 +31,16 @@ store.subscribe(() => {
 
 ReactDOM.render(
     <Provider store={store}>
-        <I18nextProvider i18n={i18n}>
+        <I18nextProvider
+            i18n={i18n}
+            initialI18nStore={window.initalI18nStore}
+            initialLanguage={window.initialLanguage}
+        >
             <App />
         </I18nextProvider>
     </Provider>,
     document.getElementById('root')
 );
-
-if (module.hot) module.hot.accept();
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
