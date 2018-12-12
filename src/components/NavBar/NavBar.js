@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import i18next from 'i18next';
 
 import NavMenu from '../NavMenu';
 import NavIconMenu from '../NavIconMenu';
@@ -126,13 +125,13 @@ class NavBar extends Component {
 
     render() {
         const {
+            i18n,
             authToken,
             menuElements,
             accountElements,
             adminElements
         } = this.props;
         const { isAdmin } = this.state;
-        const currLang = i18next.languages[0];
 
         return (
             <StyledNavBar>
@@ -188,7 +187,7 @@ class NavBar extends Component {
                         </TabletPortaitUp>
 
                         <LangSelector
-                            lang={currLang}
+                            i18n={i18n}
                             primaryColor={this.props.primaryColor}
                             secondaryColor={this.props.secondaryColor}
                         />
