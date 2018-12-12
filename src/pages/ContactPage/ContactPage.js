@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { Helmet } from 'react-helmet';
 import { withNamespaces } from 'react-i18next';
-import { Link, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import Loader from 'react-loader-spinner';
 
@@ -136,8 +137,13 @@ const Title = styled.h1`
 `;
 
 class ContactPage extends Component {
+    componentDidMount() {
+        const { onNavigationEnded, location } = this.props;
+        if (location) onNavigationEnded(location.pathname);
+    }
+
     render() {
-        const { t, history } = this.props;
+        const { t, i18n, history } = this.props;
 
         return (
             <div>
@@ -152,7 +158,7 @@ class ContactPage extends Component {
                     <Title color={config.primaryColor}>{t('Contact_H1')}</Title>
                     <Text>{t('Contact_Intro')}</Text>
                     <FormContainer>
-                        <ContactForm t={t} history={history} />
+                        <ContactForm t={t} i18n={i18n} history={history} />
                     </FormContainer>
                 </PageContainer>
             </div>
@@ -238,7 +244,7 @@ class ContactForm extends Component {
     };
 
     render() {
-        const { t } = this.props;
+        const { t, i18n } = this.props;
 
         const {
             fullname,
@@ -252,6 +258,12 @@ class ContactForm extends Component {
             messageValidation,
             isLoading
         } = this.state;
+
+        const defaultLanguage = 'en';
+        const currentLanguage =
+            i18n.languages[0] === defaultLanguage
+                ? ''
+                : '/' + i18n.languages[0];
 
         const isInvalid =
             message === '' || email === '' || fullname === '' || !terms;
@@ -331,7 +343,9 @@ class ContactForm extends Component {
                     />
                     <label>
                         {t('Contact_Terms')}
-                        <Link to={routes.HOME}>{t('Contact_Terms_Link')}</Link>
+                        <Link to={currentLanguage + routes.HOME}>
+                            {t('Contact_Terms_Link')}
+                        </Link>
                     </label>
                 </InputGroup>
 
@@ -363,8 +377,20 @@ class ContactForm extends Component {
     }
 }
 
+const mapStateToProps = state => ({
+    navPath: state.navState.navPath
+});
+
+const mapDispatchToProps = dispatch => ({
+    onNavigationEnded: path => dispatch({ type: 'NAVIGATION_ENDED', path })
+});
+
 export default compose(
     withNamespaces('index'),
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    ),
     withRouter
 )(ContactPage);
 

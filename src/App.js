@@ -4,9 +4,11 @@ import { compose } from 'recompose';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 import { withNamespaces } from 'react-i18next';
-
 import './App.css';
 import * as routes from './constants/routes';
+
+import i18next from 'i18next';
+
 import * as config from './config';
 
 // Components
@@ -63,26 +65,55 @@ class App extends Component {
         const navbarTitle = t('Navbar_Title');
         const siteDescription = t('Site_Description');
 
+        const allowedLanguages = '(es)';
+        const defaultLanguage = 'en';
+
+        const currentLanguage =
+            i18next.languages[0] === defaultLanguage
+                ? ''
+                : '/' + i18next.languages[0];
+
         const menuElements = [
-            { title: t('Main_Menu_Item_1'), link: routes.PAGE_ONE },
-            { title: t('Main_Menu_Item_2'), link: routes.PAGE_TWO },
-            { title: t('Main_Menu_Item_3'), link: routes.PAGE_THREE },
-            { title: t('Main_Menu_Item_4'), link: routes.PAGE_FOUR }
+            {
+                title: t('Main_Menu_Item_1'),
+                link: currentLanguage + routes.PAGE_ONE
+            },
+            {
+                title: t('Main_Menu_Item_2'),
+                link: currentLanguage + routes.PAGE_TWO
+            },
+            {
+                title: t('Main_Menu_Item_3'),
+                link: currentLanguage + routes.PAGE_THREE
+            },
+            {
+                title: t('Main_Menu_Item_4'),
+                link: currentLanguage + routes.PAGE_FOUR
+            }
         ];
 
         const accountElements = [
-            { title: t('Main_Menu_Account'), link: routes.ACCOUNT }
+            {
+                title: t('Main_Menu_Account'),
+                link: currentLanguage + routes.ACCOUNT
+            }
         ];
 
         const adminElements = [
-            { title: t('Main_Menu_Admin'), link: routes.ADMIN }
+            {
+                title: t('Main_Menu_Admin'),
+                link: currentLanguage + routes.ADMIN
+            }
         ];
 
         const footerMenu = [
-            { title: t('Footer_Menu_Legal'), link: '/' },
-            { title: t('Footer_Menu_Cookies'), link: '/' },
-            { title: t('Footer_Menu_About'), link: '/' },
-            { title: t('Footer_Menu_Contact'), link: routes.CONTACT }
+            { title: t('Footer_Menu_Legal'), link: currentLanguage + '/' },
+            { title: t('Footer_Menu_Cookies'), link: currentLanguage + '/' },
+            { title: t('Footer_Menu_About'), link: currentLanguage + '/' },
+            {
+                title: t('Footer_Menu_Contact'),
+                link: currentLanguage + routes.CONTACT
+            }
         ];
 
         const copyright = t('Copyright_Notice');
@@ -94,17 +125,18 @@ class App extends Component {
                         <NavBar
                             siteLogo={logo}
                             siteTitle={navbarTitle}
+                            siteHome={currentLanguage + routes.HOME}
                             siteDescription={siteDescription}
                             menuElements={menuElements}
                             accountElements={accountElements}
                             adminElements={adminElements}
                             aboutIcon={true}
-                            aboutLink="/"
+                            aboutLink={currentLanguage + routes.HOME}
                             contactIcon={true}
-                            contactLink={routes.CONTACT}
+                            contactLink={currentLanguage + routes.CONTACT}
                             homeIcon={true}
-                            homeLink={routes.HOME}
-                            loginRoute={routes.SIGN_IN}
+                            homeLink={currentLanguage + routes.HOME}
+                            loginRoute={currentLanguage + routes.SIGN_IN}
                             primaryColor={config.primaryColor}
                             secondaryColor={config.secondaryColor}
                             navPath={navPath}
@@ -113,13 +145,43 @@ class App extends Component {
                     <Switch>
                         <Route
                             exact
+                            path={
+                                '/:lng' + allowedLanguages + '?' + routes.HOME
+                            }
+                            component={() => <HomePage />}
+                        />
+                        <Route
+                            exact
                             path={routes.HOME}
                             component={() => <HomePage />}
+                        />
+
+                        {/* Page One */}
+                        <Route
+                            exact
+                            path={
+                                '/:lng' +
+                                allowedLanguages +
+                                '?' +
+                                routes.PAGE_ONE
+                            }
+                            component={() => <OnePage />}
                         />
                         <Route
                             exact
                             path={routes.PAGE_ONE}
                             component={() => <OnePage />}
+                        />
+
+                        <Route
+                            exact
+                            path={
+                                '/:lng' +
+                                allowedLanguages +
+                                '?' +
+                                routes.PAGE_TWO
+                            }
+                            component={() => <TwoPage />}
                         />
                         <Route
                             exact
@@ -128,8 +190,28 @@ class App extends Component {
                         />
                         <Route
                             exact
+                            path={
+                                '/:lng' +
+                                allowedLanguages +
+                                '?' +
+                                routes.PAGE_THREE
+                            }
+                            component={() => <ThreePage />}
+                        />
+                        <Route
+                            exact
                             path={routes.PAGE_THREE}
                             component={() => <ThreePage />}
+                        />
+                        <Route
+                            exact
+                            path={
+                                '/:lng' +
+                                allowedLanguages +
+                                '?' +
+                                routes.PAGE_FOUR
+                            }
+                            component={() => <FourPage />}
                         />
                         <Route
                             exact
@@ -138,8 +220,28 @@ class App extends Component {
                         />
                         <Route
                             exact
+                            path={
+                                '/:lng' +
+                                allowedLanguages +
+                                '?' +
+                                routes.CONTACT
+                            }
+                            component={() => <ContactPage />}
+                        />
+                        <Route
+                            exact
                             path={routes.CONTACT}
                             component={() => <ContactPage />}
+                        />
+                        <Route
+                            exact
+                            path={
+                                '/:lng' +
+                                allowedLanguages +
+                                '?' +
+                                routes.SIGN_IN
+                            }
+                            component={() => <SignInPage />}
                         />
                         <Route
                             exact
@@ -148,8 +250,28 @@ class App extends Component {
                         />
                         <Route
                             exact
+                            path={
+                                '/:lng' +
+                                allowedLanguages +
+                                '?' +
+                                routes.SIGN_UP
+                            }
+                            component={() => <SignUpPage />}
+                        />
+                        <Route
+                            exact
                             path={routes.SIGN_UP}
                             component={() => <SignUpPage />}
+                        />
+                        <Route
+                            exact
+                            path={
+                                '/:lng' +
+                                allowedLanguages +
+                                '?' +
+                                routes.PASSWORD_FORGET
+                            }
+                            component={() => <PasswordForgetPage />}
                         />
                         <Route
                             exact
@@ -158,8 +280,30 @@ class App extends Component {
                         />
                         <Route
                             exact
+                            path={
+                                '/:lng' +
+                                allowedLanguages +
+                                '?' +
+                                routes.PASSWORD_RESET +
+                                '/:id'
+                            }
+                            component={() => <PasswordResetPage />}
+                        />
+                        <Route
+                            exact
                             path={routes.PASSWORD_RESET + '/:id'}
                             component={() => <PasswordResetPage />}
+                        />
+                        <Route
+                            exact
+                            path={
+                                '/:lng' +
+                                allowedLanguages +
+                                '?' +
+                                routes.VERIFY +
+                                '/:id'
+                            }
+                            component={() => <VerifyPage />}
                         />
                         <Route
                             exact
@@ -168,8 +312,25 @@ class App extends Component {
                         />
                         <Route
                             exact
+                            path={
+                                '/:lng' +
+                                allowedLanguages +
+                                '?' +
+                                routes.ACCOUNT
+                            }
+                            component={() => <AccountPage />}
+                        />
+                        <Route
+                            exact
                             path={routes.ACCOUNT}
                             component={() => <AccountPage />}
+                        />
+                        <Route
+                            exact
+                            path={
+                                '/:lng' + allowedLanguages + '?' + routes.ADMIN
+                            }
+                            component={() => <AdminPage />}
                         />
                         <Route
                             exact
@@ -178,10 +339,20 @@ class App extends Component {
                         />
                         <Route
                             exact
+                            path={
+                                '/:lng' +
+                                allowedLanguages +
+                                '?' +
+                                routes.EDIT_PROFILE
+                            }
+                            component={() => <EditProfilePage />}
+                        />
+                        <Route
+                            exact
                             path={routes.EDIT_PROFILE}
                             component={() => <EditProfilePage />}
                         />
-                        {/* <Route  component={() => <Error404Page />} /> */}
+                        <Route component={() => <div>Not found!</div>} />
                     </Switch>
 
                     <BottomNavigation>

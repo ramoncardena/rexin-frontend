@@ -3,10 +3,15 @@ import XHR from 'i18next-xhr-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { reactI18nextModule } from 'react-i18next';
 
-const options = {
-    fallbackLng: ['en', 'es'],
+const supportedLanguages = ['en', 'es'];
 
-    ns: ['index', 'errors'],
+const options = {
+    preload: supportedLanguages,
+    fallbackLng: ['en', 'es'],
+    whitelist: supportedLanguages,
+    saveMissing: false,
+    saveMissingTo: 'fallback',
+    ns: ['index'],
     defaultNS: 'index',
 
     debug: true,
@@ -14,7 +19,9 @@ const options = {
     interpolation: {
         escapeValue: false
     },
-
+    detection: {
+        order: ['path', 'subdomain', 'querystring']
+    },
     react: {
         wait: true
     }
@@ -23,13 +30,14 @@ const options = {
 // for browser use xhr backend to load translations and browser lng detector
 if (typeof document !== 'undefined') {
     i18n.use(XHR)
+        .use(LanguageDetector)
         .init({
+            ...options,
             initImmediate: false,
             backend: {
                 loadPath: '/locales/{{lng}}/{{ns}}.json'
             }
-        })
-        .use(LanguageDetector);
+        });
 }
 
 // initialize if not already initialized

@@ -118,8 +118,13 @@ class AccountPage extends Component {
     }
 
     handleEditProfile() {
-        const { history } = this.props;
-        history.push(routes.EDIT_PROFILE);
+        const { history, i18n } = this.props;
+        const defaultLanguage = 'en';
+        const currentLanguage =
+            i18n.languages[0] === defaultLanguage
+                ? ''
+                : '/' + i18n.languages[0];
+        history.push(currentLanguage + routes.EDIT_PROFILE);
     }
 
     render() {

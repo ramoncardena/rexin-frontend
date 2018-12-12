@@ -4,6 +4,7 @@ import { compose } from 'recompose';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 import Icon from 'react-icons-kit';
+import { withNamespaces } from 'react-i18next';
 
 import * as routes from '../../constants/routes';
 
@@ -30,11 +31,15 @@ const StyledButton = styled.button`
 
 class SignOutButton extends React.Component {
     onHandelClick = event => {
-        const { onLogoutSuccess, authToken, history } = this.props;
-
+        const { onLogoutSuccess, authToken, history, i18n } = this.props;
+        const defaultLanguage = 'en';
+        const currentLanguage =
+            i18n.languages[0] === defaultLanguage
+                ? ''
+                : '/' + i18n.languages[0];
         localStorage.removeItem('token');
         onLogoutSuccess(authToken);
-        history.push(routes.HOME);
+        history.push(currentLanguage + routes.HOME);
 
         event.preventDefault();
     };
@@ -63,6 +68,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default compose(
+    withNamespaces('index'),
     connect(
         mapStateToProps,
         mapDispatchToProps
