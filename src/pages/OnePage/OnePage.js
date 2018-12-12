@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { Helmet } from 'react-helmet';
-import { translate } from 'react-i18next';
+import { withNamespaces } from 'react-i18next';
 import styled from 'styled-components';
 
 import * as config from '../../config';
@@ -62,7 +62,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default compose(
-    translate('index'),
+    withNamespaces('index'),
     connect(
         mapStateToProps,
         mapDispatchToProps

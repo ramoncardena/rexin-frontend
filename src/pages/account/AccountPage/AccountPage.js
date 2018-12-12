@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { Helmet } from 'react-helmet';
-import { translate } from 'react-i18next';
+import { withNamespaces } from 'react-i18next';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 import Loader from 'react-loader-spinner';
@@ -118,8 +118,13 @@ class AccountPage extends Component {
     }
 
     handleEditProfile() {
-        const { history } = this.props;
-        history.push(routes.EDIT_PROFILE);
+        const { history, i18n } = this.props;
+        const defaultLanguage = config.defaultLanguage;
+        const currentLanguage =
+            i18n.languages[0] === defaultLanguage
+                ? ''
+                : '/' + i18n.languages[0];
+        history.push(currentLanguage + routes.EDIT_PROFILE);
     }
 
     render() {
@@ -209,6 +214,6 @@ export default compose(
         mapStateToProps,
         mapDispatchToProps
     ),
-    translate('index'),
+    withNamespaces('index'),
     withRouter
 )(AccountPage);

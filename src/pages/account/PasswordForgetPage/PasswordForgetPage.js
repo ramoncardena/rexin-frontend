@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
-import { translate } from 'react-i18next';
+import { withNamespaces } from 'react-i18next';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -119,7 +119,7 @@ const StyledForgetLink = styled.p`
     }
 `;
 
-const PasswordForgetPage = ({ t }) => (
+const PasswordForgetPage = ({ t, i18n }) => (
     <div>
         <Helmet>
             <title>{t('Password_Forget_Title')}</title>
@@ -227,16 +227,24 @@ class PasswordForgetForm extends Component {
     }
 }
 
-const PasswordForgetLink = ({ t, textcolor, hovercolor, linkcolor }) => (
-    <StyledForgetLink
-        textcolor={config.textColor}
-        linkcolor={config.primaryColor}
-        hovercolor={config.hoverColor}
-    >
-        <Link to={routes.PASSWORD_FORGET}>{t('Sign_In_Forgot_Password')}</Link>
-    </StyledForgetLink>
-);
+function PasswordForgetLink(props) {
+    const { t, i18n } = props;
+    const defaultLanguage = config.defaultLanguage;
+    const currentLanguage =
+        i18n.languages[0] === defaultLanguage ? '' : '/' + i18n.languages[0];
+    return (
+        <StyledForgetLink
+            textcolor={config.textColor}
+            linkcolor={config.primaryColor}
+            hovercolor={config.hoverColor}
+        >
+            <Link to={currentLanguage + routes.PASSWORD_FORGET}>
+                {t('Sign_In_Forgot_Password')}
+            </Link>
+        </StyledForgetLink>
+    );
+}
 
-export default translate('index')(PasswordForgetPage);
+export default withNamespaces('index')(PasswordForgetPage);
 
 export { PasswordForgetForm, PasswordForgetLink };

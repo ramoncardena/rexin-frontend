@@ -7,8 +7,8 @@ import rootReducer from './reducers';
 import App from './App';
 import { loadState, saveState } from './utils/localStorage';
 import * as serviceWorker from './serviceWorker';
-
-import './utils/i18n';
+import { I18nextProvider } from 'react-i18next';
+import i18n from './utils/i18n';
 
 // This will make sure WebFont.load is only used in the browser.
 if (typeof window !== 'undefined') {
@@ -31,7 +31,13 @@ store.subscribe(() => {
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <I18nextProvider
+            i18n={i18n}
+            initialI18nStore={window.initalI18nStore}
+            initialLanguage={window.initialLanguage}
+        >
+            <App />
+        </I18nextProvider>
     </Provider>,
     document.getElementById('root')
 );

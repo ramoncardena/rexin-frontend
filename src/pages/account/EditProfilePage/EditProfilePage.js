@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { Helmet } from 'react-helmet';
-import { translate } from 'react-i18next';
+import { withNamespaces } from 'react-i18next';
 import styled from 'styled-components';
 import Loader from 'react-loader-spinner';
 
@@ -154,7 +154,7 @@ class EditProfilePage extends Component {
     }
 
     render() {
-        const { t, history, authToken } = this.props;
+        const { t, i18n, history, authToken } = this.props;
         const { user } = this.state;
         return (
             <div>
@@ -177,6 +177,7 @@ class EditProfilePage extends Component {
                                 user={user}
                                 authToken={authToken}
                                 t={t}
+                                i18n={i18n}
                             />
                         </FormContainer>
                         <FormContainer>
@@ -238,7 +239,7 @@ class EditForm extends Component {
     onUpdate = event => {
         const { name, phone, city, country } = this.state;
 
-        const { history, authToken } = this.props;
+        const { i18n, history, authToken } = this.props;
 
         const data = Object.assign(
             {},
@@ -255,7 +256,12 @@ class EditForm extends Component {
             .then(response => response.json())
             .then(data => {
                 if (!data.errors) {
-                    history.push(routes.ACCOUNT);
+                    const defaultLanguage = config.defaultLanguage;
+                    const currentLanguage =
+                        i18n.languages[0] === defaultLanguage
+                            ? ''
+                            : '/' + i18n.languages[0];
+                    history.push(currentLanguage + routes.ACCOUNT);
                 } else {
                     this.setState({ error: apiError.message(data.errors) });
                     this.setState({
@@ -534,7 +540,7 @@ const authCondition = authToken => !!authToken;
 
 export default compose(
     withAuthorization(authCondition),
-    translate('index'),
+    withNamespaces('index'),
     connect(
         mapStateToProps,
         mapDispatchToProps

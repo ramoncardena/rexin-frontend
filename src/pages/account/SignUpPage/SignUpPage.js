@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { compose } from 'recompose';
 import { Helmet } from 'react-helmet';
-import { translate } from 'react-i18next';
+import { withNamespaces } from 'react-i18next';
 import { Link, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -115,7 +115,7 @@ const StyledSignUpLink = styled.p`
 
 class SignUpPage extends Component {
     render() {
-        const { t, history } = this.props;
+        const { t, i18n, history } = this.props;
 
         return (
             <div>
@@ -130,7 +130,7 @@ class SignUpPage extends Component {
                     <Title color={config.primaryColor}>{t('Sign_Up_H1')}</Title>
                     <Text>{t('Sign_Up_Intro')}</Text>
                     <FormContainer>
-                        <SignUpForm t={t} history={history} />
+                        <SignUpForm t={t} i18n={i18n} history={history} />
                     </FormContainer>
                 </PageContainer>
             </div>
@@ -161,7 +161,7 @@ class SignUpForm extends Component {
     onSubmit = event => {
         const { fullname, email, passwordOne } = this.state;
 
-        const { history } = this.props;
+        const { history, i18n } = this.props;
 
         const newUser = {
             name: fullname,
@@ -175,7 +175,12 @@ class SignUpForm extends Component {
             .then(data => {
                 console.dir(data);
                 if (!data.errors) {
-                    history.push(routes.HOME);
+                    const defaultLanguage = config.defaultLanguage;
+                    const currentLanguage =
+                        i18n.languages[0] === defaultLanguage
+                            ? ''
+                            : '/' + i18n.languages[0];
+                    history.push(currentLanguage + routes.HOME);
                 } else {
                     this.setState({ error: apiError.message(data.errors) });
                     this.setState({
@@ -302,19 +307,27 @@ class SignUpForm extends Component {
     }
 }
 
-const SignUpLink = ({ t, textcolor, hovercolor, linkcolor }) => (
-    <StyledSignUpLink
-        textcolor={config.textColor}
-        linkcolor={config.primaryColor}
-        hovercolor={config.hoverColor}
-    >
-        {t('Sign_In_New_Account_Link')}{' '}
-        <Link to={routes.SIGN_UP}>{t('Global_Sign_Up')}</Link>
-    </StyledSignUpLink>
-);
+function SignUpLink(props) {
+    const { t, i18n } = props;
+    const defaultLanguage = config.defaultLanguage;
+    const currentLanguage =
+        i18n.languages[0] === defaultLanguage ? '' : '/' + i18n.languages[0];
+    return (
+        <StyledSignUpLink
+            textcolor={config.textColor}
+            linkcolor={config.primaryColor}
+            hovercolor={config.hoverColor}
+        >
+            {t('Sign_In_New_Account_Link')}{' '}
+            <Link to={currentLanguage + routes.SIGN_UP}>
+                {t('Global_Sign_Up')}
+            </Link>
+        </StyledSignUpLink>
+    );
+}
 
 export default compose(
-    translate('index'),
+    withNamespaces('index'),
     withRouter
 )(SignUpPage);
 

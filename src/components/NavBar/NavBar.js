@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import i18next from 'i18next';
 
 import NavMenu from '../NavMenu';
 import NavIconMenu from '../NavIconMenu';
@@ -126,13 +125,13 @@ class NavBar extends Component {
 
     render() {
         const {
+            i18n,
             authToken,
             menuElements,
             accountElements,
             adminElements
         } = this.props;
         const { isAdmin } = this.state;
-        const currLang = i18next.languages[0];
 
         return (
             <StyledNavBar>
@@ -141,11 +140,13 @@ class NavBar extends Component {
                         <NavLogo
                             src={this.props.siteLogo}
                             description={this.props.siteDescription}
+                            link={this.props.siteHome}
                         />
                         <NavTitle
                             title={this.props.siteTitle}
                             primaryColor={this.props.primaryColor}
                             secondaryColor={this.props.secondaryColor}
+                            link={this.props.siteHome}
                         />
                     </StyledNavLeft>
 
@@ -186,7 +187,7 @@ class NavBar extends Component {
                         </TabletPortaitUp>
 
                         <LangSelector
-                            lang={currLang}
+                            i18n={i18n}
                             primaryColor={this.props.primaryColor}
                             secondaryColor={this.props.secondaryColor}
                         />
@@ -227,16 +228,16 @@ class NavBar extends Component {
 }
 
 /* Component: NAVLOGO */
-const NavLogo = ({ src, description }) => (
-    <Link to="/">
+const NavLogo = ({ src, description, link }) => (
+    <Link to={link}>
         <img src={src} alt={description} />
     </Link>
 );
 
 /* Component: NAVTITLE */
-const NavTitle = ({ title, primaryColor, secondaryColor }) => (
+const NavTitle = ({ title, primaryColor, secondaryColor, link }) => (
     <StyledTitle primaryColor={primaryColor}>
-        <Link to="/">{title}</Link>
+        <Link to={link}>{title}</Link>
     </StyledTitle>
 );
 

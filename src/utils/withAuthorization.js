@@ -4,6 +4,7 @@ import { compose } from 'recompose';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import Loader from 'react-loader-spinner';
+import i18next from 'i18next';
 
 import { profile } from '../api';
 import * as routes from '../constants/routes';
@@ -58,6 +59,10 @@ const withAuthorization = authCondition => Component => {
         componentDidMount() {
             this._isMounted = true;
 
+            const currentLanguage =
+                i18next.languages[0] === config.defaultLanguage
+                    ? ''
+                    : '/' + i18next.languages[0];
             const { onTokenRecover } = this.props;
             const sToken = localStorage.getItem('token');
 
@@ -68,7 +73,9 @@ const withAuthorization = authCondition => Component => {
                     .then(response => response.json())
                     .then(profile => {
                         if (!authCondition(sToken, profile.role)) {
-                            this.props.history.push(routes.SIGN_IN);
+                            this.props.history.push(
+                                currentLanguage + routes.SIGN_IN
+                            );
                         } else {
                             if (this._isMounted)
                                 this.setState({ isResolved: true });
@@ -76,11 +83,13 @@ const withAuthorization = authCondition => Component => {
                     })
                     .catch(error => {
                         if (!authCondition(sToken, '')) {
-                            this.props.history.push(routes.SIGN_IN);
+                            this.props.history.push(
+                                currentLanguage + routes.SIGN_IN
+                            );
                         }
                     });
             } else {
-                this.props.history.push(routes.SIGN_IN);
+                this.props.history.push(currentLanguage + routes.SIGN_IN);
             }
         }
 

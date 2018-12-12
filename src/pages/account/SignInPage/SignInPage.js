@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
-import { translate } from 'react-i18next';
+import { withNamespaces } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 
 import { SignUpLink } from '../SignUpPage';
@@ -109,7 +109,7 @@ class SignInPage extends Component {
     }
 
     render() {
-        const { t, history, onLoginSuccess, authToken } = this.props;
+        const { t, i18n, history, onLoginSuccess, authToken } = this.props;
 
         return (
             <div>
@@ -126,18 +126,21 @@ class SignInPage extends Component {
                     <FormContainer>
                         <SignInForm
                             t={t}
+                            i18n={i18n}
                             history={history}
                             onLoginSuccess={onLoginSuccess}
                             authToken={authToken}
                         />
                         <PasswordForgetLink
                             t={t}
+                            i18n={i18n}
                             textcolor={config.primaryColor}
                             linkcolor={config.secondaryColor}
                             hovercolor={config.hoverColor}
                         />
                         <SignUpLink
                             t={t}
+                            i18n={i18n}
                             textcolor={config.primaryColor}
                             linkcolor={config.secondaryColor}
                             hovercolor={config.hoverColor}
@@ -171,7 +174,7 @@ class SignInForm extends Component {
     onSubmit = event => {
         const { email, password } = this.state;
 
-        const { history, onLoginSuccess } = this.props;
+        const { history, onLoginSuccess, i18n } = this.props;
 
         this.setState({ error: null });
 
@@ -185,9 +188,14 @@ class SignInForm extends Component {
             .then(response => response.json())
             .then(data => {
                 if (!data.errors) {
+                    const defaultLanguage = config.defaultLanguage;
+                    const currentLanguage =
+                        i18n.languages[0] === defaultLanguage
+                            ? ''
+                            : '/' + i18n.languages[0];
                     onLoginSuccess(data);
                     localStorage.setItem('token', data.token);
-                    history.push(routes.HOME);
+                    history.push(currentLanguage + routes.HOME);
                 } else {
                     this.setState({ error: apiError.message(data.errors) });
                     this.setState({
@@ -284,7 +292,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default compose(
-    translate('index'),
+    withNamespaces('index'),
     connect(
         mapStateToProps,
         mapDispatchToProps

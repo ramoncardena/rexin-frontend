@@ -1,9 +1,11 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import i18next from 'i18next';
 
 import { Icon } from 'react-icons-kit';
 import { flag } from 'react-icons-kit/feather/flag';
+import * as config from '../../config';
 
 const StyledDropdownLink = styled.button`
     color: ${props => props.textcolor};
@@ -66,23 +68,33 @@ class LangSelector extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            lang: this.props.lang ? this.props.lang : 'es'
+            lang: i18next.languages[0]
+                ? i18next.languages[0]
+                : config.defaultLanguage
         };
         this.handleEsClick = this.handleEsClick.bind(this);
         this.handleEnClick = this.handleEnClick.bind(this);
     }
 
     handleEsClick() {
-        i18next.changeLanguage('es');
-        this.setState({
-            lang: 'es'
-        });
+        const { history, location } = this.props;
+        if (i18next.languages[0] !== 'es') {
+            i18next.changeLanguage('es');
+            this.setState({
+                lang: 'es'
+            });
+            history.push('/es' + location.pathname);
+        }
     }
     handleEnClick() {
-        i18next.changeLanguage('en');
-        this.setState({
-            lang: 'en'
-        });
+        const { history, location } = this.props;
+        if (i18next.languages[0] !== 'en') {
+            i18next.changeLanguage('en');
+            this.setState({
+                lang: 'en'
+            });
+            history.push(location.pathname.replace('es/', ''));
+        }
     }
     render() {
         return (
@@ -116,4 +128,4 @@ class LangSelector extends React.Component {
     }
 }
 
-export default LangSelector;
+export default withRouter(LangSelector);
