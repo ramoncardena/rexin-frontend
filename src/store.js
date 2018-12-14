@@ -1,8 +1,8 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import { connectRouter, routerMiddleware } from 'connected-react-router';
+import { routerMiddleware } from 'connected-react-router';
 import thunk from 'redux-thunk';
 import { createBrowserHistory, createMemoryHistory } from 'history';
-import rootReducer from './reducers';
+import createRootReducer from './reducers';
 import { loadState, saveState } from './utils/localStorage';
 
 // A nice helper to tell us if we're on the server
@@ -50,7 +50,7 @@ export default (url = '/') => {
 
     // Create the store
     const store = createStore(
-        connectRouter(history)(rootReducer),
+        createRootReducer(history),
         initialState,
         composedEnhancers
     );

@@ -30,15 +30,17 @@ const { store, history } = createStore();
 
 const Application = (
     <Provider store={store}>
-        <Frontload noServerRender={true}>
-            <I18nextProvider
-                i18n={i18n}
-                initialI18nStore={window.initalI18nStore}
-                initialLanguage={window.initialLanguage}
-            >
-                <App />
-            </I18nextProvider>
-        </Frontload>
+        <ConnectedRouter history={history}>
+            <Frontload noServerRender={true}>
+                <I18nextProvider
+                    i18n={i18n}
+                    initialI18nStore={window.initalI18nStore}
+                    initialLanguage={window.initialLanguage}
+                >
+                    <App />
+                </I18nextProvider>
+            </Frontload>
+        </ConnectedRouter>
     </Provider>
 );
 
