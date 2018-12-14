@@ -3,7 +3,7 @@ import * as config from '../config';
 
 function alternateLangs(url, currentLng) {
     // Load all languages and filter current language
-    const languages = Array.from(config.allLanguages).filter(
+    const languages = Array.from(config.ALL_LANGUAGES).filter(
         lng => lng !== currentLng
     );
     // Load url object for current location
@@ -16,7 +16,7 @@ function alternateLangs(url, currentLng) {
     var htmlTags = '';
 
     // If current language is the default language
-    if (currentLng === config.defaultLanguage) {
+    if (currentLng === config.DEFAULT_LANGUAGE) {
         languages.forEach(item => {
             htmlTags =
                 htmlTags +

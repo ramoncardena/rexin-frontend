@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import { Helmet } from 'react-helmet';
 import { withNamespaces } from 'react-i18next';
 import styled from 'styled-components';
 
+import Page from '../../utils/page';
 import * as config from '../../config';
 
 const PageContainer = styled.div`
@@ -32,22 +32,19 @@ class OnePage extends Component {
     }
 
     render() {
-        const { t } = this.props;
+        const { t, i18n } = this.props;
         return (
-            <div>
-                <Helmet>
-                    <title>{t('One_Title')}</title>
-                    <meta
-                        name="description"
-                        content={t('One_SEO_Description')}
-                    />
-                </Helmet>
-
+            <Page
+                id="one"
+                title={t('One_Title')}
+                description={t('One_SEO_Description')}
+                currentLang={i18n.languages[0]}
+            >
                 <PageContainer>
-                    <Title color={config.primaryColor}>{t('One_H1')}</Title>
+                    <Title color={config.PRIMARY_COLOR}>{t('One_H1')}</Title>
                     <p>{t('One_Demo_Text')}</p>
                 </PageContainer>
-            </div>
+            </Page>
         );
     }
 }

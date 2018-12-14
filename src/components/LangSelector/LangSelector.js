@@ -70,7 +70,7 @@ class LangSelector extends React.Component {
         this.state = {
             lang: i18next.languages[0]
                 ? i18next.languages[0]
-                : config.defaultLanguage
+                : config.DEFAULT_LANGUAGE
         };
         this.handleEsClick = this.handleEsClick.bind(this);
         this.handleEnClick = this.handleEnClick.bind(this);

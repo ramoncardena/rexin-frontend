@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Helmet } from 'react-helmet';
 import { withNamespaces } from 'react-i18next';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import { auth } from '../../../api';
 import * as apiError from '../../../utils/apiError';
+import Page from '../../../utils/page';
 import * as routes from '../../../constants/routes';
 import * as config from '../../../config';
 
@@ -120,22 +120,22 @@ const StyledForgetLink = styled.p`
 `;
 
 const PasswordForgetPage = ({ t, i18n }) => (
-    <div>
-        <Helmet>
-            <title>{t('Password_Forget_Title')}</title>
-            <meta
-                name="description"
-                content={t('Password_Forget_SEO_Description')}
-            />
-        </Helmet>
+    <Page
+        id="password-forgot"
+        title={t('Password_Forget_Title')}
+        description={t('Password_Forget_SEO_Description')}
+        currentLang={i18n.languages[0]}
+    >
         <PageContainer>
-            <Title color={config.primaryColor}>{t('Password_Forget_H1')}</Title>
+            <Title color={config.PRIMARY_COLOR}>
+                {t('Password_Forget_H1')}
+            </Title>
             <Text>{t('Password_Forget_Intro')}</Text>
             <FormContainer>
                 <PasswordForgetForm t={t} />
             </FormContainer>
         </PageContainer>
-    </div>
+    </Page>
 );
 
 const byPropKey = (propertyName, value) => () => ({
@@ -200,7 +200,7 @@ class PasswordForgetForm extends Component {
                 <InputGroup>
                     <InputField
                         value={this.state.email}
-                        primaryColor={config.primaryColor}
+                        primaryColor={config.PRIMARY_COLOR}
                         onChange={event =>
                             this.setState(
                                 byPropKey('email', event.target.value)
@@ -216,7 +216,7 @@ class PasswordForgetForm extends Component {
                 <FormButton
                     disabled={isInvalid}
                     type="submit"
-                    primaryColor={config.primaryColor}
+                    primaryColor={config.PRIMARY_COLOR}
                 >
                     {t('Password_Forget_Title')}
                 </FormButton>
@@ -229,14 +229,14 @@ class PasswordForgetForm extends Component {
 
 function PasswordForgetLink(props) {
     const { t, i18n } = props;
-    const defaultLanguage = config.defaultLanguage;
+    const defaultLanguage = config.DEFAULT_LANGUAGE;
     const currentLanguage =
         i18n.languages[0] === defaultLanguage ? '' : '/' + i18n.languages[0];
     return (
         <StyledForgetLink
-            textcolor={config.textColor}
-            linkcolor={config.primaryColor}
-            hovercolor={config.hoverColor}
+            textcolor={config.TEXT_COLOR}
+            linkcolor={config.PRIMARY_COLOR}
+            hovercolor={config.HOVER_COLOR}
         >
             <Link to={currentLanguage + routes.PASSWORD_FORGET}>
                 {t('Sign_In_Forgot_Password')}

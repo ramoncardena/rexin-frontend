@@ -119,7 +119,7 @@ class AccountPage extends Component {
 
     handleEditProfile() {
         const { history, i18n } = this.props;
-        const defaultLanguage = config.defaultLanguage;
+        const defaultLanguage = config.DEFAULT_LANGUAGE;
         const currentLanguage =
             i18n.languages[0] === defaultLanguage
                 ? ''
@@ -143,7 +143,7 @@ class AccountPage extends Component {
                 {!!user ? (
                     !error ? (
                         <PageContainer>
-                            <Title color={config.primaryColor}>
+                            <Title color={config.PRIMARY_COLOR}>
                                 {t('Account_H1')}
                             </Title>
                             <ItemLabel>{t('Account_Name')}</ItemLabel>
@@ -171,7 +171,7 @@ class AccountPage extends Component {
                             <EditProfileButton
                                 disabled={false}
                                 onClick={() => this.handleEditProfile()}
-                                primaryColor={config.primaryColor}
+                                primaryColor={config.PRIMARY_COLOR}
                             >
                                 {t('Account_Edit_Button')}
                             </EditProfileButton>
@@ -185,7 +185,7 @@ class AccountPage extends Component {
                     <PageContainer>
                         <Loader
                             type="Oval"
-                            color={config.primaryColor}
+                            color={config.PRIMARY_COLOR}
                             height="50"
                             width="50"
                         />

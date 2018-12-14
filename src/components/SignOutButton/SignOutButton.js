@@ -33,7 +33,7 @@ const StyledButton = styled.button`
 class SignOutButton extends React.Component {
     onHandelClick = event => {
         const { onLogoutSuccess, authToken, history, i18n } = this.props;
-        const defaultLanguage = config.defaultLanguage;
+        const defaultLanguage = config.DEFAULT_LANGUAGE;
         const currentLanguage =
             i18n.languages[0] === defaultLanguage
                 ? ''

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import { Helmet } from 'react-helmet';
 import { withNamespaces } from 'react-i18next';
 import styled from 'styled-components';
 import Loader from 'react-loader-spinner';
@@ -11,6 +10,7 @@ import { profile } from '../../../api';
 import withAuthorization from '../../../utils/withAuthorization';
 import * as routes from '../../../constants/routes';
 import * as apiError from '../../../utils/apiError';
+import Page from '../../../utils/page';
 import * as config from '../../../config';
 
 const PageContainer = styled.div`
@@ -157,17 +157,15 @@ class EditProfilePage extends Component {
         const { t, i18n, history, authToken } = this.props;
         const { user } = this.state;
         return (
-            <div>
-                <Helmet>
-                    <title>{t('Edit_Profile_Title')}</title>
-                    <meta
-                        name="description"
-                        content={t('Edit_Profile_SEO_Description')}
-                    />
-                </Helmet>
+            <Page
+                id="edit-profile"
+                title={t('Edit_Profile_Title')}
+                description={t('Edit_Profile_SEO_Description')}
+                currentLang={i18n.languages[0]}
+            >
                 {user ? (
                     <PageContainer>
-                        <Title color={config.primaryColor}>
+                        <Title color={config.PRIMARY_COLOR}>
                             {t('Edit_Profile_H1')}
                         </Title>
                         <Text>{t('Edit_Profile_Intro')}</Text>
@@ -193,13 +191,13 @@ class EditProfilePage extends Component {
                     <PageContainer>
                         <Loader
                             type="Oval"
-                            color={config.primaryColor}
+                            color={config.PRIMARY_COLOR}
                             height="50"
                             width="50"
                         />
                     </PageContainer>
                 )}
-            </div>
+            </Page>
         );
     }
 }
@@ -256,7 +254,7 @@ class EditForm extends Component {
             .then(response => response.json())
             .then(data => {
                 if (!data.errors) {
-                    const defaultLanguage = config.defaultLanguage;
+                    const defaultLanguage = config.DEFAULT_LANGUAGE;
                     const currentLanguage =
                         i18n.languages[0] === defaultLanguage
                             ? ''
@@ -321,7 +319,7 @@ class EditForm extends Component {
                 <InputGroup>
                     <InputField
                         value={name}
-                        primaryColor={config.primaryColor}
+                        primaryColor={config.PRIMARY_COLOR}
                         onChange={event =>
                             this.setState(byPropKey('name', event.target.value))
                         }
@@ -335,7 +333,7 @@ class EditForm extends Component {
                 <InputGroup>
                     <InputField
                         value={phone}
-                        primaryColor={config.primaryColor}
+                        primaryColor={config.PRIMARY_COLOR}
                         onChange={event =>
                             this.setState(
                                 byPropKey('phone', event.target.value)
@@ -351,7 +349,7 @@ class EditForm extends Component {
                 <InputGroup>
                     <InputField
                         value={city}
-                        primaryColor={config.primaryColor}
+                        primaryColor={config.PRIMARY_COLOR}
                         onChange={event =>
                             this.setState(byPropKey('city', event.target.value))
                         }
@@ -365,7 +363,7 @@ class EditForm extends Component {
                 <InputGroup>
                     <InputField
                         value={country}
-                        primaryColor={config.primaryColor}
+                        primaryColor={config.PRIMARY_COLOR}
                         onChange={event =>
                             this.setState(
                                 byPropKey('country', event.target.value)
@@ -381,12 +379,12 @@ class EditForm extends Component {
                 <FormButton
                     disabled={isInvalid}
                     type="submit"
-                    primaryColor={config.primaryColor}
+                    primaryColor={config.PRIMARY_COLOR}
                 >
                     {!!isLoading ? (
                         <Loader
                             type="Oval"
-                            color={config.primaryColor}
+                            color={config.PRIMARY_COLOR}
                             height="16"
                             width="16"
                         />
@@ -477,7 +475,7 @@ class PasswordForm extends Component {
                 <InputGroup>
                     <InputField
                         value={password}
-                        primaryColor={config.primaryColor}
+                        primaryColor={config.PRIMARY_COLOR}
                         onChange={event =>
                             this.setState(
                                 byPropKey('password', event.target.value)
@@ -493,7 +491,7 @@ class PasswordForm extends Component {
                 <InputGroup>
                     <InputField
                         value={confirmation}
-                        primaryColor={config.primaryColor}
+                        primaryColor={config.PRIMARY_COLOR}
                         onChange={event =>
                             this.setState(
                                 byPropKey('confirmation', event.target.value)
@@ -506,12 +504,12 @@ class PasswordForm extends Component {
                 <FormButton
                     disabled={isInvalid}
                     type="submit"
-                    primaryColor={config.primaryColor}
+                    primaryColor={config.PRIMARY_COLOR}
                 >
                     {!!isLoading ? (
                         <Loader
                             type="Oval"
-                            color={config.primaryColor}
+                            color={config.PRIMARY_COLOR}
                             height="16"
                             width="16"
                         />

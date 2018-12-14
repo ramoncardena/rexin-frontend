@@ -66,7 +66,7 @@ class App extends Component {
 
         // i18next
         const allowedLanguages = '(es)'; // use (lng1 | lng2 | lng3)
-        const defaultLanguage = config.defaultLanguage;
+        const defaultLanguage = config.DEFAULT_LANGUAGE;
         const currentLanguage =
             i18n.languages[0] === defaultLanguage
                 ? ''
@@ -126,7 +126,7 @@ class App extends Component {
             <div>
                 <Helmet htmlAttributes={{ lang: currLng }} />
                 <Router>
-                    <SiteContainer textColor={config.textColor}>
+                    <SiteContainer textColor={config.TEXT_COLOR}>
                         <TopNavigation>
                             <NavBar
                                 siteLogo={logo}
@@ -143,8 +143,8 @@ class App extends Component {
                                 homeIcon={true}
                                 homeLink={currentLanguage + routes.HOME}
                                 loginRoute={currentLanguage + routes.SIGN_IN}
-                                primaryColor={config.primaryColor}
-                                secondaryColor={config.secondaryColor}
+                                primaryColor={config.PRIMARY_COLOR}
+                                secondaryColor={config.SECONDARY_COLOR}
                                 navPath={navPath}
                                 i18n={i18n}
                             />
@@ -370,8 +370,8 @@ class App extends Component {
 
                         <BottomNavigation>
                             <FooterBar
-                                primaryColor={config.primaryColor}
-                                secondaryColor={config.secondaryColor}
+                                primaryColor={config.PRIMARY_COLOR}
+                                secondaryColor={config.SECONDARY_COLOR}
                                 copyright={copyright}
                                 border={false}
                                 menu={footerMenu}

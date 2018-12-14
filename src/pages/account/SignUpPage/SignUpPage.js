@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { compose } from 'recompose';
-import { Helmet } from 'react-helmet';
 import { withNamespaces } from 'react-i18next';
 import { Link, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
@@ -8,6 +7,7 @@ import styled from 'styled-components';
 import { auth } from '../../../api';
 import * as routes from '../../../constants/routes';
 import * as apiError from '../../../utils/apiError';
+import Page from '../../../utils/page';
 import * as config from '../../../config';
 
 const PageContainer = styled.div`
@@ -118,22 +118,22 @@ class SignUpPage extends Component {
         const { t, i18n, history } = this.props;
 
         return (
-            <div>
-                <Helmet>
-                    <title> {t('Sign_Up_Title')} </title>
-                    <meta
-                        name="description"
-                        content={t('Sign_Up_SEO_Description')}
-                    />
-                </Helmet>
+            <Page
+                id="signup"
+                title={t('Sign_Up_Title')}
+                description={t('Sign_Up_SEO_Description')}
+                currentLang={i18n.languages[0]}
+            >
                 <PageContainer>
-                    <Title color={config.primaryColor}>{t('Sign_Up_H1')}</Title>
+                    <Title color={config.PRIMARY_COLOR}>
+                        {t('Sign_Up_H1')}
+                    </Title>
                     <Text>{t('Sign_Up_Intro')}</Text>
                     <FormContainer>
                         <SignUpForm t={t} i18n={i18n} history={history} />
                     </FormContainer>
                 </PageContainer>
-            </div>
+            </Page>
         );
     }
 }
@@ -175,7 +175,7 @@ class SignUpForm extends Component {
             .then(data => {
                 console.dir(data);
                 if (!data.errors) {
-                    const defaultLanguage = config.defaultLanguage;
+                    const defaultLanguage = config.DEFAULT_LANGUAGE;
                     const currentLanguage =
                         i18n.languages[0] === defaultLanguage
                             ? ''
@@ -236,7 +236,7 @@ class SignUpForm extends Component {
                 <InputGroup>
                     <InputField
                         value={fullname}
-                        primaryColor={config.primaryColor}
+                        primaryColor={config.PRIMARY_COLOR}
                         onChange={event =>
                             this.setState(
                                 byPropKey('fullname', event.target.value)
@@ -252,7 +252,7 @@ class SignUpForm extends Component {
                 <InputGroup>
                     <InputField
                         value={email}
-                        primaryColor={config.primaryColor}
+                        primaryColor={config.PRIMARY_COLOR}
                         onChange={event =>
                             this.setState(
                                 byPropKey('email', event.target.value)
@@ -268,7 +268,7 @@ class SignUpForm extends Component {
                 <InputGroup>
                     <InputField
                         value={passwordOne}
-                        primaryColor={config.primaryColor}
+                        primaryColor={config.PRIMARY_COLOR}
                         onChange={event =>
                             this.setState(
                                 byPropKey('passwordOne', event.target.value)
@@ -284,7 +284,7 @@ class SignUpForm extends Component {
                 <InputGroup>
                     <InputField
                         value={passwordTwo}
-                        primaryColor={config.primaryColor}
+                        primaryColor={config.PRIMARY_COLOR}
                         onChange={event =>
                             this.setState(
                                 byPropKey('passwordTwo', event.target.value)
@@ -297,7 +297,7 @@ class SignUpForm extends Component {
                 <FormButton
                     disabled={isInvalid}
                     type="submit"
-                    primaryColor={config.primaryColor}
+                    primaryColor={config.PRIMARY_COLOR}
                 >
                     {t('Global_Sign_Up')}
                 </FormButton>
@@ -309,14 +309,14 @@ class SignUpForm extends Component {
 
 function SignUpLink(props) {
     const { t, i18n } = props;
-    const defaultLanguage = config.defaultLanguage;
+    const defaultLanguage = config.DEFAULT_LANGUAGE;
     const currentLanguage =
         i18n.languages[0] === defaultLanguage ? '' : '/' + i18n.languages[0];
     return (
         <StyledSignUpLink
-            textcolor={config.textColor}
-            linkcolor={config.primaryColor}
-            hovercolor={config.hoverColor}
+            textcolor={config.TEXT_COLOR}
+            linkcolor={config.PRIMARY_COLOR}
+            hovercolor={config.HOVER_COLOR}
         >
             {t('Sign_In_New_Account_Link')}{' '}
             <Link to={currentLanguage + routes.SIGN_UP}>
