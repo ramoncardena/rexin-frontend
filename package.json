@@ -26,6 +26,7 @@
         "js-cookie": "^2.2.0",
         "md5-file": "^4.0.0",
         "morgan": "^1.9.1",
+        "nodemon": "^1.18.9",
         "query-string": "^6.2.0",
         "react": "^16.6.3",
         "react-dom": "^16.6.3",
@@ -51,7 +52,8 @@
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "serve": "cross-env NODE_ENV=production node ./server/index.js"
+        "serve": "cross-env NODE_ENV=production node ./server/index.js",
+        "serve-dev": "NODE_ENV=development nodemon ./server/index.js"
     },
     "eslintConfig": {
         "extends": "react-app"

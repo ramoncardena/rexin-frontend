@@ -2,99 +2,200 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Loadable from 'react-loadable';
 
+import LoadingOverlay from './components/LoadingOverlay';
+import NotFoundPage from './pages/NotFound';
 import * as routes from './constants/routes';
+import * as config from './config';
 
 // Languages allowed in the URL, all but the default, use (lng1 | lng2 | lng3)
 const allowedLanguages = '(es)';
 
 const HomePage = Loadable({
     loader: () => import(/* webpackChunkName: "homepage" */ './pages/HomePage'),
-    loading: () => null,
+    loading: () => (
+        <LoadingOverlay
+            loadingText=""
+            spinnerColor={config.PRIMARY_COLOR}
+            spinnerHeight="50"
+            spinnerWidth="50"
+        />
+    ),
     modules: ['homepage']
 });
 
 const OnePage = Loadable({
     loader: () => import(/* webpackChunkName: "onepage" */ './pages/OnePage'),
-    loading: () => null,
+    loading: () => (
+        <LoadingOverlay
+            loadingText=""
+            spinnerColor={config.PRIMARY_COLOR}
+            spinnerHeight="50"
+            spinnerWidth="50"
+        />
+    ),
     modules: ['onepage']
 });
 
 const TwoPage = Loadable({
     loader: () => import(/* webpackChunkName: "twopage" */ './pages/TwoPage'),
-    loading: () => null,
+    loading: () => (
+        <LoadingOverlay
+            loadingText=""
+            spinnerColor={config.PRIMARY_COLOR}
+            spinnerHeight="50"
+            spinnerWidth="50"
+        />
+    ),
     modules: ['twopage']
 });
 
 const ThreePage = Loadable({
     loader: () =>
         import(/* webpackChunkName: "threepage" */ './pages/ThreePage'),
-    loading: () => null,
+    loading: () => (
+        <LoadingOverlay
+            loadingText=""
+            spinnerColor={config.PRIMARY_COLOR}
+            spinnerHeight="50"
+            spinnerWidth="50"
+        />
+    ),
     modules: ['threepage']
 });
 
 const FourPage = Loadable({
     loader: () => import(/* webpackChunkName: "fourpage" */ './pages/FourPage'),
-    loading: () => null,
+    loading: () => (
+        <LoadingOverlay
+            loadingText=""
+            spinnerColor={config.PRIMARY_COLOR}
+            spinnerHeight="50"
+            spinnerWidth="50"
+        />
+    ),
     modules: ['fourpage']
 });
 
 const ContactPage = Loadable({
     loader: () =>
         import(/* webpackChunkName: "contactpage" */ './pages/ContactPage'),
-    loading: () => null,
+    loading: () => (
+        <LoadingOverlay
+            loadingText=""
+            spinnerColor={config.PRIMARY_COLOR}
+            spinnerHeight="50"
+            spinnerWidth="50"
+        />
+    ),
     modules: ['contactpage']
 });
 
 const SignInPage = Loadable({
     loader: () =>
         import(/* webpackChunkName: "signinpage" */ './pages/account/SignInPage'),
-    loading: () => null,
+    loading: () => (
+        <LoadingOverlay
+            loadingText=""
+            spinnerColor={config.PRIMARY_COLOR}
+            spinnerHeight="50"
+            spinnerWidth="50"
+        />
+    ),
     modules: ['signinpage']
 });
 
 const SignUpPage = Loadable({
     loader: () =>
         import(/* webpackChunkName: "signuppage" */ './pages/account/SignUpPage'),
-    loading: () => null,
+    loading: () => (
+        <LoadingOverlay
+            loadingText=""
+            spinnerColor={config.PRIMARY_COLOR}
+            spinnerHeight="50"
+            spinnerWidth="50"
+        />
+    ),
     modules: ['signuppage']
 });
 
 const PasswordForgetPage = Loadable({
     loader: () =>
         import(/* webpackChunkName: "passwordforgetpage" */ './pages/account/PasswordForgetPage'),
-    loading: () => null,
+    loading: () => (
+        <LoadingOverlay
+            loadingText=""
+            spinnerColor={config.PRIMARY_COLOR}
+            spinnerHeight="50"
+            spinnerWidth="50"
+        />
+    ),
     modules: ['passwordforgetpage']
 });
 
 const PasswordResetPage = Loadable({
     loader: () =>
         import(/* webpackChunkName: "passwordresetpage" */ './pages/account/PasswordResetPage'),
-    loading: () => null,
+    loading: () => (
+        <LoadingOverlay
+            loadingText=""
+            spinnerColor={config.PRIMARY_COLOR}
+            spinnerHeight="50"
+            spinnerWidth="50"
+        />
+    ),
     modules: ['passwordresetpage']
 });
 
 const VerifyPage = Loadable({
     loader: () =>
         import(/* webpackChunkName: "verifypage" */ './pages/account/VerifyPage'),
-    loading: () => null,
+    loading: () => (
+        <LoadingOverlay
+            loadingText=""
+            spinnerColor={config.PRIMARY_COLOR}
+            spinnerHeight="50"
+            spinnerWidth="50"
+        />
+    ),
     modules: ['verifypage']
 });
 const AccountPage = Loadable({
     loader: () =>
         import(/* webpackChunkName: "accountpage" */ './pages/account/AccountPage'),
-    loading: () => null,
+    loading: () => (
+        <LoadingOverlay
+            loadingText=""
+            spinnerColor={config.PRIMARY_COLOR}
+            spinnerHeight="50"
+            spinnerWidth="50"
+        />
+    ),
     modules: ['accountpage']
 });
 const EditProfilePage = Loadable({
     loader: () =>
         import(/* webpackChunkName: "editprofilepage" */ './pages/account/EditProfilePage'),
-    loading: () => null,
+    loading: () => (
+        <LoadingOverlay
+            loadingText=""
+            spinnerColor={config.PRIMARY_COLOR}
+            spinnerHeight="50"
+            spinnerWidth="50"
+        />
+    ),
     modules: ['editprofilepage']
 });
 const AdminPage = Loadable({
     loader: () =>
         import(/* webpackChunkName: "adminpage" */ './pages/admin/AdminPage'),
-    loading: () => null,
+    loading: () => (
+        <LoadingOverlay
+            loadingText=""
+            spinnerColor={config.PRIMARY_COLOR}
+            spinnerHeight="50"
+            spinnerWidth="50"
+        />
+    ),
     modules: ['adminpage']
 });
 export default () => (
@@ -200,6 +301,6 @@ export default () => (
             component={EditProfilePage}
         />
         <Route exact path={routes.EDIT_PROFILE} component={EditProfilePage} />
-        <Route component={() => <div>Not found!</div>} />
+        <Route component={() => <NotFoundPage />} />
     </Switch>
 );

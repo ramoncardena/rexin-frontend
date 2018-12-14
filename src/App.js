@@ -106,7 +106,7 @@ class App extends Component {
         const copyright = t('Copyright_Notice');
 
         return (
-            <div>
+            <div id="app">
                 <Helmet htmlAttributes={{ lang: currLng }} />
                 <SiteContainer textColor={config.TEXT_COLOR}>
                     <TopNavigation>

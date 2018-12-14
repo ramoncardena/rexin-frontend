@@ -11,7 +11,7 @@ i18n.use(i18nextBackend)
         preload: ['en', 'es'],
         ns: ['index'],
         defaultNS: 'index',
-        debug: true,
+        debug: false,
         detection: {
             order: ['path']
         },
