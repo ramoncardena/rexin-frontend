@@ -33,6 +33,7 @@ class HomePage extends Component {
 
     render() {
         const { t, i18n } = this.props;
+
         return (
             <Page
                 id="home"

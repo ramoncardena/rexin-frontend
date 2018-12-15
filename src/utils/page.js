@@ -3,6 +3,7 @@ import { withRouter } from 'react-router';
 import Helmet from 'react-helmet';
 import logo from '../images/logo.png';
 import * as config from '../config';
+import alternateLangs from './alternateLangs';
 
 const SITE_URL =
     process.env.NODE_ENV === 'development'
@@ -87,6 +88,15 @@ class Page extends Component {
     render() {
         const { children, id, className, currentLang, ...rest } = this.props;
 
+        // Load all languages and filter current language
+        const languages = Array.from(config.ALL_LANGUAGES).filter(
+            lng => lng !== currentLang
+        );
+        const alternateLinks = alternateLangs(
+            this.props.location.pathname,
+            currentLang
+        );
+
         return (
             <div id={id} className={className}>
                 <Helmet
@@ -105,6 +115,11 @@ class Page extends Component {
                         {
                             rel: 'canonical',
                             href: SITE_URL + this.props.location.pathname
+                        },
+                        {
+                            rel: 'alternate',
+                            hreflang: languages[0],
+                            href: alternateLinks[0]
                         }
                     ]}
                     meta={this.getMetaTags(rest, this.props.location.pathname)}
