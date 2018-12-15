@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import { Helmet } from 'react-helmet';
 import { withNamespaces } from 'react-i18next';
 import styled from 'styled-components';
 
+import Page from '../../utils/page';
 import * as config from '../../config';
 
 const PageContainer = styled.div`
@@ -32,21 +32,18 @@ class TwoPage extends Component {
     }
 
     render() {
-        const { t } = this.props;
+        const { t, i18n } = this.props;
         return (
-            <div>
-                <Helmet>
-                    <title>{t('Two_Title')}</title>
-                    <meta
-                        name="description"
-                        content={t('Two_SEO_Description')}
-                    />
-                </Helmet>
-
+            <Page
+                id="two"
+                title={t('Two_Title')}
+                description={t('Two_SEO_Description')}
+                currentLang={i18n.languages[0]}
+            >
                 <PageContainer>
-                    <Title color={config.primaryColor}>{t('Two_H1')}</Title>
+                    <Title color={config.PRIMARY_COLOR}>{t('Two_H1')}</Title>
                 </PageContainer>
-            </div>
+            </Page>
         );
     }
 }

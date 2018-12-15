@@ -5,6 +5,24 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Launch Express",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceRoot}/server/index.js",
+            "stopOnEntry": false,
+            "args": [],
+            "cwd": "${workspaceRoot}",
+            "preLaunchTask": null,
+            "runtimeExecutable": null,
+            "runtimeArgs": ["--nolazy"],
+            "env": {
+                "NODE_ENV": "development"
+            },
+            "externalConsole": false,
+            "sourceMaps": false,
+            "outFiles": []
+        },
+        {
             "type": "chrome",
             "request": "attach",
             "name": "Attach to Chrome",

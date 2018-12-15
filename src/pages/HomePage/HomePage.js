@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import { Helmet } from 'react-helmet';
 import { withNamespaces } from 'react-i18next';
 import styled from 'styled-components';
 
+import Page from '../../utils/page';
 import * as config from '../../config';
 
 const PageContainer = styled.div`
@@ -32,21 +32,19 @@ class HomePage extends Component {
     }
 
     render() {
-        const { t } = this.props;
-        return (
-            <div>
-                <Helmet>
-                    <title>{t('Home_Title')}</title>
-                    <meta
-                        name="description"
-                        content={t('Home_SEO_Description')}
-                    />
-                </Helmet>
+        const { t, i18n } = this.props;
 
+        return (
+            <Page
+                id="home"
+                title={t('Home_Title')}
+                description={t('Home_SEO_Description')}
+                currentLang={i18n.languages[0]}
+            >
                 <PageContainer>
-                    <Title color={config.primaryColor}>{t('Home_H1')}</Title>
+                    <Title color={config.PRIMARY_COLOR}>{t('Home_H1')}</Title>
                 </PageContainer>
-            </div>
+            </Page>
         );
     }
 }

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import styled from 'styled-components';
-import { Helmet } from 'react-helmet';
 import { withNamespaces } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 
@@ -11,6 +10,7 @@ import { PasswordForgetLink } from '../PasswordForgetPage';
 import { auth } from '../../../api';
 import * as routes from '../../../constants/routes';
 import * as apiError from '../../../utils/apiError';
+import Page from '../../../utils/page';
 import * as config from '../../../config';
 
 const PageContainer = styled.div`
@@ -112,16 +112,16 @@ class SignInPage extends Component {
         const { t, i18n, history, onLoginSuccess, authToken } = this.props;
 
         return (
-            <div>
-                <Helmet>
-                    <title>{t('Sign_In_Title')}</title>
-                    <meta
-                        name="description"
-                        content={t('Sign_In_SEO_Description')}
-                    />
-                </Helmet>
+            <Page
+                id="signin"
+                title={t('Sign_In_Title')}
+                description={t('Sign_In_SEO_Description')}
+                currentLang={i18n.languages[0]}
+            >
                 <PageContainer>
-                    <Title color={config.primaryColor}>{t('Sign_In_H1')}</Title>
+                    <Title color={config.PRIMARY_COLOR}>
+                        {t('Sign_In_H1')}
+                    </Title>
                     <Text>{t('Sign_In_Intro')}</Text>
                     <FormContainer>
                         <SignInForm
@@ -134,20 +134,20 @@ class SignInPage extends Component {
                         <PasswordForgetLink
                             t={t}
                             i18n={i18n}
-                            textcolor={config.primaryColor}
-                            linkcolor={config.secondaryColor}
-                            hovercolor={config.hoverColor}
+                            textcolor={config.PRIMARY_COLOR}
+                            linkcolor={config.SECONDARY_COLOR}
+                            hovercolor={config.HOVER_COLOR}
                         />
                         <SignUpLink
                             t={t}
                             i18n={i18n}
-                            textcolor={config.primaryColor}
-                            linkcolor={config.secondaryColor}
-                            hovercolor={config.hoverColor}
+                            textcolor={config.PRIMARY_COLOR}
+                            linkcolor={config.SECONDARY_COLOR}
+                            hovercolor={config.HOVER_COLOR}
                         />
                     </FormContainer>
                 </PageContainer>
-            </div>
+            </Page>
         );
     }
 }
@@ -188,7 +188,7 @@ class SignInForm extends Component {
             .then(response => response.json())
             .then(data => {
                 if (!data.errors) {
-                    const defaultLanguage = config.defaultLanguage;
+                    const defaultLanguage = config.DEFAULT_LANGUAGE;
                     const currentLanguage =
                         i18n.languages[0] === defaultLanguage
                             ? ''
@@ -237,7 +237,7 @@ class SignInForm extends Component {
             <StyledForm onSubmit={this.onSubmit}>
                 <InputGroup>
                     <InputField
-                        primaryColor={config.primaryColor}
+                        primaryColor={config.PRIMARY_COLOR}
                         value={email}
                         onChange={event =>
                             this.setState(
@@ -253,7 +253,7 @@ class SignInForm extends Component {
                 </InputGroup>
                 <InputGroup>
                     <InputField
-                        primaryColor={config.primaryColor}
+                        primaryColor={config.PRIMARY_COLOR}
                         value={password}
                         onChange={event =>
                             this.setState(
@@ -270,8 +270,8 @@ class SignInForm extends Component {
                 <FormButton
                     disabled={isInvalid}
                     type="submit"
-                    primaryColor={config.primaryColor}
-                    secondaryColor={config.secondaryColor}
+                    primaryColor={config.PRIMARY_COLOR}
+                    secondaryColor={config.SECONDARY_COLOR}
                 >
                     {t('Global_Sign_In')}
                 </FormButton>

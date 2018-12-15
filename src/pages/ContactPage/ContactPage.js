@@ -155,7 +155,9 @@ class ContactPage extends Component {
                     />
                 </Helmet>
                 <PageContainer>
-                    <Title color={config.primaryColor}>{t('Contact_H1')}</Title>
+                    <Title color={config.PRIMARY_COLOR}>
+                        {t('Contact_H1')}
+                    </Title>
                     <Text>{t('Contact_Intro')}</Text>
                     <FormContainer>
                         <ContactForm t={t} i18n={i18n} history={history} />
@@ -259,7 +261,7 @@ class ContactForm extends Component {
             isLoading
         } = this.state;
 
-        const defaultLanguage = config.defaultLanguage;
+        const defaultLanguage = config.DEFAULT_LANGUAGE;
         const currentLanguage =
             i18n.languages[0] === defaultLanguage
                 ? ''
@@ -273,7 +275,7 @@ class ContactForm extends Component {
                 <InputGroup>
                     <InputField
                         value={fullname}
-                        primaryColor={config.primaryColor}
+                        primaryColor={config.PRIMARY_COLOR}
                         onChange={event =>
                             this.setState({
                                 fullname: event.target.value,
@@ -293,7 +295,7 @@ class ContactForm extends Component {
                 <InputGroup>
                     <InputField
                         value={email}
-                        primaryColor={config.primaryColor}
+                        primaryColor={config.PRIMARY_COLOR}
                         onChange={event =>
                             this.setState({
                                 email: event.target.value,
@@ -313,7 +315,7 @@ class ContactForm extends Component {
                 <InputGroup>
                     <TextAreaField
                         value={message}
-                        primaryColor={config.primaryColor}
+                        primaryColor={config.PRIMARY_COLOR}
                         onChange={event =>
                             this.setState({
                                 message: event.target.value,
@@ -352,12 +354,12 @@ class ContactForm extends Component {
                 <FormButton
                     disabled={isInvalid}
                     type="submit"
-                    primaryColor={config.primaryColor}
+                    primaryColor={config.PRIMARY_COLOR}
                 >
                     {!!isLoading ? (
                         <Loader
                             type="Oval"
-                            color={config.primaryColor}
+                            color={config.PRIMARY_COLOR}
                             height="16"
                             width="16"
                         />
