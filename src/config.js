@@ -22,7 +22,8 @@ export const FACEBOOK_APP_ID = 'xxxxxxxxxx';
 export const DEFAULT_TWITTER = '@ramoncardena';
 
 /* API */
-export const BASE_URL = 'https://rexin-backend.herokuapp.com';
+// export const BASE_URL = 'https://rexin-backend.herokuapp.com';
+export const BASE_URL = 'http://localhost:5000';
 
 /*
  *  Social Networks
