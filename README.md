@@ -1,11 +1,11 @@
 # REXIN: A template for React with Server Side Rendering and Create-React-App
 
 [![author](https://img.shields.io/badge/author-@Ramon%20Cardena-blue.svg)](https://twitter.com/ramon_cardena)
-![releaste](https://img.shields.io/badge/release-v.1.0.0-green.svg)
+![releaste](https://img.shields.io/badge/release-v.1.0.2-green.svg)
 
 ## Introduction
 
-This is a base template/skeleton to be used as a starter for a **React project**. It comes with many features to start a project from a website to a full web app. It works together with **Rexin Backend** to manage authentication, users and collections.<br>
+This is a base template/skeleton to be used as a starter for a **React project**. It comes with many features to start a project from a website to a full web app. It works together with **Rexin Backend** to manage authentication, users and collections.<br><br>
 If do feel yo can imporve this project, collaborations are more than welcome!
 
 ## Features
@@ -22,10 +22,11 @@ If do feel yo can imporve this project, collaborations are more than welcome!
 -   **User registration** workflow (Sign-up and Verification by email).
 -   **User management** workflow (Sign-in, Edit Profile, Password Forgot and Password Reset).
 -   Admin page for users with **Admin role**.
--   **Contact Form** through Rexin Backend and [Mailgun](https://www.mailgun.com/).
+-   Working **Contact Form** through Rexin Backend and [Mailgun](https://www.mailgun.com/).
 -   Root url for default language and folders for aditional ones.
 -   **Google crawler** friendly.
 -   **SEO** optimized and ready.
+-   15 pre-configured **pages**.
 -   ESLint for good coding practices.
 -   Code formatting using Prettier and ESLint.
 
@@ -307,37 +308,71 @@ Admin Page `/src/pages/admin/AdminPage`<br>
 
 ## Authentication and authorization
 
-Authentication is done with JWT (JSON Web Token) against the Rexin Backend.
+Authentication is done with **JWT (JSON Web Token)** against the Rexin Backend.<br>
+
+We keep session using global state handling with **Redux**. 
+
+For authorization we use a **HOC** to check for the authorization condition that includes checking the JWT token and after that, checking user's role.
+
+You can follow the code of account pages to see how it works.
 
 
+## User Registration/Management Workflow
+User registration and authentication is provided by **[Rexin Backend](https://github.com/ramoncardena/rexin-backend)**. The pages included in the project allows you to handle user workflow:
 
-## User Registration Workflow
-User registration and authentication is provided by Rexin Backend. The pages included in the project allows you to handle user workflow:
-
-- User sign up providing full name, email and password.
-- User account verification providing verification code.
-- User sign in providing email and password.
-- Password forgot providing email 
+- **User sign up** providing full name, email and password.
+- User **account verification** providing verification code.
+- **User sign in** providing email and password.
+- **Password forgot** providing email.
+- **Password reset** providing verification id.
+- User **profile edit** providing full name, email, city, country and new password. 
 
 
 ## Internationalization
 
+Inhternationalization is carried out by [i18next](https://github.com/i18next/react-i18next) and [react-i18next](https://github.com/i18next/react-i18next). If do you want do dig deeper I'll recomend you to check their page out, it's an awesome component for doing i18n right.
+
+Rexin Frontend comes configured with 2 languages, English and Spanish. Languages files can be found here:
+
+````
+public
+ └── locales
+       ├── en
+       └── es
+````
+
+In the application you shoud use withNamespaces() HOC to pass the t function as a prop and then use it to get the transalated strings like this:
+
+````
+const {t} = this.props
+.
+.
+.
+{t('Home_Title')}
+````
 
 
 ## Components
+Rexin Frontend comes with some components for you to use. I'll be adding more in the future.
 
-### NavBar
+### Navbar
 The Navbar component is a modular navbar with the following components:
 
-- Logo and Title on the left.
-- Navigation menu, account menu, admin menu, icon menu, sign-in/sign-out button and mobile buton on the right.
+- Logo and Title on the **left panel**.
+- Navigation menu, account menu, admin menu, icon menu, sign-in/sign-out button and mobile buton on the **right panel**.
 
-### FooterBar
+### Footerbar
 The FooterBar compontent is a navbar with the following components:
 
-- Copyright notice on the left.
-- Navigation menu and social icons menu on the right.
+- Copyright notice.
+- Navigation menu .
+- Social icons menu on the right.
 
+### Loading Overlay
+This is a component to show while loading the pages.
+
+### Language Selector
+This component is responsible to change current language through i18next.
 
 
 ## Bugs or improvements
@@ -346,7 +381,7 @@ Feel free to report any bugs or improvements. Pull requests are always welcome.
 
 ## I love this! How can I help?
 
-It´s amazing you feel like that! Send me a tweet [Ramon Cardena](https://twitter.com/ramon_cardena), share this with others, make a pull request or if you feel really thankful you can always buy me a beer! Enjoy!
+It´s amazing you feel like that! Send me a tweet [Ramon Cardena](https://twitter.com/ramon_cardena), share this with others or make a pull request. Enjoy!
 
 ## Acknowledgements
 
