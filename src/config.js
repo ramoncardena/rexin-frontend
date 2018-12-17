@@ -1,4 +1,4 @@
-export const version = '1.0.1';
+export const version = '1.0.2';
 
 export const DEFAULT_LANGUAGE = 'en';
 export const ALL_LANGUAGES = ['en', 'es'];
