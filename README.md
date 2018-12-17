@@ -1,12 +1,25 @@
 # REXIN: A template for React with Server Side Rendering and Create-React-App
 
-[![author](https://img.shields.io/badge/author-@Ramon%20Cardena-blue.svg)](https://twitter.com/ramon_cardena)
-![releaste](https://img.shields.io/badge/release-v.1.0.2-green.svg)
+[![author](https://img.shields.io/badge/author-@Ramon%20Cardena-blue.svg?style=flat-square)](https://twitter.com/ramon_cardena)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://github.com/davellanedam/node-express-mongodb-jwt-rest-api-skeleton/blob/master/LICENSE)
+![releaste](https://img.shields.io/badge/release-v.1.0.2-green.svg?style=flat-square)
 
 ## Introduction
 
 This is a base template/skeleton to be used as a starter for a **React project**. It comes with many features to start a project from a website to a full web app. It works together with **Rexin Backend** to manage authentication, users and collections.<br><br>
 If do feel yo can imporve this project, collaborations are more than welcome!
+
+## Demo
+The project is deployed to **Heroku**. 
+
+You can see the frontend here:
+[Rexin Frontend](https://rexin-frontend.herokuapp.com)
+
+If you want to test the backend with Postman, it's here:
+[Rexin Backend](https://rexin-backend.herokuapp.com)
+
+The repo is ready to deploy to Heroku with a Heroku Post-process hook.
+
 
 ## Features
 
