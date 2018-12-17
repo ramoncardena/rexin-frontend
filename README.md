@@ -5,7 +5,8 @@
 
 ## Introduction
 
-This is a base template/skeleton to be used as a starter for a **React project**. It comes with many features to start a project from a website to a full web app. It works together with **Rexin Backend** to manage authentication, users and collections.
+This is a base template/skeleton to be used as a starter for a **React project**. It comes with many features to start a project from a website to a full web app. It works together with **Rexin Backend** to manage authentication, users and collections.<br>
+If do feel yo can imporve this project, collaborations are more than welcome!
 
 ## Features
 
@@ -15,7 +16,7 @@ This is a base template/skeleton to be used as a starter for a **React project**
 -   **Webfonts** with [Webfontloader](https://github.com/typekit/webfontloader).
 -   **Styling** with [Styled-Components](https://www.styled-components.com/).
 -   **Icons** with [React Icon Kit](https://github.com/wmira/react-icons-kit).
--   Connected to **Rexin Backend**.
+-   Connected to **[Rexin Backend](https://github.com/ramoncardena/rexin-backend)**.
 -   **Authentication** based on JWT.
 -   **Role based** authorization.
 -   **User registration** workflow (Sign-up and Verification by email).
@@ -39,7 +40,7 @@ This is a base template/skeleton to be used as a starter for a **React project**
 1. Clone the project from github. Change "myproject" to you project name.
 
 ```bash
-git clone https://github.com/davellanedam/node-express-mongodb-jwt-rest-api-skeleton.git ./myproject
+git clone https://github.com/ramoncardena/rexin-frontend ./myproject
 ```
 
 ### Using manual download ZIP
@@ -146,7 +147,7 @@ If you want to learn more about SSR I hightly recommend you to read Patick's tut
 
 
 ## Backend
-**Rexin Frontend** connects to **Rexin Backend** for user registration, authentication and mailing. **Rexin Backend** is based on [Daniel Avellaneda](https://github.com/davellanedam/)'s repository [Node.js express.js MongoDB JWT REST API - Basic Project Skeleton](https://github.com/davellanedam/node-express-mongodb-jwt-rest-api-skeleton).The main features of the backend are:
+**Rexin Frontend** connects to **[Rexin Backend](https://github.com/ramoncardena/rexin-backend)** for user registration, authentication and mailing. **Rexin Backend** is based on [Daniel Avellaneda](https://github.com/davellanedam/)'s repository [Node.js express.js MongoDB JWT REST API - Basic Project Skeleton](https://github.com/davellanedam/node-express-mongodb-jwt-rest-api-skeleton).The main features of the backend are:
 
 - **Multiple environment** ready (development, production)
 - Custom **email/password user system** with **basic security** and **blocking** for preventing brute force attacks.
@@ -171,7 +172,7 @@ If you want to learn more about SSR I hightly recommend you to read Patick's tut
 - **JWT Tokens**, provide login with Authorization header with value Basic username:password where username:password MUST BE ENCODED with Base64.
 - **Make requests with a token** after login with Authorization header with value Bearer *yourToken* where *yourToken* is the signed and encrypted token given in the response from the login process.
 
-Check the repository page toclone the backend and read the documentation.
+Check the [repository page](https://github.com/ramoncardena/rexin-backend) to clone the backend and read the documentation.
 
 ## Configuration
 Main features can be configured through the config.js file in the root folder.
@@ -276,7 +277,7 @@ There are 3 types of pages:
 You can create and modify pages as you wish. You can use `OnePage.js` as a reference for public pages, `AccountPage.js` for private pages and `AdminPage.js` for role based private pages.
 
 
-### Page Component
+### Page Component (for SEO)
 All the pages in Rexin Frontend contain a **Page Component** wraping around the content to render SEO meta and title.<br>
 
 
@@ -312,7 +313,11 @@ Authentication is done with JWT (JSON Web Token) against the Rexin Backend.
 
 ## User Registration Workflow
 User registration and authentication is provided by Rexin Backend. The pages included in the project allows you to handle user workflow:
-- User sign up providing 
+
+- User sign up providing full name, email and password.
+- User account verification providing verification code.
+- User sign in providing email and password.
+- Password forgot providing email 
 
 
 ## Internationalization
@@ -334,8 +339,6 @@ The FooterBar compontent is a navbar with the following components:
 - Navigation menu and social icons menu on the right.
 
 
-
-## Pages
 
 ## Bugs or improvements
 
