@@ -42,6 +42,7 @@ const StyledNavRight = styled.div`
     margin: 0;
     padding: 0;
 `;
+
 const StyledTitle = styled.div`
     margin-left: 5px;
     a {
@@ -50,6 +51,10 @@ const StyledTitle = styled.div`
         color: ${props => props.primaryColor};
         text-decoration: none;
     }
+`;
+
+const Logo = styled.img`
+    max-height: 40px;
 `;
 
 const TabletPortaitUp = styled.span`
@@ -230,7 +235,7 @@ class NavBar extends Component {
 /* Component: NAVLOGO */
 const NavLogo = ({ src, description, link }) => (
     <Link to={link}>
-        <img src={src} alt={description} />
+        <Logo src={src} alt={description} />
     </Link>
 );
 
