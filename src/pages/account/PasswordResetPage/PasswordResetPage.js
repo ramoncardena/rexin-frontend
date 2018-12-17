@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { compose } from 'recompose';
-import { Helmet } from 'react-helmet';
 import { withNamespaces } from 'react-i18next';
 import styled from 'styled-components';
 import Loader from 'react-loader-spinner';
@@ -8,6 +7,7 @@ import { withRouter } from 'react-router-dom';
 
 import { auth } from '../../../api';
 import * as apiError from '../../../utils/apiError';
+import Page from '../../../utils/page';
 import * as config from '../../../config';
 
 const PageContainer = styled.div`
@@ -110,19 +110,17 @@ const Title = styled.h1`
 class PasswordResetPage extends Component {
     render() {
         const { id } = this.props.match.params;
-        const { t } = this.props;
+        const { t, i18n } = this.props;
 
         return (
-            <div>
-                <Helmet>
-                    <title>{t('Password_Reset_Title')}</title>
-                    <meta
-                        name="description"
-                        content={t('Password_Reset_SEO_Description')}
-                    />
-                </Helmet>
+            <Page
+                id="password-reset"
+                title={t('Password_Reset_Title')}
+                description={t('Password_Reset_SEO_Description')}
+                currentLang={i18n.languages[0]}
+            >
                 <PageContainer>
-                    <Title color={config.primaryColor}>
+                    <Title color={config.PRIMARY_COLOR}>
                         {t('Password_Reset_H1')}
                     </Title>
                     <Text>{t('Password_Reset_Intro')}</Text>
@@ -130,7 +128,7 @@ class PasswordResetPage extends Component {
                         <PasswordResetForm t={t} id={id} />
                     </FormContainer>
                 </PageContainer>
-            </div>
+            </Page>
         );
     }
 }
@@ -212,7 +210,7 @@ class PasswordResetForm extends Component {
                 <InputGroup>
                     <InputField
                         value={password}
-                        primaryColor={config.primaryColor}
+                        primaryColor={config.PRIMARY_COLOR}
                         onChange={event =>
                             this.setState(
                                 byPropKey('password', event.target.value)
@@ -240,12 +238,12 @@ class PasswordResetForm extends Component {
                 <FormButton
                     disabled={isInvalid}
                     type="submit"
-                    primaryColor={config.primaryColor}
+                    primaryColor={config.PRIMARY_COLOR}
                 >
                     {!!isLoading ? (
                         <Loader
                             type="Oval"
-                            color={config.primaryColor}
+                            color={config.PRIMARY_COLOR}
                             height="16"
                             width="16"
                         />

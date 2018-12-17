@@ -60,7 +60,7 @@ const withAuthorization = authCondition => Component => {
             this._isMounted = true;
 
             const currentLanguage =
-                i18next.languages[0] === config.defaultLanguage
+                i18next.languages[0] === config.DEFAULT_LANGUAGE
                     ? ''
                     : '/' + i18next.languages[0];
             const { onTokenRecover } = this.props;
@@ -106,7 +106,7 @@ const withAuthorization = authCondition => Component => {
                     <SpinnerContainer>
                         <Loader
                             type="Oval"
-                            color={config.primaryColor}
+                            color={config.PRIMARY_COLOR}
                             height="50"
                             width="50"
                         />

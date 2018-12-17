@@ -14,7 +14,7 @@ const options = {
     ns: ['index'],
     defaultNS: 'index',
 
-    debug: true,
+    debug: false,
 
     interpolation: {
         escapeValue: false

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { compose } from 'recompose';
-import { Helmet } from 'react-helmet';
 import { withNamespaces } from 'react-i18next';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
 import { auth } from '../../../api';
 import * as apiError from '../../../utils/apiError';
+import Page from '../../../utils/page';
 import * as config from '../../../config';
 
 const PageContainer = styled.div`
@@ -106,20 +106,18 @@ class VerifyPage extends Component {
     }
 
     render() {
-        const { t } = this.props;
+        const { t, i18n } = this.props;
         const { response, error } = this.state;
 
         return (
-            <div>
-                <Helmet>
-                    <title>{t('Verify_Title')}</title>
-                    <meta
-                        name="description"
-                        content={t('Verify_SEO_Description')}
-                    />
-                </Helmet>
+            <Page
+                id="verify-account"
+                title={t('Verify_Title')}
+                description={t('Verify_SEO_Description')}
+                currentLang={i18n.languages[0]}
+            >
                 <PageContainer>
-                    <Title color={config.primaryColor}>
+                    <Title color={config.PRIMARY_COLOR}>
                         {' '}
                         {t('Verify_H1')}{' '}
                     </Title>
@@ -127,14 +125,14 @@ class VerifyPage extends Component {
                     <VerifyButton
                         disabled={false}
                         onClick={() => this.handleVerification()}
-                        primaryColor={config.primaryColor}
+                        primaryColor={config.PRIMARY_COLOR}
                     >
                         {t('Verify_Button')}
                     </VerifyButton>
                     <ErrorText>{t(error)}</ErrorText>
                     <ResponseText>{response}</ResponseText>
                 </PageContainer>
-            </div>
+            </Page>
         );
     }
 }

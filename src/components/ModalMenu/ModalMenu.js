@@ -173,7 +173,7 @@ class ModalMenu extends React.Component {
                 </StyledMenuIcon>
                 <StyledModal
                     folded={this.state.folded}
-                    backgroundColor={config.modalBackground}
+                    backgroundColor={config.MODAL_BACKGROUND}
                 >
                     <StyledCloseIcon
                         onClick={this.handleMenuClick}

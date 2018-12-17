@@ -3,7 +3,7 @@ import * as config from '../config';
 
 function alternateLangs(url, currentLng) {
     // Load all languages and filter current language
-    const languages = Array.from(config.allLanguages).filter(
+    const languages = Array.from(config.ALL_LANGUAGES).filter(
         lng => lng !== currentLng
     );
     // Load url object for current location
@@ -13,38 +13,31 @@ function alternateLangs(url, currentLng) {
     // Save pathname /xx/xxxxx/...
     const urlPathname = currentUrl.pathname;
 
-    var htmlTags = '';
+    var alternateLinks = [];
 
     // If current language is the default language
-    if (currentLng === config.defaultLanguage) {
+    if (currentLng === config.DEFAULT_LANGUAGE) {
         languages.forEach(item => {
-            htmlTags =
-                htmlTags +
-                '<link rel="alternate" hreflang="' +
-                item +
-                '" href="' +
-                urlOrigin +
-                '/' +
-                item +
-                urlPathname +
-                '" />';
+            alternateLinks.push(urlOrigin + '/' + item + urlPathname);
         });
     } else {
         // If current language isn't the default language
         languages.forEach(item => {
-            htmlTags =
-                htmlTags +
-                '<link hreflang="' +
-                item +
-                '" href="' +
-                urlOrigin +
-                '/' +
-                item +
-                urlPathname.replace(currentLng + '/', '') +
-                '" rel="alternate" />';
+            if (item === config.DEFAULT_LANGUAGE) {
+                alternateLinks.push(
+                    urlOrigin + urlPathname.replace(currentLng + '/', '')
+                );
+            } else {
+                alternateLinks.push(
+                    urlOrigin +
+                        '/' +
+                        item +
+                        urlPathname.replace(currentLng, item)
+                );
+            }
         });
     }
-    return htmlTags;
+    return alternateLinks;
 }
 
 export default alternateLangs;

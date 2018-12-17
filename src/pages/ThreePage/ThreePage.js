@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import { Helmet } from 'react-helmet';
 import { withNamespaces } from 'react-i18next';
 import styled from 'styled-components';
 
+import Page from '../../utils/page';
 import * as config from '../../config';
 
 const PageContainer = styled.div`
@@ -32,21 +32,18 @@ class ThreePage extends Component {
     }
 
     render() {
-        const { t } = this.props;
+        const { t, i18n } = this.props;
         return (
-            <div>
-                <Helmet>
-                    <title>{t('Three_Title')}</title>
-                    <meta
-                        name="description"
-                        content={t('Three_SEO_Description')}
-                    />
-                </Helmet>
-
+            <Page
+                id="three"
+                title={t('Three_Title')}
+                description={t('Three_SEO_Description')}
+                currentLang={i18n.languages[0]}
+            >
                 <PageContainer>
-                    <Title color={config.primaryColor}>{t('Three_H1')}</Title>
+                    <Title color={config.PRIMARY_COLOR}>{t('Three_H1')}</Title>
                 </PageContainer>
-            </div>
+            </Page>
         );
     }
 }

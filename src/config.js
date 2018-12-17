@@ -1,18 +1,29 @@
-export const version = '1.0.1';
+export const version = '1.0.2';
 
-export const defaultLanguage = 'en';
-export const allLanguages = ['en', 'es'];
-export const primaryColor = '#808080';
-export const secondaryColor = '#647796';
-export const hoverColor = '#647796';
-export const textColor = '#808080';
-export const textLightColor = '#D3D3D3';
-export const textStrongColor = '#000000';
-export const backgroundColor = '#ffffff';
-export const modalBackground = '#ffffff';
+export const DEFAULT_LANGUAGE = 'en';
+export const ALL_LANGUAGES = ['en', 'es'];
+
+export const PRIMARY_COLOR = '#808080';
+export const SECONDARY_COLOR = '#647796';
+export const HOVER_COLOR = '#647796';
+export const TEXT_COLOR = '#808080';
+export const TEXT_LIGHT_COLOR = '#D3D3D3';
+export const TEXT_STRONG_COLOR = '#000000';
+export const BACKGROUND_COLOR = '#ffffff';
+export const MODAL_BACKGROUND = '#ffffff';
+
+export const DEV_SITE_URL = 'http://localhost:3000';
+export const PROD_SITE_URL = 'https://rexin-frontend.herokuapp.com';
+export const DEFAULT_TITLE = 'Rexin Frontend';
+export const DEFAULT_DESCRIPTION =
+    'React frontend with JWT authentication, i18n with i18next, and much more.';
+export const DEFAULT_SEP = ' | ';
+export const FACEBOOK_APP_ID = 'xxxxxxxxxx';
+export const DEFAULT_TWITTER = '@ramoncardena';
 
 /* API */
-export const BASE_URL = 'http://localhost:5000';
+export const BASE_URL = 'https://rexin-backend.herokuapp.com';
+// export const BASE_URL = 'http://localhost:5000';
 
 /*
  *  Social Networks
