@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { render, hydrate } from 'react-dom';
 import { Provider } from 'react-redux';
 
@@ -13,6 +13,8 @@ import i18n from './utils/i18n';
 
 import App from './App';
 import './index.css';
+
+import LoadingOverlay from './components/LoadingOverlay';
 
 // This will make sure WebFont.load is only used in the browser.
 if (typeof window !== 'undefined') {
@@ -32,13 +34,15 @@ const Application = (
     <Provider store={store}>
         <ConnectedRouter history={history}>
             <Frontload noServerRender={true}>
-                <I18nextProvider
-                    i18n={i18n}
-                    initialI18nStore={window.initalI18nStore}
-                    initialLanguage={window.initialLanguage}
-                >
-                    <App />
-                </I18nextProvider>
+                <Suspense fallback={<LoadingOverlay />}>
+                    <I18nextProvider
+                        i18n={i18n}
+                        initialI18nStore={window.initalI18nStore}
+                        initialLanguage={window.initialLanguage}
+                    >
+                        <App />
+                    </I18nextProvider>
+                </Suspense>
             </Frontload>
         </ConnectedRouter>
     </Provider>

@@ -4,7 +4,7 @@ import { compose } from 'recompose';
 import { Helmet } from 'react-helmet';
 import { withRouter } from 'react-router';
 import styled from 'styled-components';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import './App.css';
 import * as routes from './constants/routes';
 
@@ -165,7 +165,7 @@ const mapStateToProps = state => ({
 });
 
 export default compose(
-    withNamespaces('index'),
+    withTranslation('index'),
     connect(mapStateToProps),
     withRouter
 )(App);

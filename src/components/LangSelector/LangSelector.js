@@ -64,16 +64,22 @@ const StyledDropdown = styled.div`
     }
 `;
 
+const INITIAL_STATE = { lang: undefined };
 class LangSelector extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            lang: i18next.languages[0]
-                ? i18next.languages[0]
-                : config.DEFAULT_LANGUAGE
-        };
+        this.state = INITIAL_STATE;
         this.handleEsClick = this.handleEsClick.bind(this);
         this.handleEnClick = this.handleEnClick.bind(this);
+    }
+
+    componentDidMount() {
+        const { i18n } = this.props;
+        this.setState({
+            lang: i18n.languages[0]
+                ? i18n.languages[0]
+                : config.DEFAULT_LANGUAGE
+        });
     }
 
     handleEsClick() {

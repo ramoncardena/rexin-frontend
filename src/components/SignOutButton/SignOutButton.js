@@ -4,7 +4,7 @@ import { compose } from 'recompose';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 import Icon from 'react-icons-kit';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import * as routes from '../../constants/routes';
 import * as config from '../../config';
@@ -69,7 +69,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default compose(
-    withNamespaces('index'),
+    withTranslation('index'),
     connect(
         mapStateToProps,
         mapDispatchToProps

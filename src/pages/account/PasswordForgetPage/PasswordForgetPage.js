@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -245,6 +245,6 @@ function PasswordForgetLink(props) {
     );
 }
 
-export default withNamespaces('index')(PasswordForgetPage);
+export default withTranslation('index')(PasswordForgetPage);
 
 export { PasswordForgetForm, PasswordForgetLink };

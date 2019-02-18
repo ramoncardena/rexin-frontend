@@ -42,17 +42,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan('dev'));
 app.use(cookieParser());
 
-// Set up homepage, static assets, and capture everything else
-app.use(express.Router().get('/', loader));
-app.use(express.static(path.resolve(__dirname, '../build')));
-app.use(loader);
-
 app.use(
     i18nextMiddleware.handle(i18n, {
         ignoreRoutes: ['/css', '/img', '/js', '/less', '/lib'],
         removeLngFromUrl: false
     })
 );
+
+// Set up homepage, static assets, and capture everything else
+app.use(express.Router().get('/', loader));
+app.use(express.static(path.resolve(__dirname, '../build')));
+app.use(loader);
 
 // We tell React Loadable to load all required assets and start listening - ROCK AND ROLL!
 Loadable.preloadAll().then(() => {

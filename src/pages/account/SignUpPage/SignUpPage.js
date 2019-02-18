@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { compose } from 'recompose';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Link, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -327,7 +327,7 @@ function SignUpLink(props) {
 }
 
 export default compose(
-    withNamespaces('index'),
+    withTranslation('index'),
     withRouter
 )(SignUpPage);
 

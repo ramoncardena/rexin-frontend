@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 import XHR from 'i18next-xhr-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import { reactI18nextModule } from 'react-i18next';
+import { initReactI18next } from 'react-i18next';
 
 const supportedLanguages = ['en', 'es'];
 
@@ -42,7 +42,7 @@ if (typeof document !== 'undefined') {
 
 // initialize if not already initialized
 if (!i18n.isInitialized) {
-    i18n.use(reactI18nextModule).init(options);
+    i18n.use(initReactI18next).init(options);
 }
 
 export default i18n;
