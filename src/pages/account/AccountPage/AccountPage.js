@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { Helmet } from 'react-helmet';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 import Loader from 'react-loader-spinner';
@@ -214,6 +214,6 @@ export default compose(
         mapStateToProps,
         mapDispatchToProps
     ),
-    withNamespaces('index'),
+    withTranslation('index'),
     withRouter
 )(AccountPage);

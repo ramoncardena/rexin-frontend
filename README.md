@@ -350,7 +350,7 @@ public
        └── es
 ```
 
-In the application you shoud use withNamespaces() HOC to pass the t function as a prop and then use it to get the transalated strings like this:
+In the application you shoud use withTranslation() HOC to pass the t function as a prop and then use it to get the transalated strings like this:
 
 ```
 const {t} = this.props

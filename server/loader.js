@@ -87,7 +87,7 @@ export default (req, res) => {
                 renderToString(
                     <Loadable.Capture report={m => modules.push(m)}>
                         <Provider store={store}>
-                            <I18nextProvider i18n={i18n}>
+                            <I18nextProvider i18n={req.i18n}>
                                 <StaticRouter
                                     location={req.url}
                                     context={context}

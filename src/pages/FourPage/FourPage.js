@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import Page from '../../utils/page';
@@ -58,7 +58,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default compose(
-    withNamespaces('index'),
+    withTranslation('index'),
     connect(
         mapStateToProps,
         mapDispatchToProps
